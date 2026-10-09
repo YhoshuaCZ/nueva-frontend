@@ -197,6 +197,24 @@ a {
   font-size: 12px;
 }
 
+/* Several figures in one card, separated by vertical rules. */
+.mat-mdc-card.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 16px 0;
+}
+
+.summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 24px;
+}
+
+.summary > div + div {
+  border-left: 1px solid var(--border);
+}
+
 /* ---------- Status chips ---------- */
 
 .chip {
@@ -298,6 +316,17 @@ a {
   .columns,
   .grid-2 {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .mat-mdc-card.summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+  }
+
+  .summary > div:nth-child(3) {
+    border-left: 0;
   }
 }
 
