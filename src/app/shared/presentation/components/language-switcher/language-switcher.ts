@@ -1,36 +1,35 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import {Component, inject, input, signal} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-language-switcher',
   imports: [MatButtonToggleGroup, MatButtonToggle],
   templateUrl: './language-switcher.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './language-switcher.css',
 })
 /**
- * Presentation component that switches the active UI language.
+ * Presentation component that switches the active UI language (EN / ES pill).
  */
 export class LanguageSwitcher {
-  /** Currently selected language code in the toggle group. */
-  currentLang = 'en';
+  private readonly translate = inject(TranslateService);
+
+  /** Visual variant: light for public pages, dark for the workspace top bar. */
+  readonly variant = input<'light' | 'dark'>('light');
+
   /** Supported language codes available to users. */
-  languages = ['en', 'es'];
+  protected readonly languages = ['en', 'es'];
+
+  /** Currently selected language code in the toggle group. */
+  protected readonly currentLang = signal(this.translate.getCurrentLang() ?? 'en');
 
   /**
-   * @param translate - Translation service managing runtime locale state.
-   */
-  constructor(private translate: TranslateService) {
-    this.currentLang = translate.currentLang() || 'en';
-  }
-
-  /**
-   * Changes the active application language.
-   *
+   * Changes the active application language and remembers it for the next visit.
    * @param language - Locale code to activate.
    */
   useLanguage(language: string) {
     this.translate.use(language);
+    this.currentLang.set(language);
+    localStorage.setItem('language', language);
   }
 }
