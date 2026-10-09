@@ -20,5 +20,9 @@ export const environment = {
   platformProviderBatchesEndpointPath: '/batches',
   platformProviderBatchEventsEndpointPath: '/batch-events',
   platformProviderMaterialLotsEndpointPath: '/material-lots',
+  platformProviderEquipmentEndpointPath: '/equipment',
+  platformProviderSensorsEndpointPath: '/sensors',
+  platformProviderReadingsEndpointPath: '/readings',
+  platformProviderAlertsEndpointPath: '/alerts',
   landingPageUrl: 'https://ingescompany-7742.github.io/IngesCompany-LandingPage/'
 };

@@ -1,0 +1,109 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.equipment-sensors' | translate]"
+    [title]="'monitoring.equipment.title' | translate"
+    [subtitle]="'monitoring.equipment.subtitle' | translate"/>
+
+  <mat-card appearance="outlined">
+    <div class="card-title row"><div>
+        <h2>{{ 'monitoring.equipment.inventory' | translate }}</h2><span class="spacer"></span>
+        <p class="small muted">{{ 'monitoring.equipment.inventory-text' | translate }}</p></div>
+    </div>
+    <div class="table-scroll"><table mat-table [dataSource]="store.equipment()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.code' | translate }}</th>
+    <td mat-cell *matCellDef="let item"><strong>{{ item.code }}</strong></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.equipment' | translate }}</th>
+    <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.model' | translate }}</th>
+    <td mat-cell *matCellDef="let item">{{ item.model }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.location' | translate }}</th>
+    <td mat-cell *matCellDef="let item">{{ item.location }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.calibration' | translate }}</th>
+    <td mat-cell *matCellDef="let item"><span class="chip chip-dot" [class]="calibrationTone(item.calibrationStatus)">{{ 'monitoring.calibration.' + item.calibrationStatus | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c5">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.next-maintenance' | translate }}</th>
+    <td mat-cell *matCellDef="let item" [class.overdue]="item.calibrationStatus === 'not-fit'">{{ item.nextMaintenance | date: 'MMM dd, yyyy' }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4', 'c5']"></tr>
+  <tr mat-row *matRowDef="let item; columns: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']" class="clickable" [class.highlight]="item.code === selectedCode()" (click)="selectedCode.set(item.code)"></tr>
+</table></div>
+  </mat-card>
+
+  <div class="columns">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div>
+          <h2>{{ 'monitoring.equipment.sensors' | translate }} · {{ selectedCode() }}</h2><span class="spacer"></span>
+          <p class="small muted">{{ 'monitoring.equipment.sensors-text' | translate }}</p></div>
+      </div>
+      <div class="table-scroll"><table mat-table [dataSource]="sensors()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.sensor' | translate }}</th>
+    <td mat-cell *matCellDef="let sensor"><a [routerLink]="['/production/sensors', sensor.code]">{{ sensor.code }}</a></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.device-id' | translate }}</th>
+    <td mat-cell *matCellDef="let sensor" class="mono">{{ sensor.deviceId }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.type' | translate }}</th>
+    <td mat-cell *matCellDef="let sensor">{{ 'monitoring.type.' + sensor.type | translate }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.limits' | translate }}</th>
+    <td mat-cell *matCellDef="let sensor">{{ sensor.lowerLimit }}–{{ sensor.upperLimit }} {{ sensor.unit }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let sensor"><span class="chip chip-dot" [class]="sensor.status === 'active' ? 'chip-success' : 'chip-danger'">{{ 'monitoring.sensor-status.' + sensor.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let sensor; columns: ['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr class="mat-mdc-row" *matNoDataRow><td class="mat-mdc-cell muted" colspan="5">{{ 'monitoring.equipment.no-sensors' | translate }}</td></tr>
+</table></div>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="panel side"><form [formGroup]="form" (ngSubmit)="registerSensor()" novalidate>
+      <h2>{{ 'monitoring.equipment.register-sensor' | translate }}</h2>
+      <p class="small muted">{{ 'monitoring.equipment.register-text' | translate }}</p>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'monitoring.equipment.device-id' | translate }}</mat-label><input matInput type="text" formControlName="deviceId" placeholder="tb-7f3a2c91-coat02-temp" (input)="duplicateDevice.set(false)"></mat-form-field>
+@if (form.controls.deviceId.invalid && form.controls.deviceId.touched) { <p class="field-error">▲ {{ 'monitoring.equipment.device-error' | translate }}</p> }
+@if (duplicateDevice()) { <p class="field-error">▲ {{ 'monitoring.equipment.device-duplicate' | translate }}</p> }</div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'monitoring.equipment.type' | translate }}</mat-label><mat-select formControlName="type">
+          @for (type of sensorTypes; track type) { <mat-option [value]="type">{{ 'monitoring.type.' + type | translate }}</mat-option> }
+        </mat-select></mat-form-field></div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'monitoring.equipment.equipment' | translate }}</mat-label><mat-select formControlName="equipmentCode">
+          @for (item of store.equipment(); track item.id) { <mat-option [value]="item.code">{{ item.code }} · {{ item.name }}</mat-option> }
+        </mat-select></mat-form-field></div>
+      <button mat-flat-button type="submit" class="block">{{ 'monitoring.equipment.register-sensor' | translate }}</button>
+    </form></mat-card>
+  </div>
+
+  @if (attention(); as item) {
+    <div class="grid-2">
+      <mat-card appearance="outlined" class="panel side">
+        <h2>{{ 'monitoring.equipment.calibration' | translate }} · {{ item.code }}</h2>
+        <p class="small muted">{{ 'monitoring.equipment.calibration-due' | translate }} {{ item.calibrationDue | date: 'MMM dd, yyyy' }}</p>
+        <span class="chip chip-dot" [class]="calibrationTone(item.calibrationStatus)">{{ 'monitoring.calibration.' + item.calibrationStatus | translate }}</span>
+        <p>{{ 'monitoring.equipment.calibration-text' | translate }}</p>
+        <button mat-flat-button type="button" (click)="store.recordCalibration(item)">{{ 'monitoring.equipment.record-calibration' | translate }}</button>
+      </mat-card>
+      <mat-card appearance="outlined" class="panel side">
+        <h2>{{ 'monitoring.equipment.maintenance' | translate }} · {{ item.code }}</h2>
+        <p class="small muted">{{ 'monitoring.equipment.next-maintenance' | translate }}: {{ item.nextMaintenance | date: 'MMM dd, yyyy' }} · {{ 'monitoring.equipment.every-90' | translate }}</p>
+        @if (item.workOrder) { <span class="chip chip-dot chip-warning">{{ item.workOrder }} · {{ item.maintenanceOwner }}</span> }
+        <p>{{ 'monitoring.equipment.maintenance-text' | translate }}</p>
+        <button mat-flat-button type="button" (click)="store.recordMaintenance(item)">{{ 'monitoring.equipment.record-maintenance' | translate }}</button>
+      </mat-card>
+    </div>
+  }
+</section>

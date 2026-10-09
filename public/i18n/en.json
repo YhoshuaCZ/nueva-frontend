@@ -586,5 +586,152 @@
       "review-access": "Review access",
       "activity": "Administrative activity"
     }
+  },
+  "monitoring": {
+    "type": {
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "pressure": "Diff. pressure"
+    },
+    "calibration": {
+      "fit": "Fit for use",
+      "due": "Calibration due",
+      "not-fit": "Not fit for use"
+    },
+    "sensor-status": {
+      "active": "Active",
+      "offline": "Offline"
+    },
+    "severity-level": {
+      "critical": "Critical",
+      "warning": "Warning"
+    },
+    "alert-status": {
+      "open": "Open",
+      "acknowledged": "Acknowledged",
+      "under-investigation": "Under investigation",
+      "closed": "Closed"
+    },
+    "range": "Acceptable range {{lower}}–{{upper}} {{unit}}",
+    "within-range": "Within range",
+    "out-of-range": "Out of range",
+    "alert-open": "Alert open",
+    "no-data": "No IoT data is associated with this batch.",
+    "acknowledgment-rule": "Acknowledgment is NOT closure · An investigation and an approved QA disposition are required.",
+    "alert-sensor": "Alert / sensor",
+    "equipment-column": "Equipment",
+    "severity": "Severity",
+    "status": "Status",
+    "overview": {
+      "subtitle": "Facility telemetry, equipment health and actionable alerts.",
+      "view-alerts": "View active alerts",
+      "sensors-online": "Sensors online",
+      "offline": "{{count}} offline · Heartbeat > 5 min (stale)",
+      "equipment": "Equipment monitored",
+      "equipment-note": "Across 3 lines and storage",
+      "active-alerts": "Active alerts",
+      "critical": "{{count}} critical",
+      "availability": "Data availability",
+      "past-day": "Past 24 hours",
+      "sensor-detail": "Open sensor detail",
+      "alert-queue": "Alert queue",
+      "health": "Equipment health",
+      "rules": "Monitoring rules"
+    },
+    "rules": {
+      "threshold": "Temperature threshold",
+      "threshold-text": "> 25 °C for 2 min → High alert",
+      "offline": "Offline handling",
+      "offline-text": "No heartbeat for 5 min → Data-quality alert",
+      "acknowledgment": "Acknowledgment is not closure",
+      "acknowledgment-text": "A linked investigation and an approved disposition are still required."
+    },
+    "equipment": {
+      "title": "Equipment & IoT devices",
+      "subtitle": "Equipment inventory, calibration and preventive maintenance, and the ThingsBoard sensors installed on each piece of equipment.",
+      "inventory": "Equipment inventory",
+      "inventory-text": "Equipment that is Not fit for use cannot be associated with a batch",
+      "code": "Code",
+      "equipment": "Equipment",
+      "model": "Brand · model · serial",
+      "location": "Location",
+      "calibration": "Calibration",
+      "next-maintenance": "Next maintenance",
+      "sensors": "IoT sensors",
+      "sensors-text": "Readings arrive through ThingsBoard and are linked to the batch in progress",
+      "sensor": "Sensor",
+      "device-id": "ThingsBoard device ID",
+      "type": "Sensor type",
+      "limits": "Limits",
+      "no-sensors": "No sensors installed.",
+      "register-sensor": "Register IoT sensor",
+      "register-text": "Laboratory administrator or production supervisor",
+      "device-error": "Use a ThingsBoard ID that starts with tb-.",
+      "device-duplicate": "This device ID is already registered.",
+      "calibration-due": "Calibration due",
+      "calibration-text": "Equipment is marked Not fit for use automatically when its calibration expires. It cannot be associated with a batch until a new calibration certificate is recorded.",
+      "record-calibration": "Record calibration",
+      "maintenance": "Preventive maintenance",
+      "every-90": "every 90 days",
+      "maintenance-text": "Recording the maintenance performed updates the next maintenance date automatically (every 90 days).",
+      "record-maintenance": "Record maintenance"
+    },
+    "detail": {
+      "title": "Equipment & sensor detail",
+      "sensor": "Sensor",
+      "telemetry": "{{type}} telemetry",
+      "last-reading": "Last reading",
+      "remains-open": "{{code}} remains open despite recovery.",
+      "acknowledgment": "Alert acknowledgment",
+      "acknowledged-by": "Acknowledged by",
+      "response-note": "Response note",
+      "response-hint": "Document corrective actions taken in response to this excursion.",
+      "linked": "Linked incident / deviation",
+      "acknowledge": "Acknowledge and save note",
+      "save-note": "Save response note",
+      "saved": "Saved",
+      "equipment-calibration": "Equipment & calibration",
+      "asset": "Asset identity",
+      "maintenance-owner": "Maintenance owner",
+      "workflow": "Response workflow",
+      "step-threshold": "Threshold exceeded",
+      "step-acknowledged": "Alert acknowledged",
+      "step-investigation": "Batch held & investigation opened",
+      "step-disposition": "QA disposition",
+      "not-found": "No sensor matches that code."
+    },
+    "evidence": {
+      "title": "IoT evidence",
+      "batch-record": "View batch record",
+      "associate": "Associate equipment & sensors",
+      "associate-text": "Readings are linked to this batch only while it is in progress",
+      "sensors": "Sensors",
+      "associated": "Associated",
+      "in-use": "Sensor in use by {{batch}}",
+      "associate-button": "Associate equipment",
+      "rejected": {
+        "not-fit": "{{code}} is Not fit for use (calibration expired) and cannot be associated.",
+        "sensor-in-use": "A sensor of {{code}} is associated with another batch that is still in progress. Release it there first."
+      },
+      "critical": "Critical variables",
+      "recorded": "Recorded automatically by ThingsBoard · red points are out of range",
+      "readings": "Readings captured automatically",
+      "readings-text": "No manual transcription · every reading keeps its timestamp, sensor and source",
+      "timestamp": "Timestamp",
+      "variable": "Variable",
+      "value": "Value",
+      "source": "Source",
+      "result": "Result",
+      "out-alert": "Out of range · alert",
+      "view-alert": "View alert",
+      "show-all": "Show all {{count}} readings",
+      "show-latest": "Show latest readings"
+    },
+    "incidents": {
+      "subtitle": "IoT alerts and production incidents with their response.",
+      "active": "Active",
+      "all": "All",
+      "what": "Incident"
+    }
   }
 }
