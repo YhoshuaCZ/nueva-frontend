@@ -1,40 +1,22 @@
-import { Routes } from '@angular/router';
-import { Home } from './shared/presentation/views/home/home';
-import { routes as manufacturingRoutes } from './manufacturing/presentation/manufacturing.routes';
+import {Routes} from '@angular/router';
+import {Layout} from './shared/presentation/components/layout/layout';
+import {routes as manufacturingRoutes} from './manufacturing/presentation/manufacturing.routes';
 
-const baseTitle = 'DoofPlus'
-
-/**
- * Import views for the routes
- */
-const about = () =>
-  import('./shared/presentation/views/about/about').then(m => m.About);
+const baseTitle = 'DoofPlus';
 
 const pageNotFound = () =>
-  import('./shared/presentation/views/page-not-found/page-not-found').then(m=>m.PageNotFound);
+  import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound);
 
 const iamRoutes = () => import('./iam/presentation/iam.routes').then(m => m.iamRoutes);
 
 /**
- * Define the routes where the toolbar and footer will be used
+ * Root routes. Public pages use the layout (toolbar and footer).
  */
 export const routes: Routes = [
-  { path: 'home', component: Home, title: `${baseTitle} - Home` },
-  { path: 'about', loadComponent: about, title: `${baseTitle} - About` },
-
-  /**
-   * Define the routes for the IAM module
-   */
-  { path: 'iam', loadChildren: iamRoutes },
-
-  /**
-   * Define the routes for the manufacturing module
-   */
-  ...manufacturingRoutes,
-
-  /**
-   * Define the default route and the wildcard route for page not found
-   */
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
-  { path: '**', loadComponent: pageNotFound, title: `${baseTitle} - Page Not Found` }
+  { path: '', component: Layout, children: [
+    { path: '', redirectTo: '/iam/sign-in', pathMatch: 'full' },
+    { path: 'iam', loadChildren: iamRoutes },
+    ...manufacturingRoutes,
+    { path: '**', loadComponent: pageNotFound, title: `${baseTitle} - Page Not Found` }
+  ]}
 ];
