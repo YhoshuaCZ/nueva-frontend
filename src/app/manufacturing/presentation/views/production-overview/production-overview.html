@@ -30,7 +30,7 @@
   </div>
 
   @if (heldBatch(); as held) {
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" role="alert">
       <div><strong><mat-icon class="inline">error_outline</mat-icon>{{ held.line }} · {{ held.code }} · {{ held.incident }}</strong></div>
       <a mat-stroked-button [routerLink]="['/production/batches', held.code, 'iot']">{{ 'manufacturing.overview.view-evidence' | translate }}</a>
     </div>
@@ -43,7 +43,7 @@
             <h2>{{ 'manufacturing.overview.schedule' | translate }}</h2><span class="spacer"></span>
             <p class="small muted">{{ 'manufacturing.overview.schedule-text' | translate }}</p></div>
         </div>
-        <div class="table-scroll"><table mat-table [dataSource]="schedule()">
+        <div class="table-scroll"><table mat-table [dataSource]="schedule()" [attr.aria-label]="'manufacturing.overview.schedule' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.orders.order' | translate }}</th>
     <td mat-cell *matCellDef="let row"><a [routerLink]="['/production/orders', row.order.code]">{{ row.order.code }}</a><span class="sub">{{ row.order.batchCode }}</span></td>
@@ -71,7 +71,7 @@
 
       <mat-card appearance="outlined">
         <h2 class="card-title">{{ 'manufacturing.overview.readiness' | translate }}</h2>
-        <div class="table-scroll"><table mat-table [dataSource]="readiness()">
+        <div class="table-scroll"><table mat-table [dataSource]="readiness()" [attr.aria-label]="'manufacturing.overview.readiness' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.overview.resource' | translate }}</th>
     <td mat-cell *matCellDef="let item"><strong>{{ item.code }}</strong></td>

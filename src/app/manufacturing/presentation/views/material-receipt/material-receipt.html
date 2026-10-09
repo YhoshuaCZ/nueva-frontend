@@ -4,7 +4,7 @@
     [title]="'manufacturing.receipt.title' | translate"
     [subtitle]="selected() ? selected()!.receiptCode + ' · ' + selected()!.material + ' · ' + ('manufacturing.receipt.subtitle' | translate) : ''"/>
 
-  <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'manufacturing.receipt.alert' | translate }}</strong></div></div>
+  <div class="alert" role="status"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'manufacturing.receipt.alert' | translate }}</strong></div></div>
 
   <ol class="stepper">
     @for (step of steps; track step; let i = $index) {
@@ -48,7 +48,7 @@
 
       <mat-card appearance="outlined">
         <h2 class="card-title">{{ 'manufacturing.receipt.lots' | translate }}</h2>
-        <div class="table-scroll"><table mat-table [dataSource]="store.materialLots()">
+        <div class="table-scroll"><table mat-table [dataSource]="store.materialLots()" [attr.aria-label]="'manufacturing.receipt.lots' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.receipt.internal-lot' | translate }}</th>
     <td mat-cell *matCellDef="let lot"><strong>{{ lot.code }}</strong><span class="sub">{{ lot.receiptCode }}</span></td>

@@ -35,7 +35,7 @@
   </mat-card>
 
   @if (subscriptionsStore.subscription()?.paymentState === 'declined') {
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" role="alert">
       <mat-icon>warning</mat-icon>
       <div><strong>{{ 'subscriptions.declined-title' | translate }}</strong><p>{{ 'subscriptions.declined-text' | translate }}</p></div>
       <a mat-flat-button class="danger" routerLink="/administration/subscription">{{ 'subscriptions.retry' | translate }} →</a>
@@ -47,7 +47,7 @@
       <mat-card appearance="outlined">
         <h2 class="card-title">{{ 'organizations.overview.users-attention' | translate }}</h2>
         <div class="table-scroll">
-          <table mat-table [dataSource]="usersRequiringAttention()">
+          <table mat-table [dataSource]="usersRequiringAttention()" [attr.aria-label]="'organizations.overview.users-attention' | translate">
             <ng-container matColumnDef="user">
               <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.user' | translate }}</th>
               <td mat-cell *matCellDef="let user"><strong>{{ user.fullName }}</strong></td>
@@ -75,7 +75,7 @@
       <mat-card appearance="outlined">
         <h2 class="card-title">{{ 'organizations.overview.facilities' | translate }}</h2>
         <div class="table-scroll">
-          <table mat-table [dataSource]="sites()">
+          <table mat-table [dataSource]="sites()" [attr.aria-label]="'organizations.overview.facilities' | translate">
             <ng-container matColumnDef="site">
               <th mat-header-cell *matHeaderCellDef>{{ 'organizations.overview.org-facility' | translate }}</th>
               <td mat-cell *matCellDef="let site">
