@@ -1,31 +1,15 @@
-import { Component, signal } from '@angular/core';
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
-import { MatButton } from '@angular/material/button';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 import {Footer} from '../footer/footer';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
 import {Toolbar} from '../toolbar/toolbar';
 
-
 @Component({
-  imports: [
-    MatToolbar,
-    MatToolbarRow,
-    MatButton,
-    RouterLink,
-    RouterLinkActive,
-    TranslatePipe,
-    RouterOutlet,
-    Footer,
-    Toolbar,
-  ],
+  imports: [RouterOutlet, Footer, Toolbar],
   selector: 'app-layout',
   styleUrl: './layout.css',
   templateUrl: './layout.html',
 })
-export class Layout {
-  protected options = signal([
-    { link: '/home', label: 'option.home' },
-    { link: '/about', label: 'option.about' },
-  ]);
-}
+/**
+ * Frame of the public pages (sign-in and organization registration): toolbar, routed content and footer.
+ */
+export class Layout {}
