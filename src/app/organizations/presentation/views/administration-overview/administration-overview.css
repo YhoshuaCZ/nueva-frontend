@@ -8,10 +8,6 @@
   align-self: flex-start;
 }
 
-.danger {
-  --mat-button-filled-container-color: var(--danger);
-}
-
 .alert-danger .mat-icon {
   color: var(--danger-dark);
 }

@@ -1,24 +1,4 @@
 {
-  "production-batches": [
-    {
-      "id": "LT-2026-001",
-      "productFormula": "Paracetamol 500mg",
-      "quantity": 10000,
-      "status": "Planned"
-    },
-    {
-      "id": "LT-2026-002",
-      "productFormula": "Ibuprofen 200mg",
-      "quantity": 5000,
-      "status": "In Progress"
-    },
-    {
-      "id": "LT-2026-003",
-      "productFormula": "Amoxicillin 250mg",
-      "quantity": 8000,
-      "status": "Completed"
-    }
-  ],
   "users": [
     {
       "id": 1,
@@ -345,6 +325,512 @@
       "title": "Payment declined · INV-2026-1001",
       "actor": "Niubiz",
       "occurredAt": "2026-10-01T08:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "code": "AC500",
+      "name": "Paracetamol 500 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v3.2",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 2,
+      "code": "IB200",
+      "name": "Ibuprofen 200 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v2.0",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 3,
+      "code": "AM500",
+      "name": "Amoxicillin 500 mg",
+      "dosageForm": "Capsule",
+      "formulaVersion": "v1.1",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 4,
+      "code": "MF850",
+      "name": "Metformin 850 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v1.0 draft",
+      "formulaStatus": "pending"
+    },
+    {
+      "id": 5,
+      "code": "LR010",
+      "name": "Loratadine 10 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "",
+      "formulaStatus": "none"
+    }
+  ],
+  "master-formulas": [
+    {
+      "id": 1,
+      "productCode": "AC500",
+      "version": "v3.2",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-09-18",
+      "batchSize": 120000
+    },
+    {
+      "id": 2,
+      "productCode": "IB200",
+      "version": "v2.0",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-08-02",
+      "batchSize": 80000
+    },
+    {
+      "id": 3,
+      "productCode": "AM500",
+      "version": "v1.1",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-07-15",
+      "batchSize": 60000
+    },
+    {
+      "id": 4,
+      "productCode": "MF850",
+      "version": "v1.0",
+      "status": "draft",
+      "approvedBy": "",
+      "approvedAt": "",
+      "batchSize": 90000
+    }
+  ],
+  "formula-items": [
+    {
+      "id": 1,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Paracetamol (API)",
+      "role": "Active ingredient",
+      "target": "60.0 kg",
+      "tolerance": "± 0.5 %",
+      "control": "Meridian Ingredients · RM-26098"
+    },
+    {
+      "id": 2,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Microcrystalline cellulose",
+      "role": "Diluent",
+      "target": "12.0 kg",
+      "tolerance": "± 1.0 %",
+      "control": "Meridian Ingredients · RM-26092"
+    },
+    {
+      "id": 3,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Povidone K30",
+      "role": "Binder",
+      "target": "1.8 kg",
+      "tolerance": "± 2.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 4,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Croscarmellose sodium",
+      "role": "Disintegrant",
+      "target": "1.4 kg",
+      "tolerance": "± 2.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 5,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Magnesium stearate",
+      "role": "Lubricant",
+      "target": "0.36 kg",
+      "tolerance": "± 5.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 6,
+      "formulaId": 1,
+      "kind": "parameter",
+      "name": "Coating temperature",
+      "role": "",
+      "target": "22.0 °C",
+      "tolerance": "18.0–25.0 °C",
+      "control": "Sensor T-204"
+    },
+    {
+      "id": 7,
+      "formulaId": 1,
+      "kind": "parameter",
+      "name": "Tablet weight",
+      "role": "",
+      "target": "620 mg",
+      "tolerance": "± 3.0 %",
+      "control": "QC sampling"
+    },
+    {
+      "id": 8,
+      "formulaId": 2,
+      "kind": "component",
+      "name": "Ibuprofen (API)",
+      "role": "Active ingredient",
+      "target": "16.0 kg",
+      "tolerance": "± 0.5 %",
+      "control": "Meridian Ingredients"
+    },
+    {
+      "id": 9,
+      "formulaId": 2,
+      "kind": "component",
+      "name": "Lactose monohydrate",
+      "role": "Diluent",
+      "target": "9.5 kg",
+      "tolerance": "± 1.0 %",
+      "control": "Andes Excipients"
+    }
+  ],
+  "production-orders": [
+    {
+      "id": 1,
+      "code": "PO-26041",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26041",
+      "plannedQuantity": 120000,
+      "line": "Line 02",
+      "status": "on-hold",
+      "plannedStart": "2026-10-07T06:00:00Z",
+      "plannedEnd": "2026-10-07T16:00:00Z"
+    },
+    {
+      "id": 2,
+      "code": "PO-26042",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26042",
+      "plannedQuantity": 120000,
+      "line": "Line 01",
+      "status": "in-progress",
+      "plannedStart": "2026-10-07T07:00:00Z",
+      "plannedEnd": "2026-10-07T17:00:00Z"
+    },
+    {
+      "id": 3,
+      "code": "PO-26043",
+      "productCode": "IB200",
+      "formulaId": 2,
+      "batchCode": "B-26043",
+      "plannedQuantity": 80000,
+      "line": "Line 03",
+      "status": "in-progress",
+      "plannedStart": "2026-10-07T08:00:00Z",
+      "plannedEnd": "2026-10-07T18:00:00Z"
+    },
+    {
+      "id": 4,
+      "code": "PO-26044",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26044",
+      "plannedQuantity": 120000,
+      "line": "Line 01",
+      "status": "planned",
+      "plannedStart": "2026-10-08T06:00:00Z",
+      "plannedEnd": "2026-10-08T16:00:00Z"
+    }
+  ],
+  "operations": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "sequence": 1,
+      "name": "Dispensing",
+      "equipment": "RM station · Alberto Valle",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 2,
+      "orderId": 1,
+      "sequence": 2,
+      "name": "Granulation",
+      "equipment": "EQ-GRAN-01",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 3,
+      "orderId": 1,
+      "sequence": 3,
+      "name": "Compression",
+      "equipment": "EQ-PRESS-02",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 4,
+      "orderId": 1,
+      "sequence": 4,
+      "name": "Coating",
+      "equipment": "EQ-COAT-02 · T-204",
+      "progress": 68,
+      "status": "on-hold",
+      "reference": "DEV-26017"
+    },
+    {
+      "id": 5,
+      "orderId": 1,
+      "sequence": 5,
+      "name": "Packaging",
+      "equipment": "Line 02",
+      "progress": 0,
+      "status": "not-started",
+      "reference": ""
+    },
+    {
+      "id": 6,
+      "orderId": 2,
+      "sequence": 1,
+      "name": "Dispensing",
+      "equipment": "RM station · Alberto Valle",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 7,
+      "orderId": 2,
+      "sequence": 2,
+      "name": "Granulation",
+      "equipment": "EQ-GRAN-01",
+      "progress": 42,
+      "status": "in-progress",
+      "reference": ""
+    },
+    {
+      "id": 8,
+      "orderId": 2,
+      "sequence": 3,
+      "name": "Compression",
+      "equipment": "EQ-PRESS-01",
+      "progress": 0,
+      "status": "not-started",
+      "reference": ""
+    }
+  ],
+  "batches": [
+    {
+      "id": 1,
+      "code": "B-26041",
+      "productCode": "AC500",
+      "orderCode": "PO-26041",
+      "quantity": 120000,
+      "line": "Line 02",
+      "owner": "Alberto Valle",
+      "status": "on-hold",
+      "progress": 68,
+      "incident": "Held during coating · Temperature excursion · DEV-26017",
+      "lastActivity": "Release validation blocked",
+      "lastActivityAt": "2026-10-07T10:32:00Z"
+    },
+    {
+      "id": 2,
+      "code": "B-26042",
+      "productCode": "AC500",
+      "orderCode": "PO-26042",
+      "quantity": 120000,
+      "line": "Line 01",
+      "owner": "Alberto Valle",
+      "status": "in-progress",
+      "progress": 42,
+      "incident": "",
+      "lastActivity": "Granulation started",
+      "lastActivityAt": "2026-10-07T09:10:00Z"
+    },
+    {
+      "id": 3,
+      "code": "B-26043",
+      "productCode": "IB200",
+      "orderCode": "PO-26043",
+      "quantity": 80000,
+      "line": "Line 03",
+      "owner": "Alberto Valle",
+      "status": "in-progress",
+      "progress": 15,
+      "incident": "",
+      "lastActivity": "Dispensing complete",
+      "lastActivityAt": "2026-10-07T08:40:00Z"
+    },
+    {
+      "id": 4,
+      "code": "B-26038",
+      "productCode": "AC500",
+      "orderCode": "PO-26038",
+      "quantity": 120000,
+      "line": "Line 01",
+      "owner": "María México",
+      "status": "release-requested",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Release requested",
+      "lastActivityAt": "2026-10-06T17:05:00Z"
+    },
+    {
+      "id": 5,
+      "code": "B-26039",
+      "productCode": "IB200",
+      "orderCode": "PO-26039",
+      "quantity": 80000,
+      "line": "Line 03",
+      "owner": "Lucía Paredes",
+      "status": "release-requested",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Release requested",
+      "lastActivityAt": "2026-10-06T16:20:00Z"
+    },
+    {
+      "id": 6,
+      "code": "B-26037",
+      "productCode": "AC500",
+      "orderCode": "PO-26037",
+      "quantity": 120000,
+      "line": "Line 02",
+      "owner": "María México",
+      "status": "released",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Released by QA",
+      "lastActivityAt": "2026-10-05T11:00:00Z"
+    }
+  ],
+  "batch-events": [
+    {
+      "id": 1,
+      "batchCode": "B-26041",
+      "title": "Created & materials allocated",
+      "detail": "Alberto Valle",
+      "occurredAt": "2026-10-06T15:00:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26041",
+      "title": "Production started",
+      "detail": "Line 02",
+      "occurredAt": "2026-10-07T06:00:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26041",
+      "title": "Coating started",
+      "detail": "EQ-COAT-02",
+      "occurredAt": "2026-10-07T09:48:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26041",
+      "title": "On hold · Temperature excursion",
+      "detail": "DEV-26017",
+      "occurredAt": "2026-10-07T10:26:00Z",
+      "tone": "warning"
+    },
+    {
+      "id": 5,
+      "batchCode": "B-26041",
+      "title": "Release validation blocked",
+      "detail": "María México",
+      "occurredAt": "2026-10-07T10:32:00Z",
+      "tone": "danger"
+    }
+  ],
+  "material-lots": [
+    {
+      "id": 1,
+      "code": "RM-26098",
+      "receiptCode": "RCV-26098",
+      "material": "Paracetamol (API)",
+      "category": "api",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-AC-0911",
+      "quantity": "500 kg · 20 sealed drums",
+      "expiryDate": "2028-08-31",
+      "storageLocation": "W-B04 · Released stock",
+      "certificate": "CoA_MI-AC-0911.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 2,
+      "code": "RM-26092",
+      "receiptCode": "RCV-26092",
+      "material": "Microcrystalline cellulose",
+      "category": "excipient",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-MC-0874",
+      "quantity": "200 kg · 8 bags",
+      "expiryDate": "2028-05-31",
+      "storageLocation": "W-B07 · Released stock",
+      "certificate": "CoA_MI-MC-0874.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 3,
+      "code": "RM-26081",
+      "receiptCode": "RCV-26081",
+      "material": "Blister foil",
+      "category": "packaging",
+      "supplier": "Andes Packaging",
+      "supplierLot": "AP-BF-0412",
+      "quantity": "40 rolls",
+      "expiryDate": "2029-01-31",
+      "storageLocation": "W-P02 · Released stock",
+      "certificate": "CoA_AP-BF-0412.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 4,
+      "code": "RM-26104",
+      "receiptCode": "RCV-26104",
+      "material": "Paracetamol (API)",
+      "category": "api",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-AC-0926",
+      "quantity": "500 kg · 20 sealed drums",
+      "expiryDate": "2028-09-30",
+      "storageLocation": "Q-A12 · Quarantine zone",
+      "certificate": "CoA_MI-AC-0926.pdf",
+      "status": "sampling",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "pending",
+      "allocatedBatch": ""
     }
   ]
 }
