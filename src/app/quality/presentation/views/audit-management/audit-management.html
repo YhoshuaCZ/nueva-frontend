@@ -34,7 +34,7 @@
       <div class="stack">
         <mat-card appearance="outlined">
           <h2 class="card-title">{{ 'quality.audits.register' | translate }}</h2>
-          <div class="table-scroll"><table mat-table [dataSource]="findings()">
+          <div class="table-scroll"><table mat-table [dataSource]="findings()" [attr.aria-label]="'quality.audits.register' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'quality.audits.finding' | translate }}</th>
     <td mat-cell *matCellDef="let finding"><span class="code">{{ finding.code }}</span> · {{ finding.title }}</td>

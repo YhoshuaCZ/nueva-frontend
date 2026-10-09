@@ -13,7 +13,7 @@
         <h2>{{ 'quality.results.results' | translate }} · {{ batchCode() }} · {{ manufacturingStore.productByCode(manufacturingStore.batchByCode(batchCode())()?.productCode ?? '')()?.name }}</h2><span class="spacer"></span>
         <p class="small muted">{{ results()[0]?.sampleCode }} · {{ results()[0]?.reportCode }}</p></div>
     </div>
-    <div class="table-scroll"><table mat-table [dataSource]="results()">
+    <div class="table-scroll"><table mat-table [dataSource]="results()" [attr.aria-label]="'quality.results.results' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.test' | translate }}</th>
     <td mat-cell *matCellDef="let result"><strong>{{ result.test }}</strong></td>
@@ -71,7 +71,7 @@
       @if (oos(); as result) {
         <h2>{{ 'quality.results.oos-title' | translate }} · {{ result.test }}</h2>
         <p class="small muted">{{ 'quality.results.oos-subtitle' | translate }}</p>
-        <div class="alert alert-danger"><div><p>{{ 'quality.results.oos-text' | translate: {result: result.result, spec: result.specification} }}</p></div></div>
+        <div class="alert alert-danger" role="alert"><div><p>{{ 'quality.results.oos-text' | translate: {result: result.result, spec: result.specification} }}</p></div></div>
         <dl>
           <dt>{{ 'quality.results.batch' | translate }}</dt><dd>{{ batchCode() }} · {{ 'quality.results.quarantine' | translate }}</dd>
           <dt>{{ 'quality.results.linked-deviation' | translate }}</dt>

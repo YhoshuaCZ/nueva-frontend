@@ -18,7 +18,7 @@
   </div>
 
   @for (batch of blocked(); track batch.id) {
-    <div class="alert">
+    <div class="alert" role="status">
       <div><strong>{{ 'quality.overview.blocked' | translate: {code: batch.code} }}</strong><p>{{ batch.incident }}</p></div>
       <a mat-flat-button class="warning" routerLink="/qa/deviations">{{ 'quality.overview.review' | translate }} →</a>
     </div>
@@ -28,7 +28,7 @@
     <div class="stack">
       <mat-card appearance="outlined">
         <div class="card-title row"><h2>{{ 'quality.overview.priority' | translate }}</h2><span class="spacer"></span><span class="chip chip-teal">{{ priorityQueue().length }}</span></div>
-        <div class="table-scroll"><table mat-table [dataSource]="priorityQueue()">
+        <div class="table-scroll"><table mat-table [dataSource]="priorityQueue()" [attr.aria-label]="'quality.overview.priority' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'quality.tasks.record' | translate }}</th>
     <td mat-cell *matCellDef="let task" class="code">{{ task.recordCode.split(' ')[0] }}</td>
@@ -57,7 +57,7 @@
       <mat-card appearance="outlined">
         <h2 class="card-title">{{ 'quality.overview.operations' | translate }}</h2>
         <div class="table-scroll">
-          <table mat-table [dataSource]="processes()">
+          <table mat-table [dataSource]="processes()" [attr.aria-label]="'quality.overview.operations' | translate">
             <ng-container matColumnDef="process">
               <th mat-header-cell *matHeaderCellDef>{{ 'quality.overview.process' | translate }}</th>
               <td mat-cell *matCellDef="let row"><strong>{{ row.title }}</strong><span class="sub">{{ row.detail }}</span></td>

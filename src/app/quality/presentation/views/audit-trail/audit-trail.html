@@ -24,7 +24,7 @@
 
   <mat-card appearance="outlined">
     <div class="card-title row"><h2>{{ 'quality.trail.log' | translate }}</h2><span class="spacer"></span><span class="chip chip-teal">{{ 'quality.trail.events' | translate: {count: visible().length} }}</span></div>
-    <div class="table-scroll"><table mat-table [dataSource]="visible()">
+    <div class="table-scroll"><table mat-table [dataSource]="visible()" [attr.aria-label]="'quality.trail.log' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>UTC</th>
     <td mat-cell *matCellDef="let event">{{ event.occurredAt | date: 'MMM dd · HH:mm' : 'UTC' }}</td>
@@ -56,7 +56,7 @@
         <div class="card-title row"><div><h2>{{ 'quality.trail.selected' | translate }} · {{ event.event }}</h2><span class="spacer"></span>
           <p class="small muted">{{ event.eventCode }} · {{ event.occurredAt | date: 'HH:mm' : 'UTC' }} UTC</p></div></div>
         <div class="table-scroll">
-          <table mat-table [dataSource]="[event]">
+          <table mat-table [dataSource]="[event]" [attr.aria-label]="'quality.trail.selected' | translate">
             <ng-container matColumnDef="field">
               <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.field' | translate }}</th>
               <td mat-cell *matCellDef="let change">{{ change.field || '—' }}</td>

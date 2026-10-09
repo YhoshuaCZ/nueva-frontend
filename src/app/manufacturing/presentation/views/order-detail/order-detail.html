@@ -8,7 +8,7 @@
     </app-page-header>
 
     @if (heldOperation(); as held) {
-      <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'manufacturing.orders.hold-alert' | translate: {operation: held.name, reference: held.reference} }}</strong></div></div>
+      <div class="alert" role="status"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'manufacturing.orders.hold-alert' | translate: {operation: held.name, reference: held.reference} }}</strong></div></div>
     }
 
     <div class="columns">
@@ -18,7 +18,7 @@
               <h2>{{ 'manufacturing.orders.execution' | translate }} · {{ po.batchCode }}</h2><span class="spacer"></span>
               <p class="small muted">{{ 'manufacturing.orders.execution-text' | translate }}</p></div>
           </div>
-          <div class="table-scroll"><table mat-table [dataSource]="operations()">
+          <div class="table-scroll"><table mat-table [dataSource]="operations()" [attr.aria-label]="'manufacturing.orders.execution' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.orders.operation' | translate }}</th>
     <td mat-cell *matCellDef="let operation"><strong>{{ operation.name }}</strong></td>
@@ -47,7 +47,7 @@
                 <h2>{{ 'manufacturing.orders.formula' | translate }} · MFR-{{ mfr.productCode }} {{ mfr.version }}</h2><span class="spacer"></span>
                 <p class="small muted">{{ 'manufacturing.orders.formula-text' | translate }} {{ mfr.approvedAt | date: 'MMM dd, yyyy' }}</p></div>
             </div>
-            <div class="table-scroll"><table mat-table [dataSource]="items()">
+            <div class="table-scroll"><table mat-table [dataSource]="items()" [attr.aria-label]="'manufacturing.orders.formula' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.orders.ingredient' | translate }}</th>
     <td mat-cell *matCellDef="let item" [class.strong]="item.role === 'Active ingredient'">{{ item.name }}</td>

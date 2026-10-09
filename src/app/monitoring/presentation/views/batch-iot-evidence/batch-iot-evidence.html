@@ -52,7 +52,7 @@
         <p class="small muted">{{ 'monitoring.evidence.readings-text' | translate }}</p></div>
     </div>
     <div class="table-scroll">
-      <table mat-table [dataSource]="evidenceRows()">
+      <table mat-table [dataSource]="evidenceRows()" [attr.aria-label]="'monitoring.evidence.readings' | translate">
         <ng-container matColumnDef="timestamp">
           <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.timestamp' | translate }}</th>
           <td mat-cell *matCellDef="let row">{{ row.reading.recordedAt | date: 'MMM dd · HH:mm' : 'UTC' }}</td>
@@ -96,7 +96,7 @@
   </mat-card>
 
   @if (alert(); as open) {
-    <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ open.code }} · {{ open.detail }}</strong></div>
+    <div class="alert" role="status"><mat-icon>warning_amber</mat-icon><div><strong>{{ open.code }} · {{ open.detail }}</strong></div>
       <a mat-flat-button [routerLink]="['/production/sensors', open.sensorCode]">{{ 'monitoring.evidence.view-alert' | translate }}</a>
     </div>
   }

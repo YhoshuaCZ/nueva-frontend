@@ -8,7 +8,7 @@
     </app-page-header>
 
     @if (alert(); as open) {
-      <div class="alert critical">
+      <div class="alert critical" role="status">
         <div>
           <p class="severity">{{ 'monitoring.severity-level.' + open.severity | translate }}</p>
           <strong>{{ open.code }} · {{ open.title }}</strong>
