@@ -18,5 +18,183 @@
       "quantity": 8000,
       "status": "Completed"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "fullName": "María México",
+      "initials": "MM",
+      "email": "maria.mexico@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "qa-specialist",
+      "environment": "qa",
+      "facility": "Ate / Lima",
+      "status": "active",
+      "privilege": "qa-release",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 2,
+      "fullName": "Alberto Valle",
+      "initials": "AV",
+      "email": "alberto.valle@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "production-supervisor",
+      "environment": "production",
+      "facility": "Ate",
+      "status": "active",
+      "privilege": "no-final-release",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 3,
+      "fullName": "Elena Paz",
+      "initials": "EP",
+      "email": "elena.paz@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "qa-specialist",
+      "environment": "qa",
+      "facility": "Lima",
+      "status": "active",
+      "privilege": "none",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 4,
+      "fullName": "Carlos Medina",
+      "initials": "CM",
+      "email": "carlos.medina@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "administrator",
+      "environment": "administration",
+      "facility": "All facilities",
+      "status": "active",
+      "privilege": "administrator",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 5,
+      "fullName": "Óscar Ramos",
+      "initials": "ÓR",
+      "email": "oscar.ramos@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "internal-auditor",
+      "environment": "qa",
+      "facility": "Ate",
+      "status": "invited",
+      "privilege": "read-only",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 6,
+      "fullName": "Lucía Paredes",
+      "initials": "LP",
+      "email": "lucia.paredes@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "quality-manager",
+      "environment": "qa",
+      "facility": "Ate",
+      "status": "active",
+      "privilege": "none",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    }
+  ],
+  "role-profiles": [
+    {
+      "id": 1,
+      "key": "qa-specialist",
+      "name": "QA Specialist",
+      "createEdit": [
+        "Documents",
+        "CAPA"
+      ],
+      "approveSign": "Release if authorized",
+      "restriction": "No billing access",
+      "tone": "teal"
+    },
+    {
+      "id": 2,
+      "key": "production-supervisor",
+      "name": "Production Supervisor",
+      "createEdit": [
+        "Orders",
+        "Incidents"
+      ],
+      "approveSign": "Production records",
+      "restriction": "Cannot release batch",
+      "tone": "purple"
+    },
+    {
+      "id": 3,
+      "key": "quality-manager",
+      "name": "Quality Manager",
+      "createEdit": [
+        "Documents"
+      ],
+      "approveSign": "Approve documents and CAPA",
+      "restriction": "Cannot approve own records",
+      "tone": "pink"
+    },
+    {
+      "id": 4,
+      "key": "internal-auditor",
+      "name": "Internal Auditor",
+      "createEdit": [],
+      "approveSign": "None",
+      "restriction": "Read-only evidence",
+      "tone": "neutral"
+    },
+    {
+      "id": 5,
+      "key": "administrator",
+      "name": "Administrator",
+      "createEdit": [
+        "Users",
+        "Plans"
+      ],
+      "approveSign": "None",
+      "restriction": "No QA release or signing",
+      "tone": "neutral"
+    }
+  ],
+  "invitations": [
+    {
+      "id": 1,
+      "fullName": "Óscar Ramos",
+      "email": "oscar.ramos@andinos.com.pe",
+      "role": "internal-auditor",
+      "facility": "Ate manufacturing",
+      "note": "Please review the Q4 audit evidence package.",
+      "status": "pending",
+      "sentAt": "2026-10-05T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "fullName": "Jorge Salas",
+      "email": "jorge.salas@andinos.com.pe",
+      "role": "production-supervisor",
+      "facility": "Ate manufacturing",
+      "note": "",
+      "status": "pending",
+      "sentAt": "2026-10-06T09:30:00Z"
+    }
   ]
 }
