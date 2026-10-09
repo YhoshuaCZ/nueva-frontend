@@ -1,0 +1,93 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.products-formulas' | translate]"
+    [title]="'manufacturing.products.title' | translate"
+    [subtitle]="'manufacturing.products.subtitle' | translate"/>
+
+  <div class="columns">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div>
+          <h2>{{ 'manufacturing.products.catalog' | translate }}</h2><span class="spacer"></span>
+          <p class="small muted">{{ 'manufacturing.products.catalog-text' | translate: {count: store.products().length} }}</p></div>
+      </div>
+      <div class="table-scroll"><table mat-table [dataSource]="store.products()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.code' | translate }}</th>
+    <td mat-cell *matCellDef="let product"><strong>{{ product.code }}</strong></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.product' | translate }}</th>
+    <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.dosage-form' | translate }}</th>
+    <td mat-cell *matCellDef="let product">{{ product.dosageForm }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.formula' | translate }}</th>
+    <td mat-cell *matCellDef="let product">{{ product.formulaVersion || '—' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.status' | translate }}</th>
+    <td mat-cell *matCellDef="let product"><span class="chip chip-dot" [class]="toneOf(product.formulaStatus)">{{ 'manufacturing.formula-status.' + product.formulaStatus | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let product; columns: ['c0', 'c1', 'c2', 'c3', 'c4']" class="clickable" [class.highlight]="product.code === selectedCode()" (click)="selectedCode.set(product.code)"></tr>
+</table></div>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="panel new-product"><form [formGroup]="form" (ngSubmit)="register()" novalidate>
+      <h2>{{ 'manufacturing.products.new' | translate }}</h2>
+      <p class="small muted">{{ 'manufacturing.products.new-text' | translate }}</p>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.products.code' | translate }}</mat-label><input matInput type="text" formControlName="code" maxlength="5" (input)="duplicateCode.set(null)" placeholder="AC500"></mat-form-field>
+@if (isInvalid('code')) { <p class="field-error">▲ {{ 'manufacturing.products.code-error' | translate }}</p> }
+@if (duplicateCode()) { <p class="field-error">▲ {{ 'manufacturing.products.duplicate' | translate: {code: duplicateCode()} }}</p> }</div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.products.name' | translate }}</mat-label><input matInput type="text" formControlName="name" placeholder="Paracetamol 500 mg"></mat-form-field></div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.products.dosage-form' | translate }}</mat-label><mat-select formControlName="dosageForm">
+          @for (form of dosageForms; track form) { <mat-option [value]="form">{{ form }}</mat-option> }
+        </mat-select></mat-form-field></div>
+      <button mat-flat-button type="submit" class="block">{{ 'manufacturing.products.register' | translate }}</button>
+    </form></mat-card>
+  </div>
+
+  @if (formula(); as current) {
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div>
+          <h2>{{ 'manufacturing.products.formula-title' | translate: {code: current.productCode, version: current.version} }}</h2><span class="spacer"></span>
+          <p class="small muted">
+            {{ 'manufacturing.products.formula-text' | translate: {by: current.approvedBy, size: current.batchSize} }}
+            · {{ current.approvedAt | date: 'MMM dd, yyyy' }}
+          </p></div>
+        <span class="chip chip-dot" [class]="current.status === 'approved' ? 'chip-success' : 'chip-warning'">
+          {{ 'manufacturing.formula-status.' + (current.status === 'approved' ? 'locked' : 'draft') | translate }}
+        </span>
+      </div>
+      <div class="table-scroll"><table mat-table [dataSource]="components()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let item; let i = index">{{ i + 1 }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.component' | translate }}</th>
+    <td mat-cell *matCellDef="let item; let i = index">{{ item.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.function' | translate }}</th>
+    <td mat-cell *matCellDef="let item; let i = index">{{ item.role }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.quantity' | translate }}</th>
+    <td mat-cell *matCellDef="let item; let i = index">{{ item.target }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.supplier' | translate }}</th>
+    <td mat-cell *matCellDef="let item; let i = index">{{ item.control }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let item; let i = index; columns: ['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr class="mat-mdc-row" *matNoDataRow><td class="mat-mdc-cell muted" colspan="5">{{ 'manufacturing.products.no-components' | translate }}</td></tr>
+</table></div>
+      <p class="card-body small muted protected"><mat-icon class="inline">lock</mat-icon>{{ 'manufacturing.products.protected' | translate }}</p>
+    </mat-card>
+  }
+</section>

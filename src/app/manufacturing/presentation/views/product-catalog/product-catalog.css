@@ -1,0 +1,14 @@
+.new-product {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.protected {
+  padding-top: 16px;
+}
