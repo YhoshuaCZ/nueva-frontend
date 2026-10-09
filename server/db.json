@@ -1321,5 +1321,706 @@
       "responseNote": "Maintenance notified.",
       "linkedRecord": "INC-26007"
     }
+  ],
+  "quality-documents": [
+    {
+      "id": 1,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.4",
+      "status": "in-review",
+      "author": "María México",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-10-06",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "Adds IoT evidence linkage and a 30-minute escalation threshold.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 2,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.3",
+      "status": "approved",
+      "author": "Elena Paz",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-07-12",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "Adds the product-impact assessment step.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 3,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.2",
+      "status": "obsolete",
+      "author": "Lucía Paredes",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-03-02",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "First version aligned with DIGEMID guidance.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 4,
+      "code": "SOP-PR-007",
+      "title": "Line clearance",
+      "version": "1.3",
+      "status": "in-review",
+      "author": "Alberto Valle",
+      "technicalReviewer": "Jorge Salas",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-10-05",
+      "purpose": "Ensure each line is cleared before a new batch.",
+      "scope": "Every manufacturing line of the Ate plant.",
+      "procedure": "Remove previous materials and labels, verify and sign the clearance before dispensing.",
+      "revisionSummary": "Adds the supervisor signature to step 3.",
+      "reviewCycleMonths": 24
+    }
+  ],
+  "deviations": [
+    {
+      "id": 1,
+      "code": "DEV-26017",
+      "title": "Temperature excursion during coating",
+      "batchCode": "B-26041",
+      "orderCode": "PO-26041",
+      "summary": "Coater EQ-COAT-02 exceeded 25 °C for 12 minutes.",
+      "classification": "major",
+      "containment": "Batch held; coating paused; QC sampling requested.",
+      "severity": 4,
+      "likelihood": 3,
+      "detectability": 2,
+      "status": "open",
+      "rootCause": "Equipment failure",
+      "capaCode": "CAPA-26009",
+      "reportedBy": "Alberto Valle",
+      "reportedAt": "2026-10-07T10:26:00Z",
+      "owner": "María México",
+      "dueAt": "2026-10-07T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "code": "DEV-26015",
+      "title": "Label jam on line 03",
+      "batchCode": "B-26039",
+      "orderCode": "PO-26039",
+      "summary": "Labeler stopped for 6 minutes; 40 labels discarded.",
+      "classification": "minor",
+      "containment": "Labels reconciled and line cleared.",
+      "severity": 2,
+      "likelihood": 2,
+      "detectability": 1,
+      "status": "dispositioned",
+      "rootCause": "Procedure not followed",
+      "capaCode": "",
+      "reportedBy": "Alberto Valle",
+      "reportedAt": "2026-10-05T11:10:00Z",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-06T11:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "recordCode": "DEV-26017",
+      "fileName": "Telemetry_T-204_1007.csv",
+      "detail": "Sensor T-204 · 10:12–10:24 UTC · 12 KB",
+      "status": "attached"
+    },
+    {
+      "id": 2,
+      "recordCode": "DEV-26017",
+      "fileName": "Coater inspection.jpg",
+      "detail": "Alberto Valle · Oct 07, 10:30 UTC",
+      "status": "attached"
+    },
+    {
+      "id": 3,
+      "recordCode": "DEV-26017",
+      "fileName": "AR-26041 report",
+      "detail": "6 tests · independent QA approval pending",
+      "status": "pending-review"
+    },
+    {
+      "id": 4,
+      "recordCode": "AUD-26004",
+      "fileName": "Supplier_qualification.pdf",
+      "detail": "Version 4.0 · Reviewed",
+      "status": "reviewed"
+    },
+    {
+      "id": 5,
+      "recordCode": "AUD-26004",
+      "fileName": "Calibration_register.xlsx",
+      "detail": "Uploaded Oct 06 · 84 KB",
+      "status": "pending-review"
+    },
+    {
+      "id": 6,
+      "recordCode": "AUD-26004",
+      "fileName": "Audit_checklist.pdf",
+      "detail": "Version 1.2 · 24 questions",
+      "status": "reviewed"
+    }
+  ],
+  "capa-plans": [
+    {
+      "id": 1,
+      "code": "CAPA-26009",
+      "title": "Coater control-loop drift",
+      "sourceDeviation": "DEV-26017",
+      "owner": "María México",
+      "reviewer": "Lucía Paredes",
+      "rootCause": "",
+      "acceptanceCriterion": "No temperature excursion across 10 consecutive coating batches. A failed effectiveness check automatically reopens this plan.",
+      "effectivenessCheckAt": "2026-10-30",
+      "status": "in-progress"
+    }
+  ],
+  "capa-actions": [
+    {
+      "id": 1,
+      "capaCode": "CAPA-26009",
+      "code": "CA-01",
+      "title": "Calibrate T-204",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-08",
+      "status": "open",
+      "evidence": "Calibration certificate",
+      "evidenceAttached": false
+    },
+    {
+      "id": 2,
+      "capaCode": "CAPA-26009",
+      "code": "CA-02",
+      "title": "Replace control relay",
+      "owner": "Jorge Salas",
+      "dueAt": "2026-10-09",
+      "status": "planned",
+      "evidence": "WO-26087 at close",
+      "evidenceAttached": false
+    },
+    {
+      "id": 3,
+      "capaCode": "CAPA-26009",
+      "code": "PA-01",
+      "title": "Revise SOP-QA-014",
+      "owner": "Elena Paz",
+      "dueAt": "2026-10-10",
+      "status": "in-review",
+      "evidence": "SOP draft",
+      "evidenceAttached": false
+    },
+    {
+      "id": 4,
+      "capaCode": "CAPA-26009",
+      "code": "PA-02",
+      "title": "Train 8 operators",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-14",
+      "status": "open",
+      "evidence": "Training records",
+      "evidenceAttached": false
+    }
+  ],
+  "analytical-results": [
+    {
+      "id": 1,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "98.7 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Dissolution 30 min",
+      "protocol": "PRT-QC-015 v2",
+      "result": "72 % (Q)",
+      "specification": "Q ≥ 80 %",
+      "analyst": "Elena Paz",
+      "status": "oos",
+      "approval": "requested"
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Uniformity of dosage",
+      "protocol": "PRT-QC-018 v1",
+      "result": "AV 6.1",
+      "specification": "AV ≤ 15.0",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Water content (KF)",
+      "protocol": "PRT-QC-021 v3",
+      "result": "",
+      "specification": "≤ 2.0 %",
+      "analyst": "",
+      "status": "pending",
+      "approval": "requested"
+    },
+    {
+      "id": 5,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "99.2 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 6,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Dissolution 30 min",
+      "protocol": "PRT-QC-015 v2",
+      "result": "91 % (Q)",
+      "specification": "Q ≥ 80 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 7,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Uniformity of dosage",
+      "protocol": "PRT-QC-018 v1",
+      "result": "AV 8.4",
+      "specification": "AV ≤ 15.0",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 8,
+      "batchCode": "B-26039",
+      "sampleCode": "S-26039-01",
+      "reportCode": "AR-26039",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "100.4 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    }
+  ],
+  "audits": [
+    {
+      "id": 1,
+      "code": "AUD-26004",
+      "title": "Q4 supplier quality audit",
+      "period": "Oct 05–09, 2026",
+      "areasReviewed": 3,
+      "areasTotal": 4,
+      "status": "in-progress"
+    }
+  ],
+  "audit-findings": [
+    {
+      "id": 1,
+      "auditCode": "AUD-26004",
+      "code": "F-01",
+      "title": "Calibration records",
+      "classification": "major",
+      "owner": "Jorge Salas",
+      "dueAt": "2026-10-09",
+      "status": "evidence-pending",
+      "observation": "Supplier temperature probe calibration certificates were not available for two instruments.",
+      "response": "Calibration register attached; signed certificates requested from the supplier.",
+      "closureRequirement": "Independent reviewer verifies current certificates and traceable calibration dates."
+    },
+    {
+      "id": 2,
+      "auditCode": "AUD-26004",
+      "code": "F-02",
+      "title": "Training coverage",
+      "classification": "minor",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-09",
+      "status": "in-review",
+      "observation": "Two operators had no record of SOP-QA-014 training.",
+      "response": "Training session scheduled.",
+      "closureRequirement": "Signed training records."
+    },
+    {
+      "id": 3,
+      "auditCode": "AUD-26004",
+      "code": "F-03",
+      "title": "Document retention",
+      "classification": "minor",
+      "owner": "Elena Paz",
+      "dueAt": "2026-10-06",
+      "status": "closed",
+      "observation": "Retention period not stated in two records.",
+      "response": "Retention added.",
+      "closureRequirement": "Updated records."
+    },
+    {
+      "id": 4,
+      "auditCode": "AUD-26004",
+      "code": "F-04",
+      "title": "Label reconciliation",
+      "classification": "minor",
+      "owner": "María México",
+      "dueAt": "2026-10-06",
+      "status": "closed",
+      "observation": "One reconciliation sheet without signature.",
+      "response": "Sheet signed.",
+      "closureRequirement": "Signed sheet."
+    }
+  ],
+  "audit-events": [
+    {
+      "id": 1,
+      "eventCode": "EVT-89416",
+      "occurredAt": "2026-10-07T10:32:00Z",
+      "actor": "María México",
+      "actorRole": "qa-specialist",
+      "event": "Release validation",
+      "record": "B-26041",
+      "result": "Blocked",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 2,
+      "eventCode": "EVT-89414",
+      "occurredAt": "2026-10-07T10:30:00Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Evidence attached",
+      "record": "DEV-26017",
+      "result": "Recorded",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 3,
+      "eventCode": "EVT-89412",
+      "occurredAt": "2026-10-07T10:26:14Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Batch status changed",
+      "record": "B-26041",
+      "result": "On hold",
+      "field": "Status",
+      "before": "In progress",
+      "after": "On hold",
+      "reason": "Temperature excursion · DEV-26017"
+    },
+    {
+      "id": 4,
+      "eventCode": "EVT-89410",
+      "occurredAt": "2026-10-07T10:24:00Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Alert acknowledged",
+      "record": "ALT-26031",
+      "result": "Acknowledged",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 5,
+      "eventCode": "EVT-89407",
+      "occurredAt": "2026-10-07T10:13:00Z",
+      "actor": "T-204 service",
+      "actorRole": "system",
+      "event": "Threshold exceeded",
+      "record": "ALT-26031",
+      "result": "Alert created",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 6,
+      "eventCode": "EVT-89401",
+      "occurredAt": "2026-10-07T09:42:00Z",
+      "actor": "María México",
+      "actorRole": "qa-specialist",
+      "event": "2FA verification",
+      "record": "Session S-8912",
+      "result": "Success",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    }
+  ],
+  "regulatory-reports": [
+    {
+      "id": 1,
+      "code": "RPT-26012",
+      "type": "Batch dossier",
+      "scope": "B-26041",
+      "owner": "María México",
+      "status": "blocked",
+      "template": "Batch release dossier v1.2",
+      "format": "PDF package + CSV appendix",
+      "createdAt": "2026-10-07"
+    },
+    {
+      "id": 2,
+      "code": "RPT-26011",
+      "type": "Quality review",
+      "scope": "Sep 2026",
+      "owner": "Lucía Paredes",
+      "status": "approved",
+      "template": "Monthly quality review v2.0",
+      "format": "PDF",
+      "createdAt": "2026-10-02"
+    },
+    {
+      "id": 3,
+      "code": "RPT-26010",
+      "type": "CAPA summary",
+      "scope": "Q3 2026",
+      "owner": "María México",
+      "status": "approved",
+      "template": "CAPA summary v1.0",
+      "format": "PDF + CSV",
+      "createdAt": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "code": "RPT-26009",
+      "type": "Audit evidence",
+      "scope": "AUD-26004",
+      "owner": "Óscar Ramos",
+      "status": "draft",
+      "template": "Audit evidence package v1.1",
+      "format": "ZIP",
+      "createdAt": "2026-10-06"
+    }
+  ],
+  "collaboration-tasks": [
+    {
+      "id": 1,
+      "title": "Assess product impact",
+      "recordCode": "DEV-26017 · B-26041",
+      "detail": "Temperature excursion",
+      "owner": "María México",
+      "dueAt": "2026-10-07T14:00:00Z",
+      "status": "to-do"
+    },
+    {
+      "id": 2,
+      "title": "Approve SOP-QA-014 v2.4",
+      "recordCode": "SOP-QA-014",
+      "detail": "Document in review",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-07T16:00:00Z",
+      "status": "in-review"
+    },
+    {
+      "id": 3,
+      "title": "Release B-26038",
+      "recordCode": "B-26038",
+      "detail": "Release requested by Production",
+      "owner": "María México",
+      "dueAt": "2026-10-07T17:00:00Z",
+      "status": "ready"
+    },
+    {
+      "id": 4,
+      "title": "Approve raw material RM-26104",
+      "recordCode": "RM-26104",
+      "detail": "Approval request · Production",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-08T12:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": 5,
+      "title": "Calibrate T-204",
+      "recordCode": "CAPA-26009",
+      "detail": "CAPA-26009 action",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-08T12:00:00Z",
+      "status": "open"
+    },
+    {
+      "id": 6,
+      "title": "Approve CAPA-26009 actions",
+      "recordCode": "CAPA-26009",
+      "detail": "Corrective action plan",
+      "owner": "María México",
+      "dueAt": "2026-10-09T12:00:00Z",
+      "status": "in-review"
+    }
+  ],
+  "task-comments": [
+    {
+      "id": 1,
+      "recordCode": "DEV-26017",
+      "author": "Alberto Valle",
+      "initials": "AV",
+      "postedAt": "2026-10-07T10:30:00Z",
+      "text": "@María México coating is paused. Telemetry and the inspection photo are attached. Please assess the product impact."
+    },
+    {
+      "id": 2,
+      "recordCode": "DEV-26017",
+      "author": "Elena Paz",
+      "initials": "EP",
+      "postedAt": "2026-10-07T11:15:00Z",
+      "text": "All six analytical tests passed. The final report approval is pending independent review."
+    },
+    {
+      "id": 3,
+      "recordCode": "DEV-26017",
+      "author": "María México",
+      "initials": "MM",
+      "postedAt": "2026-10-07T11:24:00Z",
+      "text": "Reviewing the excursion duration against SOP-QA-014 v2.3. The batch remains on hold."
+    }
+  ],
+  "traceability-gaps": [
+    {
+      "id": 1,
+      "batchCode": "B-26029",
+      "product": "Ibuprofen 200 mg",
+      "missingRecord": "Line clearance signature",
+      "detail": "missing: line clearance signed by the production supervisor (step 3 of MFR-IB200 v2.0)."
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26033",
+      "product": "Amoxicillin 500 mg",
+      "missingRecord": "Calibration certificate EQ-MIX-02",
+      "detail": "missing: calibration certificate of EQ-MIX-02 valid on the manufacturing date."
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26035",
+      "product": "Paracetamol 500 mg",
+      "missingRecord": "QC result · water content",
+      "detail": "missing: water content (KF) result of the finished product."
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26036",
+      "product": "Paracetamol 500 mg",
+      "missingRecord": "IoT readings 02:00–03:10",
+      "detail": "missing: IoT readings of T-204 between 02:00 and 03:10 UTC (sensor offline)."
+    }
+  ],
+  "deviation-trends": [
+    {
+      "id": 1,
+      "rootCause": "Equipment failure",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 2,
+      "rootCause": "Equipment failure",
+      "month": "2026-08",
+      "count": 2
+    },
+    {
+      "id": 3,
+      "rootCause": "Equipment failure",
+      "month": "2026-09",
+      "count": 3
+    },
+    {
+      "id": 4,
+      "rootCause": "Procedure not followed",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 5,
+      "rootCause": "Procedure not followed",
+      "month": "2026-08",
+      "count": 1
+    },
+    {
+      "id": 6,
+      "rootCause": "Procedure not followed",
+      "month": "2026-09",
+      "count": 0
+    },
+    {
+      "id": 7,
+      "rootCause": "Raw material",
+      "month": "2026-07",
+      "count": 0
+    },
+    {
+      "id": 8,
+      "rootCause": "Raw material",
+      "month": "2026-08",
+      "count": 1
+    },
+    {
+      "id": 9,
+      "rootCause": "Raw material",
+      "month": "2026-09",
+      "count": 1
+    },
+    {
+      "id": 10,
+      "rootCause": "Environmental conditions",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 11,
+      "rootCause": "Environmental conditions",
+      "month": "2026-08",
+      "count": 0
+    },
+    {
+      "id": 12,
+      "rootCause": "Environmental conditions",
+      "month": "2026-09",
+      "count": 1
+    }
   ]
 }
