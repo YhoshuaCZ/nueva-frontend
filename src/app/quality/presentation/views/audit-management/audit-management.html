@@ -1,0 +1,88 @@
+<section class="page">
+  @if (audit(); as current) {
+    <app-page-header
+      [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'quality.audits.title' | translate]"
+      [title]="'quality.audits.title' | translate"
+      [subtitle]="current.code + ' · ' + current.title + ' · ' + current.period">
+      <button mat-flat-button type="button" (click)="adding.set(!adding())">+ {{ 'quality.audits.add' | translate }}</button>
+    </app-page-header>
+
+    <div class="stats">
+      <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.audits.findings' | translate }}</p><p class="stat-value">{{ findings().length }}</p></mat-card>
+      <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.audits.closed' | translate }}</p><p class="stat-value">{{ closedCount() }}</p></mat-card>
+      <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.audits.pending' | translate }}</p><p class="stat-value warn">{{ findings().length - closedCount() }}</p></mat-card>
+      <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.audits.progress' | translate }}</p>
+        <p class="stat-value teal">{{ current.areasReviewed * 100 / current.areasTotal }}%</p>
+        <p class="stat-note">{{ 'quality.audits.areas' | translate: {done: current.areasReviewed, total: current.areasTotal} }}</p></mat-card>
+    </div>
+
+    @if (adding()) {
+      <mat-card appearance="outlined" class="panel"><form [formGroup]="form" (ngSubmit)="addFinding()" novalidate>
+        <h2>{{ 'quality.audits.add' | translate }}</h2>
+        <div class="form-grid">
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.audits.finding' | translate }}</mat-label><input matInput type="text" formControlName="title"></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.audits.class' | translate }}</mat-label><mat-select formControlName="classification"><mat-option value="minor">{{ 'quality.classification.minor' | translate }}</mat-option><mat-option value="major">{{ 'quality.classification.major' | translate }}</mat-option></mat-select></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.batches.owner' | translate }}</mat-label><input matInput type="text" formControlName="owner"></mat-form-field></div>
+          <div class="field full"><mat-form-field appearance="outline"><mat-label>{{ 'quality.audits.observation' | translate }}</mat-label><textarea matInput rows="2" formControlName="observation"></textarea></mat-form-field></div>
+        </div>
+        <div class="row"><button mat-flat-button type="submit">{{ 'quality.audits.save' | translate }}</button>
+          <button mat-stroked-button type="button" (click)="adding.set(false)">{{ 'subscriptions.cancel' | translate }}</button></div>
+      </form></mat-card>
+    }
+
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined">
+          <h2 class="card-title">{{ 'quality.audits.register' | translate }}</h2>
+          <div class="table-scroll"><table mat-table [dataSource]="findings()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.audits.finding' | translate }}</th>
+    <td mat-cell *matCellDef="let finding"><span class="code">{{ finding.code }}</span> · {{ finding.title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.audits.class' | translate }}</th>
+    <td mat-cell *matCellDef="let finding"><span class="chip" [class]="finding.classification === 'major' ? 'chip-danger' : 'chip-info'">{{ 'quality.classification.' + finding.classification | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.audits.owner-due' | translate }}</th>
+    <td mat-cell *matCellDef="let finding">{{ finding.owner }} · {{ finding.dueAt | date: 'MMM dd' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let finding"><span class="chip" [class]="toneOf(finding.status)">{{ 'quality.finding-status.' + finding.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3']"></tr>
+  <tr mat-row *matRowDef="let finding; columns: ['c0', 'c1', 'c2', 'c3']" class="clickable" [class.highlight]="finding.code === selectedCode()" (click)="selectedCode.set(finding.code)"></tr>
+</table></div>
+        </mat-card>
+        @if (selected(); as finding) {
+          <mat-card appearance="outlined" class="panel">
+            <div class="selected-head"><strong>{{ 'quality.audits.selected' | translate }} · {{ finding.code }} · {{ finding.title }}</strong>
+              <span class="chip" [class]="finding.classification === 'major' ? 'chip-danger' : 'chip-info'">{{ 'quality.classification.' + finding.classification | translate }}</span></div>
+            <p class="label">{{ 'quality.audits.observation' | translate }}</p><p>{{ finding.observation }}</p>
+            <p class="label">{{ 'quality.audits.response' | translate }}</p><p>{{ finding.response || '—' }}</p>
+            <p class="label">{{ 'quality.audits.closure' | translate }}</p><p>{{ finding.closureRequirement }}</p>
+          </mat-card>
+        }
+      </div>
+      <aside class="stack">
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.audits.plan' | translate }}</h2>
+          <ol class="plan">
+            <li class="done"><strong>{{ 'quality.audits.plan-opening' | translate }}</strong></li>
+            <li class="current"><strong>{{ 'quality.audits.plan-evidence' | translate }}</strong></li>
+            <li><strong>{{ 'quality.audits.plan-closing' | translate }}</strong></li>
+            <li><strong>{{ 'quality.audits.plan-report' | translate }}</strong></li>
+          </ol>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.audits.package' | translate }}</h2>
+          @for (item of evidence(); track item.id) {
+            <div class="file"><span class="type">{{ item.fileName.split('.').pop()?.toUpperCase() }}</span>
+              <div><strong>{{ item.fileName }}</strong><span class="small muted">{{ item.detail }}</span></div></div>
+          }
+        </mat-card>
+      </aside>
+    </div>
+  }
+</section>
