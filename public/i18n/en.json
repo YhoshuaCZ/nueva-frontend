@@ -237,7 +237,9 @@
     "home": "DoofPlus home",
     "main-navigation": "Workspace navigation",
     "user-menu": "User menu",
-    "legal": "Legal information"
+    "legal": "Legal information",
+    "cancel": "Cancel",
+    "status": "Status"
   },
   "nav": {
     "quality-overview": "Quality overview",
