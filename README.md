@@ -1,59 +1,59 @@
-# IngesCompanyFrontend
+# DoofPlus Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.0.
+Web Application of DoofPlus, the platform of IngesCompany for pharmaceutical laboratories: quality documents,
+deviations and CAPA, batch release with electronic signature, manufacturing against approved master formulas
+and IoT monitoring of critical equipment.
 
-## Development server
+Built with Angular 22, Angular Material and ngx-translate (English and Spanish). Each bounded context keeps the
+domain, application, infrastructure and presentation layers. Until the DoofPlus Platform (Web Services) is
+deployed, the data comes from a fake API served by json-server.
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Run it locally
 
 ```bash
-ng generate component component-name
+npm install
+npm run server
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+In a second terminal:
 
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+Open `http://localhost:4200/`. The fake API runs at `http://localhost:3000/api/v1` and stores its data in
+`server/db.json`.
 
-To build the project run:
+## Demo accounts
+
+Every account uses the password `DoofPlus2026!` and the two-factor code `482106`.
+
+| User | Email | Environment |
+|------|-------|-------------|
+| María México · QA Specialist (release privilege) | `maria.mexico@andinos.com.pe` | QA/QC |
+| Alberto Valle · Production Supervisor | `alberto.valle@andinos.com.pe` | Production |
+| Carlos Medina · Administrator | `carlos.medina@andinos.com.pe` | Administration |
+
+Signing in to an environment that does not match the role shows the "Access not authorized" state.
+
+## Bounded contexts and routes
+
+| Bounded context | Folder | Main routes |
+|-----------------|--------|-------------|
+| IAM | `src/app/iam` | `/sign-in`, `/sign-in/:environment`, `/administration/users` |
+| Organizations & Profiles | `src/app/organizations` | `/register`, `/administration/overview`, `/<environment>/profile` |
+| Subscriptions & Payments | `src/app/subscriptions` | `/administration/subscription` |
+| Manufacturing & Batch Management | `src/app/manufacturing` | `/production/overview`, `/production/orders`, `/production/batches`, `/production/products`, `/production/raw-materials` |
+| IoT Monitoring | `src/app/monitoring` | `/production/iot`, `/production/equipment`, `/production/sensors/:code`, `/production/incidents` |
+| Quality & Compliance | `src/app/quality` | `/qa/overview`, `/qa/documents`, `/qa/deviations`, `/qa/capa`, `/qa/batch-release`, `/qa/audit-trail`, `/qa/tasks` |
+
+`src/app/shared` has the base API, endpoint, assembler and form classes, the public layout, the workspace shell
+and the language switcher.
+
+## Build
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The production build is stored in `dist/`.
