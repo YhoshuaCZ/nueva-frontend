@@ -154,6 +154,10 @@ a {
   overflow-x: auto;
 }
 
+.table-scroll .mat-mdc-cell {
+  white-space: nowrap;
+}
+
 .code {
   color: var(--teal);
   font-weight: 700;
@@ -293,7 +297,7 @@ a {
 @media (max-width: 1100px) {
   .columns,
   .grid-2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
