@@ -14,6 +14,7 @@ const organizationsPublicRoutes = () => import('./organizations/presentation/org
 const organizationsAdministrationRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.organizationsAdministrationRoutes);
 const profileRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.profileRoutes);
 const manufacturingRoutes = () => import('./manufacturing/presentation/manufacturing.routes').then(m => m.manufacturingRoutes);
+const monitoringRoutes = () => import('./monitoring/presentation/monitoring.routes').then(m => m.monitoringRoutes);
 const subscriptionsRoutes = () => import('./subscriptions/presentation/subscriptions.routes').then(m => m.subscriptionsRoutes);
 
 /**
@@ -36,6 +37,7 @@ export const routes: Routes = [
   { path: 'production',     component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'production' }, children: [
     { path: '', loadChildren: profileRoutes },
     { path: '', loadChildren: manufacturingRoutes },
+    { path: '', loadChildren: monitoringRoutes },
     notFound
   ]},
   { path: 'administration', component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'administration' }, children: [
