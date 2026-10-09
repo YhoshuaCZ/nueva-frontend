@@ -1,0 +1,107 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'manufacturing.receipt.title' | translate]"
+    [title]="'manufacturing.receipt.title' | translate"
+    [subtitle]="selected() ? selected()!.receiptCode + ' · ' + selected()!.material + ' · ' + ('manufacturing.receipt.subtitle' | translate) : ''"/>
+
+  <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'manufacturing.receipt.alert' | translate }}</strong></div></div>
+
+  <ol class="stepper">
+    @for (step of steps; track step; let i = $index) {
+      <li [class.done]="i < stepIndex()" [class.current]="i === stepIndex()">
+        <span>@if (i < stepIndex()) { <mat-icon>check</mat-icon> } @else { {{ i + 1 }} }</span>{{ 'manufacturing.receipt.step.' + step | translate }}
+      </li>
+    }
+  </ol>
+
+  <div class="columns">
+    <div class="stack">
+      <mat-card appearance="outlined" class="panel receipt"><form [formGroup]="form" (ngSubmit)="record()" novalidate>
+        <h2>{{ 'manufacturing.receipt.details' | translate }}</h2>
+        <p class="small muted">* {{ 'manufacturing.receipt.required' | translate }}</p>
+        <div class="form-grid">
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.material' | translate }}</mat-label><input matInput type="text" formControlName="material"></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.supplier' | translate }}</mat-label><input matInput type="text" formControlName="supplier"></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.supplier-lot' | translate }}</mat-label><input matInput type="text" formControlName="supplierLot" placeholder="MI-AC-0926"></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.internal-lot' | translate }}</mat-label><input matInput type="text" formControlName="code" placeholder="RM-26105" (input)="duplicateLot.set(false)"></mat-form-field>
+@if (isInvalid('code')) { <p class="field-error">{{ 'manufacturing.receipt.lot-error' | translate }}</p> }
+@if (duplicateLot()) { <p class="field-error">{{ 'manufacturing.receipt.lot-duplicate' | translate }}</p> }</div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.quantity' | translate }}</mat-label><input matInput type="text" formControlName="quantity" placeholder="500 kg · 20 sealed drums"></mat-form-field></div>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.expiry' | translate }}</mat-label><input matInput type="date" formControlName="expiryDate"></mat-form-field></div>
+          <div class="field full"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.receipt.location' | translate }}</mat-label><input matInput type="text" formControlName="storageLocation"></mat-form-field></div>
+          <div class="field full upload" [class.invalid]="isInvalid('certificate')">
+            <span class="upload-label">{{ 'manufacturing.receipt.certificate' | translate }} *</span>
+            <input #certificate type="file" accept=".pdf" hidden (change)="attachCertificate($event)">
+            <div class="row">
+              <button mat-stroked-button type="button" (click)="certificate.click()"><mat-icon>upload_file</mat-icon>PDF</button>
+              @if (form.controls.certificate.value) {
+                <span class="attached"><mat-icon class="inline">attach_file</mat-icon>{{ form.controls.certificate.value }} <span class="chip chip-success">{{ 'manufacturing.receipt.attached' | translate }}</span></span>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button mat-flat-button type="submit" [disabled]="store.loading()">{{ 'manufacturing.receipt.record' | translate }}</button>
+          <span class="small muted">{{ 'manufacturing.receipt.record-note' | translate }}</span>
+        </div>
+      </form></mat-card>
+
+      <mat-card appearance="outlined">
+        <h2 class="card-title">{{ 'manufacturing.receipt.lots' | translate }}</h2>
+        <div class="table-scroll"><table mat-table [dataSource]="store.materialLots()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.receipt.internal-lot' | translate }}</th>
+    <td mat-cell *matCellDef="let lot"><strong>{{ lot.code }}</strong><span class="sub">{{ lot.receiptCode }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.receipt.material' | translate }}</th>
+    <td mat-cell *matCellDef="let lot">{{ lot.material }}<span class="sub">{{ lot.supplier }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.receipt.expiry' | translate }}</th>
+    <td mat-cell *matCellDef="let lot">{{ lot.expiryDate | date: 'MMM dd, yyyy' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.receipt.disposition' | translate }}</th>
+    <td mat-cell *matCellDef="let lot"><span class="chip chip-dot" [class]="lot.status === 'approved' ? 'chip-success' : lot.status === 'rejected' ? 'chip-danger' : 'chip-warning'">{{ 'manufacturing.lot-status.' + lot.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3']"></tr>
+  <tr mat-row *matRowDef="let lot; columns: ['c0', 'c1', 'c2', 'c3']" class="clickable" [class.highlight]="lot.code === selected()?.code" (click)="selectedCode.set(lot.code)"></tr>
+</table></div>
+      </mat-card>
+    </div>
+
+    <aside class="stack">
+      @if (selected(); as lot) {
+        <mat-card appearance="outlined" class="panel side">
+          <h2>{{ 'manufacturing.receipt.checklist' | translate }} · {{ lot.code }}</h2>
+          <div class="check">
+            <span><strong>{{ 'manufacturing.receipt.packaging' | translate }}</strong></span>
+            <span class="chip chip-dot" [class]="lot.packagingVerified ? 'chip-success' : 'chip-warning'">{{ (lot.packagingVerified ? 'manufacturing.receipt.verified' : 'manufacturing.receipt.pending') | translate }}</span>
+          </div>
+          <div class="check">
+            <span><strong>{{ 'manufacturing.receipt.identity' | translate }}</strong></span>
+            <span class="chip chip-dot" [class]="lot.identityVerified ? 'chip-success' : 'chip-warning'">{{ (lot.identityVerified ? 'manufacturing.receipt.verified' : 'manufacturing.receipt.pending') | translate }}</span>
+          </div>
+          <div class="check">
+            <span><strong>{{ 'manufacturing.receipt.sampling' | translate }}</strong></span>
+            <span class="chip chip-dot" [class]="lot.samplingStatus === 'done' ? 'chip-success' : 'chip-warning'">{{ 'manufacturing.sampling-status.' + lot.samplingStatus | translate }}</span>
+          </div>
+          <div class="check">
+            <span><strong>{{ 'manufacturing.receipt.quality-approval' | translate }}</strong><span class="small muted">{{ 'manufacturing.receipt.quality-approval-text' | translate }}</span></span>
+            <span class="chip chip-dot chip-neutral">{{ 'manufacturing.lot-status.' + lot.status | translate }}</span>
+          </div>
+          <button mat-flat-button type="button" class="block" (click)="store.requestInspection(lot)"
+                  [disabled]="lot.samplingStatus !== 'pending' || lot.status === 'approved' || lot.status === 'rejected'">
+            {{ 'manufacturing.receipt.request-inspection' | translate }}
+          </button>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel side">
+          <h2>{{ 'manufacturing.receipt.disposition' | translate }}</h2>
+          <span class="chip chip-dot chip-warning">{{ 'manufacturing.lot-status.' + lot.status | translate }}</span>
+          <p class="small muted">{{ 'manufacturing.receipt.disposition-text' | translate }}</p>
+        </mat-card>
+      }
+    </aside>
+  </div>
+</section>
