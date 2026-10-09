@@ -586,5 +586,152 @@
       "review-access": "Revisar accesos",
       "activity": "Actividad administrativa"
     }
+  },
+  "monitoring": {
+    "type": {
+      "temperature": "Temperatura",
+      "humidity": "Humedad",
+      "pressure": "Presión diferencial"
+    },
+    "calibration": {
+      "fit": "Apto para uso",
+      "due": "Calibración por vencer",
+      "not-fit": "No apto para uso"
+    },
+    "sensor-status": {
+      "active": "Activo",
+      "offline": "Sin conexión"
+    },
+    "severity-level": {
+      "critical": "Crítica",
+      "warning": "Advertencia"
+    },
+    "alert-status": {
+      "open": "Abierta",
+      "acknowledged": "Reconocida",
+      "under-investigation": "En investigación",
+      "closed": "Cerrada"
+    },
+    "range": "Rango aceptable {{lower}}–{{upper}} {{unit}}",
+    "within-range": "Dentro de rango",
+    "out-of-range": "Fuera de rango",
+    "alert-open": "Alerta abierta",
+    "no-data": "No hay datos IoT asociados a este lote.",
+    "acknowledgment-rule": "Reconocer NO es cerrar · Se requiere una investigación y una disposición de QA aprobada.",
+    "alert-sensor": "Alerta / sensor",
+    "equipment-column": "Equipo",
+    "severity": "Severidad",
+    "status": "Estado",
+    "overview": {
+      "subtitle": "Telemetría de la planta, salud de los equipos y alertas accionables.",
+      "view-alerts": "Ver alertas activas",
+      "sensors-online": "Sensores en línea",
+      "offline": "{{count}} sin conexión · Heartbeat > 5 min",
+      "equipment": "Equipos monitoreados",
+      "equipment-note": "En 3 líneas y almacén",
+      "active-alerts": "Alertas activas",
+      "critical": "{{count}} críticas",
+      "availability": "Disponibilidad de datos",
+      "past-day": "Últimas 24 horas",
+      "sensor-detail": "Abrir detalle del sensor",
+      "alert-queue": "Cola de alertas",
+      "health": "Salud de los equipos",
+      "rules": "Reglas de monitoreo"
+    },
+    "rules": {
+      "threshold": "Umbral de temperatura",
+      "threshold-text": "> 25 °C por 2 min → Alerta alta",
+      "offline": "Sensor sin conexión",
+      "offline-text": "Sin heartbeat por 5 min → Alerta de calidad de datos",
+      "acknowledgment": "Reconocer no es cerrar",
+      "acknowledgment-text": "Todavía se requiere una investigación vinculada y una disposición aprobada."
+    },
+    "equipment": {
+      "title": "Equipos y dispositivos IoT",
+      "subtitle": "Inventario de equipos, calibración y mantenimiento preventivo, y los sensores ThingsBoard instalados en cada equipo.",
+      "inventory": "Inventario de equipos",
+      "inventory-text": "Un equipo No apto para uso no se puede asociar a un lote",
+      "code": "Código",
+      "equipment": "Equipo",
+      "model": "Marca · modelo · serie",
+      "location": "Ubicación",
+      "calibration": "Calibración",
+      "next-maintenance": "Próximo mantenimiento",
+      "sensors": "Sensores IoT",
+      "sensors-text": "Las lecturas llegan por ThingsBoard y se vinculan al lote en curso",
+      "sensor": "Sensor",
+      "device-id": "ID de dispositivo ThingsBoard",
+      "type": "Tipo de sensor",
+      "limits": "Límites",
+      "no-sensors": "No hay sensores instalados.",
+      "register-sensor": "Registrar sensor IoT",
+      "register-text": "Administrador del laboratorio o supervisor de producción",
+      "device-error": "Usa un ID de ThingsBoard que empiece con tb-.",
+      "device-duplicate": "Este ID de dispositivo ya está registrado.",
+      "calibration-due": "Vencimiento de calibración",
+      "calibration-text": "El equipo pasa a No apto para uso automáticamente cuando vence su calibración. No se puede asociar a un lote hasta registrar un certificado nuevo.",
+      "record-calibration": "Registrar calibración",
+      "maintenance": "Mantenimiento preventivo",
+      "every-90": "cada 90 días",
+      "maintenance-text": "Registrar el mantenimiento realizado actualiza automáticamente la fecha del próximo (cada 90 días).",
+      "record-maintenance": "Registrar mantenimiento"
+    },
+    "detail": {
+      "title": "Detalle de equipo y sensor",
+      "sensor": "Sensor",
+      "telemetry": "Telemetría de {{type}}",
+      "last-reading": "Última lectura",
+      "remains-open": "{{code}} sigue abierta aunque la variable se recuperó.",
+      "acknowledgment": "Reconocimiento de la alerta",
+      "acknowledged-by": "Reconocida por",
+      "response-note": "Nota de respuesta",
+      "response-hint": "Documenta las acciones correctivas tomadas ante esta excursión.",
+      "linked": "Incidente / desviación vinculada",
+      "acknowledge": "Reconocer y guardar nota",
+      "save-note": "Guardar nota de respuesta",
+      "saved": "Guardado",
+      "equipment-calibration": "Equipo y calibración",
+      "asset": "Identidad del activo",
+      "maintenance-owner": "Responsable de mantenimiento",
+      "workflow": "Flujo de respuesta",
+      "step-threshold": "Umbral superado",
+      "step-acknowledged": "Alerta reconocida",
+      "step-investigation": "Lote retenido e investigación abierta",
+      "step-disposition": "Disposición de QA",
+      "not-found": "Ningún sensor coincide con ese código."
+    },
+    "evidence": {
+      "title": "Evidencia IoT",
+      "batch-record": "Ver registro del lote",
+      "associate": "Asociar equipos y sensores",
+      "associate-text": "Las lecturas se vinculan a este lote solo mientras está en curso",
+      "sensors": "Sensores",
+      "associated": "Asociado",
+      "in-use": "Sensor en uso por {{batch}}",
+      "associate-button": "Asociar equipo",
+      "rejected": {
+        "not-fit": "{{code}} no es apto para uso (calibración vencida) y no se puede asociar.",
+        "sensor-in-use": "Un sensor de {{code}} está asociado a otro lote que sigue en curso. Libéralo primero."
+      },
+      "critical": "Variables críticas",
+      "recorded": "Registrado automáticamente por ThingsBoard · los puntos rojos están fuera de rango",
+      "readings": "Lecturas capturadas automáticamente",
+      "readings-text": "Sin transcripción manual · cada lectura guarda su hora, sensor y origen",
+      "timestamp": "Fecha y hora",
+      "variable": "Variable",
+      "value": "Valor",
+      "source": "Origen",
+      "result": "Resultado",
+      "out-alert": "Fuera de rango · alerta",
+      "view-alert": "Ver alerta",
+      "show-all": "Ver las {{count}} lecturas",
+      "show-latest": "Ver solo las recientes"
+    },
+    "incidents": {
+      "subtitle": "Alertas IoT e incidentes de producción con su respuesta.",
+      "active": "Activos",
+      "all": "Todos",
+      "what": "Incidente"
+    }
   }
 }
