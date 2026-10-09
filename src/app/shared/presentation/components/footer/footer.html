@@ -1,6 +1,6 @@
 <footer class="app-footer">
   <p>{{ 'footer.copyright' | translate }}</p>
-  <nav>
+  <nav [attr.aria-label]="'shell.legal' | translate">
     <a [href]="landingUrl + 'terms.html'">{{ 'footer.terms' | translate }}</a>
     <a [href]="landingUrl + 'privacy.html'">{{ 'footer.privacy' | translate }}</a>
   </nav>

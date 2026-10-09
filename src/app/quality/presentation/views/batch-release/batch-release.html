@@ -11,18 +11,18 @@
   </app-page-header>
 
   @if (batch()?.status === 'released') {
-    <div class="alert alert-info"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.released' | translate: {code: code()} }}</strong></div></div>
+    <div class="alert alert-info" role="status"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.released' | translate: {code: code()} }}</strong></div></div>
   } @else if (ready()) {
-    <div class="alert alert-info"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.ready' | translate }}</strong><p>{{ 'quality.release.ready-text' | translate }}</p></div></div>
+    <div class="alert alert-info" role="status"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.ready' | translate }}</strong><p>{{ 'quality.release.ready-text' | translate }}</p></div></div>
   } @else {
-    <div class="alert alert-danger"><div><strong>{{ 'quality.release.blocked' | translate: {code: code()} }}</strong><p>{{ 'quality.release.blocked-text' | translate }}</p></div></div>
+    <div class="alert alert-danger" role="alert"><div><strong>{{ 'quality.release.blocked' | translate: {code: code()} }}</strong><p>{{ 'quality.release.blocked-text' | translate }}</p></div></div>
   }
 
   <div class="columns">
     <mat-card appearance="outlined">
       <div class="card-title row"><h2>{{ 'quality.release.readiness' | translate }}</h2><span class="spacer"></span>
         <span class="chip" [class]="ready() ? 'chip-teal' : 'chip-danger'">{{ 'quality.release.passed' | translate: {passed: passed(), total: checks().length} }}</span></div>
-      <div class="table-scroll"><table mat-table [dataSource]="checks()">
+      <div class="table-scroll"><table mat-table [dataSource]="checks()" [attr.aria-label]="'quality.release.readiness' | translate">
   <ng-container matColumnDef="c0">
     <th mat-header-cell *matHeaderCellDef>#</th>
     <td mat-cell *matCellDef="let check; let i = index">{{ i + 1 }}</td>

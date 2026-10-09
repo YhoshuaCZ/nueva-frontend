@@ -1,6 +1,7 @@
+<a class="skip-link" href="#content">{{ 'shell.skip-to-content' | translate }}</a>
 <mat-sidenav-container class="workspace">
   <mat-sidenav #sidenav class="sidebar" [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset()">
-    <a [routerLink]="navigation[0].link" class="brand"><img src="/doofplus-wordmark.png" alt="DoofPlus"></a>
+    <a [routerLink]="navigation[0].link" class="brand" [attr.aria-label]="'shell.home' | translate"><img src="/doofplus-wordmark.png" alt="DoofPlus"></a>
     @if (user(); as current) {
       <div class="organization">
         <strong>{{ current.organizationName }}</strong>
@@ -9,9 +10,9 @@
       </div>
     }
     <p class="section-title">{{ 'shell.workspace' | translate }}</p>
-    <mat-nav-list (click)="isHandset() && sidenav.close()">
+    <mat-nav-list [attr.aria-label]="'shell.main-navigation' | translate" (click)="isHandset() && sidenav.close()">
       @for (option of navigation; track option.link) {
-        <a mat-list-item [routerLink]="option.link" routerLinkActive="active" #link="routerLinkActive"
+        <a mat-list-item [routerLink]="option.link" routerLinkActive="active" ariaCurrentWhenActive="page" #link="routerLinkActive"
            [activated]="link.isActive">{{ option.label | translate }}</a>
       }
     </mat-nav-list>
@@ -34,7 +35,7 @@
       <span class="spacer"></span>
       <app-language-switcher variant="dark"/>
       @if (user(); as current) {
-        <button type="button" class="user-button" [matMenuTriggerFor]="userMenu">
+        <button type="button" class="user-button" [matMenuTriggerFor]="userMenu" [attr.aria-label]="('shell.user-menu' | translate) + ': ' + current.fullName">
           <span class="avatar">{{ current.initials }}</span>
           <span class="user-text">
             <strong>{{ current.fullName }}</strong>
@@ -53,7 +54,7 @@
       }
     </mat-toolbar>
 
-    <main class="content">
+    <main id="content" class="content" tabindex="-1">
       <router-outlet/>
     </main>
 
@@ -61,7 +62,7 @@
       @if (user(); as current) {
         <p>{{ current.organizationName }} · {{ current.plant }} · {{ today() }} · {{ 'shell.utc' | translate }} · {{ 'shell.role-based' | translate }}</p>
       }
-      <nav>
+      <nav [attr.aria-label]="'shell.legal' | translate">
         <a [href]="landingUrl + 'terms.html'">{{ 'footer.terms' | translate }}</a>
         <a [href]="landingUrl + 'privacy.html'">{{ 'footer.privacy' | translate }}</a>
       </nav>

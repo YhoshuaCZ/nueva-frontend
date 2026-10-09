@@ -7,7 +7,7 @@
   </app-page-header>
   <mat-card appearance="outlined">
     <div class="table-scroll">
-      <table mat-table [dataSource]="store.orders()">
+      <table mat-table [dataSource]="store.orders()" [attr.aria-label]="'nav.production-orders' | translate">
         <ng-container matColumnDef="order">
           <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.orders.order' | translate }}</th>
           <td mat-cell *matCellDef="let order"><a [routerLink]="['/production/orders', order.code]">{{ order.code }}</a><span class="sub">{{ order.batchCode }}</span></td>

@@ -3,15 +3,15 @@
     [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.incidents' | translate]"
     [title]="'nav.incidents' | translate"
     [subtitle]="'monitoring.incidents.subtitle' | translate"/>
-  <nav mat-tab-nav-bar [tabPanel]="panel" mat-stretch-tabs="false" mat-align-tabs="start" class="tabs">
+  <nav mat-tab-nav-bar [tabPanel]="panel" mat-stretch-tabs="false" mat-align-tabs="start" class="tabs" [attr.aria-label]="'shell.filters' | translate">
     <a mat-tab-link [active]="!showClosed()" (click)="showClosed.set(false)">{{ 'monitoring.incidents.active' | translate }}</a>
     <a mat-tab-link [active]="showClosed()" (click)="showClosed.set(true)">{{ 'monitoring.incidents.all' | translate }}</a>
   </nav>
   <mat-tab-nav-panel #panel class="stack">
-    <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'monitoring.acknowledgment-rule' | translate }}</strong></div></div>
+    <div class="alert" role="status"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'monitoring.acknowledgment-rule' | translate }}</strong></div></div>
     <mat-card appearance="outlined">
       <div class="table-scroll">
-        <table mat-table [dataSource]="visible()">
+        <table mat-table [dataSource]="visible()" [attr.aria-label]="'nav.incidents' | translate">
           <ng-container matColumnDef="alert">
             <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.alert-sensor' | translate }}</th>
             <td mat-cell *matCellDef="let alert"><a [routerLink]="['/production/sensors', alert.sensorCode]">{{ alert.code }}</a><span class="sub">{{ alert.sensorCode }} · {{ alert.equipmentCode }}</span></td>

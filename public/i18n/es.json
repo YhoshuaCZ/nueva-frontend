@@ -231,7 +231,13 @@
     "profile": "Perfil y preferencias",
     "sign-out": "Cerrar sesión",
     "utc": "Horas en UTC",
-    "role-based": "Permisos por rol"
+    "role-based": "Permisos por rol",
+    "filters": "Filtros",
+    "skip-to-content": "Saltar al contenido principal",
+    "home": "Inicio de DoofPlus",
+    "main-navigation": "Navegación del workspace",
+    "user-menu": "Menú de usuario",
+    "legal": "Información legal"
   },
   "nav": {
     "quality-overview": "Resumen de calidad",
