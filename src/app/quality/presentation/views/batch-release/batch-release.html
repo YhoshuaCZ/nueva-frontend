@@ -1,0 +1,75 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'nav.batch-release' | translate]"
+    [title]="'nav.batch-release' | translate"
+    [subtitle]="batch() ? batch()!.code + ' · ' + (manufacturingStore.productByCode(batch()!.productCode)()?.name ?? '') + ' · ' + (batch()!.quantity | number) + ' ' + ('manufacturing.units' | translate) : ''">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="picker"><mat-select [value]="code()" (selectionChange)="select($event.value)" aria-label="Record">
+      @for (item of queue(); track item.id) {
+        <mat-option [value]="item.code">{{ item.code }} · {{ 'manufacturing.batch-status.' + item.status | translate }}</mat-option>
+      }
+    </mat-select></mat-form-field>
+  </app-page-header>
+
+  @if (batch()?.status === 'released') {
+    <div class="alert alert-info"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.released' | translate: {code: code()} }}</strong></div></div>
+  } @else if (ready()) {
+    <div class="alert alert-info"><mat-icon>check_circle</mat-icon><div><strong>{{ 'quality.release.ready' | translate }}</strong><p>{{ 'quality.release.ready-text' | translate }}</p></div></div>
+  } @else {
+    <div class="alert alert-danger"><div><strong>{{ 'quality.release.blocked' | translate: {code: code()} }}</strong><p>{{ 'quality.release.blocked-text' | translate }}</p></div></div>
+  }
+
+  <div class="columns">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><h2>{{ 'quality.release.readiness' | translate }}</h2><span class="spacer"></span>
+        <span class="chip" [class]="ready() ? 'chip-teal' : 'chip-danger'">{{ 'quality.release.passed' | translate: {passed: passed(), total: checks().length} }}</span></div>
+      <div class="table-scroll"><table mat-table [dataSource]="checks()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let check; let i = index">{{ i + 1 }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.release.check' | translate }}</th>
+    <td mat-cell *matCellDef="let check; let i = index"><strong>{{ 'quality.release.checks.' + check.key | translate }}</strong><span class="sub">{{ 'quality.release.checks.' + check.key + '-text' | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.capa.evidence' | translate }}</th>
+    <td mat-cell *matCellDef="let check; let i = index" class="code">{{ check.evidence }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let check; let i = index"><span class="chip" [class]="check.passed ? 'chip-success' : 'chip-danger'">{{ (check.passed ? 'quality.release.check-passed' : 'quality.release.check-failed') | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3']"></tr>
+  <tr mat-row *matRowDef="let check; let i = index; columns: ['c0', 'c1', 'c2', 'c3']" [class.failed]="!check.passed"></tr>
+</table></div>
+    </mat-card>
+
+    <aside class="stack">
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'quality.release.sign' | translate }}</h2>
+        <div class="approver">
+          <p class="small strong teal">{{ 'quality.release.authenticated' | translate }}</p>
+          <p><strong>{{ iamStore.currentUser()?.fullName }}</strong></p>
+          <p class="small teal">{{ 'privileges.' + iamStore.currentUser()?.privilege | translate }} · {{ iamStore.currentUser()?.plant }}</p>
+        </div>
+        <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.release.meaning' | translate }}</mat-label><input matInput type="text" [value]="'quality.release.meaning-value' | translate" disabled>
+          <small class="muted">{{ 'quality.release.meaning-fixed' | translate }}</small></mat-form-field></div>
+        <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.release.password' | translate }}</mat-label><input matInput type="password" [formControl]="password" autocomplete="current-password"></mat-form-field>
+@if (result() === 'invalid-password') { <p class="field-error">{{ 'quality.release.wrong-password' | translate }}</p> }</div>
+        <p class="small muted">{{ 'quality.release.record' | translate }}: <strong>{{ code() }} · {{ 'quality.release.release-record' | translate }}</strong></p>
+        @if (!canSign()) { <p class="field-error">{{ 'quality.release.no-privilege' | translate }}</p> }
+        <button mat-flat-button type="button" class="block" (click)="sign()" [disabled]="!ready() || !canSign() || batch()?.status === 'released'">
+          {{ 'quality.release.sign-button' | translate }}
+        </button>
+        <p class="small muted">{{ 'quality.release.sign-note' | translate }}</p>
+      </mat-card>
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'quality.release.context' | translate }}</h2>
+        <p class="label">{{ 'quality.release.approver-privilege' | translate }}</p>
+        <p class="small muted">{{ 'quality.release.approver-text' | translate }}</p>
+        <p class="label">{{ 'quality.release.attribution' | translate }}</p>
+        <p class="small muted">{{ 'quality.release.attribution-text' | translate }}</p>
+      </mat-card>
+    </aside>
+  </div>
+</section>
