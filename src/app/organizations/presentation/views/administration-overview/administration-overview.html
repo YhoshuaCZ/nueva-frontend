@@ -1,0 +1,139 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.administration.short' | translate, 'nav.administration-overview' | translate]"
+    [title]="'nav.administration-overview' | translate"
+    [subtitle]="'organizations.overview.subtitle' | translate">
+    <a mat-flat-button routerLink="/administration/users/invite"><mat-icon>add</mat-icon>{{ 'iam.users.invite' | translate }}</a>
+  </app-page-header>
+
+  <mat-card appearance="outlined" class="summary">
+    <div>
+      <p class="stat-label">{{ 'organizations.overview.active-users' | translate }}</p>
+      <p class="stat-value">{{ activeUsers().length }}</p>
+      <span class="chip chip-warning">{{ 'organizations.overview.invitations-pending' | translate: {count: iamStore.pendingInvitations().length} }}</span>
+    </div>
+    <div>
+      <p class="stat-label">{{ 'organizations.overview.organizations' | translate }}</p>
+      <p class="stat-value">1</p>
+      <p class="stat-note">{{ store.organization()?.legalName }} · {{ 'organizations.overview.facilities-count' | translate: {count: store.facilities().length} }}</p>
+    </div>
+    <div>
+      <p class="stat-label">{{ 'organizations.overview.subscription' | translate }}</p>
+      <p class="stat-value">{{ subscriptionsStore.currentPlan()?.name }}</p>
+      @if (subscriptionsStore.subscription(); as subscription) {
+        <p class="row">
+          <span class="chip" [class]="subscription.status === 'active' ? 'chip-success' : 'chip-warning'">{{ 'organizations.status.' + subscription.status | translate }}</span>
+          <span class="stat-note">{{ 'organizations.overview.renews' | translate }} {{ subscription.nextInvoiceDate | date: 'MMM dd' }}</span>
+        </p>
+      }
+    </div>
+    <div>
+      <p class="stat-label">{{ 'organizations.overview.access-reviews' | translate }}</p>
+      <p class="stat-value">{{ iamStore.pendingInvitations().length + 1 }}</p>
+      <span class="chip chip-warning">{{ 'organizations.overview.due' | translate }}</span>
+    </div>
+  </mat-card>
+
+  @if (subscriptionsStore.subscription()?.paymentState === 'declined') {
+    <div class="alert alert-danger">
+      <mat-icon>warning</mat-icon>
+      <div><strong>{{ 'subscriptions.declined-title' | translate }}</strong><p>{{ 'subscriptions.declined-text' | translate }}</p></div>
+      <a mat-flat-button class="danger" routerLink="/administration/subscription">{{ 'subscriptions.retry' | translate }} →</a>
+    </div>
+  }
+
+  <div class="columns">
+    <div class="stack">
+      <mat-card appearance="outlined">
+        <h2 class="card-title">{{ 'organizations.overview.users-attention' | translate }}</h2>
+        <div class="table-scroll">
+          <table mat-table [dataSource]="usersRequiringAttention()">
+            <ng-container matColumnDef="user">
+              <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.user' | translate }}</th>
+              <td mat-cell *matCellDef="let user"><strong>{{ user.fullName }}</strong></td>
+            </ng-container>
+            <ng-container matColumnDef="profile">
+              <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.profile' | translate }}</th>
+              <td mat-cell *matCellDef="let user">{{ 'roles.' + user.role | translate }}</td>
+            </ng-container>
+            <ng-container matColumnDef="facility">
+              <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.facility' | translate }}</th>
+              <td mat-cell *matCellDef="let user">{{ user.facility }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.status' | translate }}</th>
+              <td mat-cell *matCellDef="let user">
+                <span class="chip" [class]="user.status === 'active' ? 'chip-success' : 'chip-info'">{{ 'iam.status.' + user.status | translate }}</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+            <tr mat-row *matRowDef="let user; columns: userColumns"></tr>
+          </table>
+        </div>
+      </mat-card>
+
+      <mat-card appearance="outlined">
+        <h2 class="card-title">{{ 'organizations.overview.facilities' | translate }}</h2>
+        <div class="table-scroll">
+          <table mat-table [dataSource]="sites()">
+            <ng-container matColumnDef="site">
+              <th mat-header-cell *matHeaderCellDef>{{ 'organizations.overview.org-facility' | translate }}</th>
+              <td mat-cell *matCellDef="let site">
+                @if (site.organization) {
+                  <span class="code">{{ site.name }}</span><span class="sub">{{ site.detail }}</span>
+                } @else {
+                  <strong>{{ site.name }}</strong><span class="sub">{{ site.detail | translate }}</span>
+                }
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="region">
+              <th mat-header-cell *matHeaderCellDef>{{ 'organizations.overview.region' | translate }}</th>
+              <td mat-cell *matCellDef="let site">{{ site.region }}</td>
+            </ng-container>
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>{{ 'organizations.overview.owner' | translate }}</th>
+              <td mat-cell *matCellDef="let site">{{ site.owner }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.status' | translate }}</th>
+              <td mat-cell *matCellDef="let site"><span class="chip chip-success">{{ 'organizations.status.' + site.status | translate }}</span></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="siteColumns"></tr>
+            <tr mat-row *matRowDef="let site; columns: siteColumns" [class.highlight]="site.organization"></tr>
+          </table>
+        </div>
+      </mat-card>
+    </div>
+
+    <aside class="stack">
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'organizations.overview.account-health' | translate }}</h2>
+        <div class="health ok">
+          <strong>{{ 'organizations.overview.plan-active' | translate: {plan: subscriptionsStore.currentPlan()?.name} }}</strong>
+          <span>{{ 'organizations.overview.plan-active-text' | translate: {count: activeUsers().length} }}</span>
+        </div>
+        <div class="health ok">
+          <strong>{{ 'organizations.overview.two-factor' | translate }}</strong>
+          <span>{{ 'organizations.overview.two-factor-text' | translate }}</span>
+        </div>
+        <div class="health warning">
+          <strong>{{ 'organizations.overview.access-review' | translate }}</strong>
+          <span>{{ 'organizations.overview.access-review-text' | translate: {count: iamStore.pendingInvitations().length + 1} }}</span>
+        </div>
+        <a routerLink="/administration/users">{{ 'organizations.overview.review-access' | translate }} →</a>
+      </mat-card>
+
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'organizations.overview.activity' | translate }}</h2>
+        <ol class="timeline">
+          @for (activity of store.activities(); track activity.id) {
+            <li>
+              <strong>{{ activity.title }}</strong>
+              <span>{{ activity.actor }} · {{ activity.occurredAt | date: 'MMM dd · HH:mm' : 'UTC' }} UTC</span>
+            </li>
+          }
+        </ol>
+      </mat-card>
+    </aside>
+  </div>
+</section>
