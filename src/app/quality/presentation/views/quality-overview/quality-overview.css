@@ -1,0 +1,24 @@
+.danger {
+  color: var(--danger);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--teal);
+  background: var(--mint);
+}
+
+.decision.risk {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}

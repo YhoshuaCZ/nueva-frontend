@@ -1,46 +1,86 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, map, catchError, throwError} from 'rxjs';
-import {SignUpCommand} from '../domain/model/sign-up.command';
+import {Observable, map} from 'rxjs';
+import {BaseApi} from '../../shared/infrastructure/base-api';
+import {environment} from '../../../environments/environment';
+import {User} from '../domain/model/user.entity';
+import {RoleProfile} from '../domain/model/role-profile.entity';
+import {Invitation} from '../domain/model/invitation.entity';
 import {SignInCommand} from '../domain/model/sign-in.command';
-import {SignUpResource, SignUpResponse} from './sign-up.response';
-import {SignInResource, SignInResponse} from './sign-in.response';
-import {SignUpAssembler} from './sign-up.assembler';
-import {SignInAssembler} from './sign-in.assembler';
+import {UsersApiEndpoint} from './users-api-endpoint';
+import {RoleProfilesApiEndpoint} from './role-profiles-api-endpoint';
+import {InvitationsApiEndpoint} from './invitations-api-endpoint';
+import {UserResource} from './users-response';
+import {UserAssembler} from './user-assembler';
 
-@Injectable({
-  providedIn: 'root'
-})
 /**
- * The IamApi class provides methods for interacting with the IAM API, including signing up and signing in users.
- * @param http - The HttpClient used for making HTTP requests.
- * @param basePath - The base URL for the IAM API.
+ * Infrastructure facade for the IAM endpoints: authentication, users, profiles and invitations.
  */
-export class IamApi {
+@Injectable({providedIn: 'root'})
+export class IamApi extends BaseApi {
   private readonly http = inject(HttpClient);
-  private readonly basePath = 'http://localhost:3000/api/v1/authentication';
+  private readonly usersEndpoint = new UsersApiEndpoint(this.http);
+  private readonly roleProfilesEndpoint = new RoleProfilesApiEndpoint(this.http);
+  private readonly invitationsEndpoint = new InvitationsApiEndpoint(this.http);
+  private readonly usersUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderUsersEndpointPath}`;
+  private readonly userAssembler = new UserAssembler();
 
   /**
-   * Signs up a new user using the provided SignUpCommand.
-   * @param command
+   * Finds the user that matches the credentials of the command.
+   * @param command - Email and password entered by the user.
+   * @returns Stream with the user, or undefined when the credentials are invalid.
+   * @remarks The fake API filters users by query parameters; the DoofPlus Platform will expose a sign-in endpoint.
    */
-  signUp(command: SignUpCommand): Observable<SignUpResource> {
-    const request = SignUpAssembler.toRequestFromCommand(command);
-    return this.http.post<SignUpResponse>(`${this.basePath}/sign-up`, request).pipe(
-      map(response => SignUpAssembler.toResourceFromResponse(response)),
-      catchError(error => throwError(() => new Error('Failed to sign up: ' + error.message)))
+  findUserByCredentials = (command: SignInCommand): Observable<User | undefined> =>
+    this.http.get<UserResource[]>(this.usersUrl, {params: {email: command.email, password: command.password}}).pipe(
+      map(resources => resources.length ? this.userAssembler.toEntityFromResource(resources[0]) : undefined)
     );
-  }
 
   /**
-   * Signs in a user using the provided SignInCommand.
-   * @param command
+   * Checks the two-factor code of a user.
+   * @param userId - Identifier of the user that is signing in.
+   * @param code - Six-digit code from the authenticator app.
+   * @returns Stream that emits true when the code is valid.
    */
-  signIn(command: SignInCommand): Observable<SignInResource> {
-    const request = SignInAssembler.toRequestFromCommand(command);
-    return this.http.post<SignInResponse>(`${this.basePath}/sign-in`, request).pipe(
-      map(response => SignInAssembler.toResourceFromResponse(response)),
-      catchError(error => throwError(() => new Error('Failed to sign in: ' + error.message)))
+  verifyTwoFactorCode = (userId: number, code: string): Observable<boolean> =>
+    this.http.get<UserResource[]>(this.usersUrl, {params: {id: userId, twoFactorCode: code}}).pipe(
+      map(resources => resources.length > 0)
     );
-  }
+
+  /**
+   * Creates a user account with its password.
+   * @param user - The user to create.
+   * @param password - Initial password chosen by the user.
+   * @returns Stream with the created user.
+   * @remarks The fake API stores the password with the user; the DoofPlus Platform will hash it in a sign-up endpoint.
+   */
+  createUser = (user: User, password: string): Observable<User> =>
+    this.http.post<UserResource>(this.usersUrl, {...this.userAssembler.toResourceFromEntity(user), id: undefined, password}).pipe(
+      map(resource => this.userAssembler.toEntityFromResource(resource))
+    );
+
+  /**
+   * Retrieves all users of the organization.
+   * @returns Stream with the user collection.
+   */
+  getUsers = (): Observable<User[]> => this.usersEndpoint.getAll();
+
+  /**
+   * Retrieves the role profiles.
+   * @returns Stream with the profile collection.
+   */
+  getRoleProfiles = (): Observable<RoleProfile[]> => this.roleProfilesEndpoint.getAll();
+
+  /**
+   * Retrieves the invitations.
+   * @returns Stream with the invitation collection.
+   */
+  getInvitations = (): Observable<Invitation[]> => this.invitationsEndpoint.getAll();
+
+  /**
+   * Creates a new invitation.
+   * @param invitation - The invitation to send.
+   * @returns Stream with the created invitation.
+   */
+  createInvitation = (invitation: Invitation): Observable<Invitation> => this.invitationsEndpoint.create(invitation);
 }

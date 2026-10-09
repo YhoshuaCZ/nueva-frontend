@@ -1,0 +1,91 @@
+<section class="page">
+  @if (sensor(); as current) {
+    <app-page-header
+      [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'monitoring.detail.title' | translate]"
+      [title]="'monitoring.detail.title' | translate"
+      [subtitle]="current.equipmentCode + ' · ' + (equipment()?.name ?? '') + ' · ' + ('monitoring.detail.sensor' | translate) + ' ' + current.code + ' · ' + (equipment()?.location ?? '')">
+      <a mat-stroked-button routerLink="/production/equipment">← {{ 'nav.equipment-sensors' | translate }}</a>
+    </app-page-header>
+
+    @if (alert(); as open) {
+      <div class="alert critical">
+        <div>
+          <p class="severity">{{ 'monitoring.severity-level.' + open.severity | translate }}</p>
+          <strong>{{ open.code }} · {{ open.title }}</strong>
+          <p>{{ open.detail }}</p>
+        </div>
+        <span class="chip" [class]="open.status === 'open' ? 'chip-info' : 'chip-teal'">{{ 'monitoring.alert-status.' + open.status | translate }}</span>
+      </div>
+    }
+
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ current.code }} · {{ 'monitoring.detail.telemetry' | translate: {type: ('monitoring.type.' + current.type | translate)} }}</h2>
+          @if (lastReading(); as last) {
+            <p class="current" [class.out]="store.isOutOfRange(last)">
+              {{ last.value }} {{ current.unit }} · {{ (store.isOutOfRange(last) ? 'monitoring.out-of-range' : 'monitoring.within-range') | translate }}
+              <span class="muted small">· {{ 'monitoring.detail.last-reading' | translate }} {{ last.recordedAt | date: 'HH:mm' : 'UTC' }} UTC</span>
+            </p>
+          }
+          @if (alert(); as open) {
+            <p class="small danger">{{ 'monitoring.detail.remains-open' | translate: {code: open.code} }}</p>
+          }
+          <app-telemetry-chart [readings]="readings()" [lower]="current.lowerLimit" [upper]="current.upperLimit" [unit]="current.unit"
+                               [emptyText]="'monitoring.no-data' | translate"/>
+        </mat-card>
+
+        @if (alert(); as open) {
+          <mat-card appearance="outlined" class="panel">
+            <h2>{{ 'monitoring.detail.acknowledgment' | translate }}</h2>
+            @if (open.acknowledgedBy) {
+              <p class="label">{{ 'monitoring.detail.acknowledged-by' | translate }}</p>
+              <p>{{ open.acknowledgedBy }} · {{ open.acknowledgedAt | date: 'MMM dd, yyyy · HH:mm' : 'UTC' }} UTC</p>
+            }
+            <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'monitoring.detail.response-note' | translate }}</mat-label><textarea matInput rows="3" [formControl]="note" (input)="saved.set(false)"></textarea>
+              <small class="muted">{{ 'monitoring.detail.response-hint' | translate }}</small></mat-form-field></div>
+            @if (open.linkedRecord) {
+              <p class="label">{{ 'monitoring.detail.linked' | translate }}</p>
+              <p class="link-text">{{ open.linkedRecord }}</p>
+            }
+            <div class="row">
+              <button mat-flat-button type="button" (click)="saveNote()">{{ (open.status === 'open' ? 'monitoring.detail.acknowledge' : 'monitoring.detail.save-note') | translate }}</button>
+              @if (saved()) { <span class="chip chip-success">{{ 'monitoring.detail.saved' | translate }}</span> }
+            </div>
+          </mat-card>
+        }
+      </div>
+
+      <aside class="stack">
+        @if (equipment(); as item) {
+          <mat-card appearance="outlined" class="panel">
+            <h2>{{ 'monitoring.detail.equipment-calibration' | translate }}</h2>
+            <p class="label">{{ 'monitoring.detail.asset' | translate }}</p>
+            <p>{{ item.code }} · {{ item.name }} · {{ item.location }}</p>
+            <p class="label">{{ 'monitoring.detail.sensor' | translate }} {{ current.code }}</p>
+            <p>{{ 'monitoring.type.' + current.type | translate }} · {{ current.unit }} · <span class="mono">{{ current.deviceId }}</span></p>
+            <p class="label">{{ 'monitoring.equipment.calibration-due' | translate }}</p>
+            <p>{{ item.calibrationDue | date: 'MMM dd, yyyy' }} <span class="chip" [class]="item.calibrationStatus === 'fit' ? 'chip-success' : 'chip-warning'">{{ 'monitoring.calibration.' + item.calibrationStatus | translate }}</span></p>
+            <p class="muted">{{ item.certificate }}</p>
+            <p class="label">{{ 'monitoring.detail.maintenance-owner' | translate }}</p>
+            <p>{{ item.maintenanceOwner }} @if (item.workOrder) { · {{ item.workOrder }} }</p>
+          </mat-card>
+        }
+        @if (alert(); as open) {
+          <mat-card appearance="outlined" class="panel">
+            <h2>{{ 'monitoring.detail.workflow' | translate }}</h2>
+            <ol class="workflow">
+              <li class="done">{{ 'monitoring.detail.step-threshold' | translate }}</li>
+              <li [class.done]="open.status !== 'open'">{{ 'monitoring.detail.step-acknowledged' | translate }}</li>
+              <li [class.done]="!!open.linkedRecord">{{ 'monitoring.detail.step-investigation' | translate }}</li>
+              <li [class.done]="open.status === 'closed'">{{ 'monitoring.detail.step-disposition' | translate }}</li>
+            </ol>
+            <p class="small note">{{ 'monitoring.rules.acknowledgment-text' | translate }}</p>
+          </mat-card>
+        }
+      </aside>
+    </div>
+  } @else {
+    <p class="muted">{{ 'monitoring.detail.not-found' | translate }}</p>
+  }
+</section>

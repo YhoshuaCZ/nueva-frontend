@@ -154,6 +154,10 @@ a {
   overflow-x: auto;
 }
 
+.table-scroll .mat-mdc-cell {
+  white-space: nowrap;
+}
+
 .code {
   color: var(--teal);
   font-weight: 700;
@@ -191,6 +195,24 @@ a {
 .stat-note {
   color: var(--muted);
   font-size: 12px;
+}
+
+/* Several figures in one card, separated by vertical rules. */
+.mat-mdc-card.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 16px 0;
+}
+
+.summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 24px;
+}
+
+.summary > div + div {
+  border-left: 1px solid var(--border);
 }
 
 /* ---------- Status chips ---------- */
@@ -264,6 +286,15 @@ a {
 
 .alert .mat-icon {
   flex-shrink: 0;
+  color: var(--warning);
+}
+
+.alert-danger .mat-icon {
+  color: var(--danger-dark);
+}
+
+.alert-info .mat-icon {
+  color: var(--teal);
 }
 
 /* ---------- Forms ---------- */
@@ -288,12 +319,79 @@ a {
   grid-column: 1 / -1;
 }
 
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field .mat-mdc-form-field {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.field-error {
+  margin: -14px 0 12px;
+  color: var(--danger-dark);
+  font-size: 12px;
+}
+
+/* ---------- Buttons, tabs and icons ---------- */
+
+.mat-mdc-button-base.danger {
+  --mat-button-filled-container-color: var(--danger);
+}
+
+.mat-mdc-button-base.warning {
+  --mat-button-filled-container-color: var(--warning-strong);
+  --mat-button-filled-label-text-color: var(--navy);
+}
+
+.mat-mdc-form-field.picker {
+  width: 240px;
+}
+
+.mat-mdc-button-base.block {
+  width: 100%;
+}
+
+.mat-mdc-tab-nav-bar.tabs {
+  --mat-tab-active-indicator-color: var(--teal);
+  --mat-tab-active-label-text-color: var(--teal);
+  --mat-tab-active-focus-label-text-color: var(--teal);
+  --mat-tab-active-hover-label-text-color: var(--teal);
+  --mat-tab-inactive-label-text-color: var(--slate);
+  --mat-tab-label-text-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.mat-icon.inline {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  vertical-align: text-bottom;
+}
+
+.card-body {
+  padding: 16px 20px;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1100px) {
   .columns,
   .grid-2 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .mat-mdc-card.summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+  }
+
+  .summary > div:nth-child(3) {
+    border-left: 0;
   }
 }
 

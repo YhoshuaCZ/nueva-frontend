@@ -1,0 +1,91 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'quality.deviations.title' | translate]"
+    [title]="'quality.deviations.title' | translate"
+    [subtitle]="deviation() ? deviation()!.code + ' · ' + deviation()!.title + ' · ' + ('quality.deviations.linked-to' | translate) + ' ' + deviation()!.batchCode : ''">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="picker"><mat-select [value]="code()" (selectionChange)="code.set($event.value); submitResult.set(null)" aria-label="Record">
+      @for (item of store.deviations(); track item.id) { <mat-option [value]="item.code">{{ item.code }}</mat-option> }
+    </mat-select></mat-form-field>
+  </app-page-header>
+
+  @if (deviation(); as dev) {
+    <div class="row">
+      <span class="chip chip-warning">{{ 'quality.classification.' + dev.classification | translate }} · RPN {{ rpn() }}</span>
+      <span class="chip chip-neutral">{{ 'quality.deviation-status.' + dev.status | translate }}</span>
+      <span class="spacer"></span>
+      <span class="small muted">{{ 'quality.deviations.routes' | translate }}</span>
+    </div>
+    @if (submitResult() === 'blocked') {
+      <div class="alert alert-danger" role="alert"><div><strong>{{ 'quality.deviations.evidence-required' | translate }}</strong></div></div>
+    }
+    @if (submitResult() === 'submitted') {
+      <div class="alert alert-info" role="status"><div><strong>{{ 'quality.deviations.submitted' | translate }}</strong></div></div>
+    }
+
+    <div class="columns">
+      <mat-card appearance="outlined" class="panel"><form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <h2>{{ 'quality.deviations.investigation' | translate }}</h2>
+        <p class="small muted">* {{ 'quality.deviations.required' | translate }}</p>
+        <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.deviations.summary' | translate }}</mat-label><textarea matInput rows="2" formControlName="summary"></textarea></mat-form-field></div>
+        <div class="row">
+          <div class="field grow"><mat-form-field appearance="outline"><mat-label>{{ 'quality.deviations.affected' | translate }}</mat-label><input matInput type="text" [value]="dev.batchCode + ' / ' + dev.orderCode" disabled></mat-form-field></div>
+          <span class="chip chip-danger">{{ 'quality.deviations.batch-held' | translate }}</span>
+        </div>
+        <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.deviations.classification' | translate }}</mat-label><mat-select formControlName="classification">
+            @for (item of ['minor', 'major', 'critical']; track item) { <mat-option [value]="item">{{ 'quality.classification.' + item | translate }}</mat-option> }
+          </mat-select></mat-form-field>
+@if (form.controls.classification.value !== 'minor') { <p class="field-error">▲ {{ 'quality.deviations.impact-required' | translate }}</p> }</div>
+        <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.deviations.containment' | translate }}</mat-label><input matInput type="text" formControlName="containment"></mat-form-field></div>
+        <p class="field-label">{{ 'quality.deviations.risk' | translate }} *</p>
+        <div class="rpn">
+          @for (factor of ['severity', 'likelihood', 'detectability']; track factor; let last = $last) {
+            <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.deviations.' + factor | translate }}</mat-label><mat-select [formControlName]="factor">
+                @for (score of scores; track score) { <mat-option [value]="score">{{ score }}</mat-option> }
+              </mat-select></mat-form-field></div>
+            @if (!last) { <span class="times">×</span> }
+          }
+        </div>
+        <p class="calculated">{{ 'quality.deviations.calculated' | translate }}: <strong>{{ rpn() }}</strong>
+          ({{ form.controls.severity.value }} × {{ form.controls.likelihood.value }} × {{ form.controls.detectability.value }})</p>
+        <p class="warning"><mat-icon class="inline">warning_amber</mat-icon>{{ 'quality.deviations.all-evidence' | translate }}</p>
+        @if (dev.capaCode) {
+          <p class="field-label">{{ 'quality.deviations.linked-capa' | translate }}</p>
+          <p><a routerLink="/qa/capa">{{ dev.capaCode }}</a></p>
+        }
+        <button mat-flat-button type="submit">{{ 'quality.deviations.submit' | translate }}</button>
+      </form></mat-card>
+
+      <aside class="stack">
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.deviations.evidence' | translate }}</h2>
+          <p class="small muted">{{ 'quality.deviations.files' | translate: {count: evidence().length} }}</p>
+          @for (item of evidence(); track item.id) {
+            <div class="evidence" [class.pending]="item.status === 'pending-review'">
+              <div><strong>{{ item.fileName }}</strong><span class="small muted">{{ item.detail }}</span></div>
+              @if (item.status === 'pending-review') {
+                <button mat-stroked-button type="button" (click)="store.reviewEvidence(item)">{{ 'quality.deviations.mark-reviewed' | translate }}</button>
+              } @else {
+                <span class="chip chip-success">{{ 'quality.evidence-status.' + item.status | translate }}</span>
+              }
+            </div>
+          }
+          <input #evidenceFile type="file" accept=".csv,.jpg,.pdf,.xlsx" hidden (change)="attach($event)">
+          <button mat-button type="button" class="attach" (click)="evidenceFile.click()"><mat-icon>attach_file</mat-icon>{{ 'quality.deviations.attach' | translate }}</button>
+          <p class="small muted">{{ 'quality.deviations.supported' | translate }}</p>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel disposition">
+          <h2>{{ 'quality.deviations.disposition' | translate }} — {{ 'quality.deviation-status.' + dev.status | translate }}</h2>
+          <p>{{ 'quality.deviations.disposition-text' | translate }}</p>
+          <span class="chip chip-danger"><mat-icon class="inline">lock</mat-icon>{{ 'quality.deviations.release-blocked' | translate }}</span>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.deviations.timeline' | translate }}</h2>
+          <p><strong>{{ 'quality.deviations.reported' | translate }}</strong> <span class="small muted">{{ dev.reportedBy }} · {{ dev.reportedAt | date: 'MMM dd, HH:mm' : 'UTC' }} UTC</span></p>
+          <p><strong>{{ 'quality.deviations.assessment' | translate }}</strong> <span class="small muted">{{ dev.owner }} · {{ dev.dueAt | date: 'MMM dd, HH:mm' : 'UTC' }} UTC</span></p>
+          @if (dev.capaCode) { <p><strong>{{ 'quality.deviations.capa-linked' | translate }} · {{ dev.capaCode }}</strong></p> }
+          <p class="danger"><strong>{{ 'quality.deviations.release-decision' | translate }}</strong> · {{ 'quality.deviations.blocked-until' | translate }}</p>
+        </mat-card>
+      </aside>
+    </div>
+  }
+</section>

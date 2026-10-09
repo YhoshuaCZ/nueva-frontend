@@ -1,0 +1,63 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'nav.quality-indicators' | translate]"
+    [title]="'nav.quality-indicators' | translate"
+    [subtitle]="'quality.indicators.subtitle' | translate">
+    <button mat-flat-button type="button" (click)="export()">{{ 'quality.indicators.export' | translate }}</button>
+  </app-page-header>
+
+  <div class="stats">
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.indicators.complete' | translate }}</p>
+      <p class="stat-value">{{ (closedBatches - store.gaps().length) * 100 / closedBatches }} %</p>
+      <p class="stat-note">{{ 'quality.indicators.complete-note' | translate: {done: closedBatches - store.gaps().length, total: closedBatches} }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.indicators.missing' | translate }}</p><p class="stat-value">{{ store.gaps().length }}</p>
+      <p class="stat-note">{{ 'quality.indicators.missing-note' | translate }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.indicators.closed' | translate }}</p><p class="stat-value">{{ closedDeviations() }}</p>
+      <p class="stat-note">{{ 'quality.indicators.closed-note' | translate }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.indicators.recurrent' | translate }}</p><p class="stat-value">{{ recurrent().length }}</p>
+      <p class="stat-note">{{ 'quality.indicators.recurrent-note' | translate }}</p></mat-card>
+  </div>
+
+  <div class="grid-2">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div><h2>{{ 'quality.indicators.gaps' | translate }}</h2><span class="spacer"></span><p class="small muted">{{ 'quality.indicators.gaps-text' | translate }}</p></div></div>
+      <div class="table-scroll"><table mat-table [dataSource]="store.gaps()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.batch' | translate }}</th>
+    <td mat-cell *matCellDef="let gap"><strong>{{ gap.batchCode }}</strong></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.product' | translate }}</th>
+    <td mat-cell *matCellDef="let gap">{{ gap.product }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.indicators.missing-records' | translate }}</th>
+    <td mat-cell *matCellDef="let gap">{{ gap.missingRecord }}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2']"></tr>
+  <tr mat-row *matRowDef="let gap; columns: ['c0', 'c1', 'c2']" class="clickable" [class.highlight]="gap.batchCode === selectedGap()" (click)="selectedGap.set(gap.batchCode)"></tr>
+</table></div>
+      @for (gap of store.gaps(); track gap.id) {
+        @if (gap.batchCode === selectedGap()) { <p class="card-body detail">{{ gap.batchCode }} · {{ gap.detail }}</p> }
+      }
+    </mat-card>
+
+    <mat-card appearance="outlined" class="panel">
+      <h2>{{ 'quality.indicators.by-cause' | translate }}</h2>
+      <p class="small muted">{{ 'quality.indicators.by-cause-text' | translate }}</p>
+      <div class="heat" [style.grid-template-columns]="'180px repeat(' + months().length + ', 1fr)'">
+        <span></span>
+        @for (month of months(); track month) { <span class="month">{{ month }}</span> }
+        @for (cause of causes(); track cause) {
+          <span class="cause">{{ cause }}</span>
+          @for (month of months(); track month) {
+            <span class="cell"><i [style.height.px]="4 + countOf(cause, month) * 8" [class.hot]="recurrent().includes(cause)"></i><small>{{ countOf(cause, month) }}</small></span>
+          }
+        }
+      </div>
+      @for (cause of recurrent(); track cause) {
+        <p class="small danger">{{ 'quality.indicators.recurrent-text' | translate: {cause: cause, count: totalOf(cause)} }}</p>
+      }
+    </mat-card>
+  </div>
+</section>

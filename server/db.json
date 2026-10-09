@@ -1,22 +1,2026 @@
 {
-  "production-batches": [
+  "users": [
     {
-      "id": "LT-2026-001",
-      "productFormula": "Paracetamol 500mg",
-      "quantity": 10000,
-      "status": "Planned"
+      "id": 1,
+      "fullName": "María México",
+      "initials": "MM",
+      "email": "maria.mexico@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "qa-specialist",
+      "environment": "qa",
+      "facility": "Ate / Lima",
+      "status": "active",
+      "privilege": "qa-release",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
     },
     {
-      "id": "LT-2026-002",
-      "productFormula": "Ibuprofen 200mg",
-      "quantity": 5000,
-      "status": "In Progress"
+      "id": 2,
+      "fullName": "Alberto Valle",
+      "initials": "AV",
+      "email": "alberto.valle@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "production-supervisor",
+      "environment": "production",
+      "facility": "Ate",
+      "status": "active",
+      "privilege": "no-final-release",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
     },
     {
-      "id": "LT-2026-003",
-      "productFormula": "Amoxicillin 250mg",
-      "quantity": 8000,
-      "status": "Completed"
+      "id": 3,
+      "fullName": "Elena Paz",
+      "initials": "EP",
+      "email": "elena.paz@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "qa-specialist",
+      "environment": "qa",
+      "facility": "Lima",
+      "status": "active",
+      "privilege": "none",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 4,
+      "fullName": "Carlos Medina",
+      "initials": "CM",
+      "email": "carlos.medina@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "administrator",
+      "environment": "administration",
+      "facility": "All facilities",
+      "status": "active",
+      "privilege": "administrator",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 5,
+      "fullName": "Óscar Ramos",
+      "initials": "ÓR",
+      "email": "oscar.ramos@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "internal-auditor",
+      "environment": "qa",
+      "facility": "Ate",
+      "status": "invited",
+      "privilege": "read-only",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    },
+    {
+      "id": 6,
+      "fullName": "Lucía Paredes",
+      "initials": "LP",
+      "email": "lucia.paredes@andinos.com.pe",
+      "password": "DoofPlus2026!",
+      "twoFactorCode": "482106",
+      "role": "quality-manager",
+      "environment": "qa",
+      "facility": "Ate",
+      "status": "active",
+      "privilege": "none",
+      "organizationId": 1,
+      "organizationName": "Laboratorios Andinos",
+      "plant": "Ate plant"
+    }
+  ],
+  "role-profiles": [
+    {
+      "id": 1,
+      "key": "qa-specialist",
+      "name": "QA Specialist",
+      "createEdit": [
+        "Documents",
+        "CAPA"
+      ],
+      "approveSign": "Release if authorized",
+      "restriction": "No billing access",
+      "tone": "teal"
+    },
+    {
+      "id": 2,
+      "key": "production-supervisor",
+      "name": "Production Supervisor",
+      "createEdit": [
+        "Orders",
+        "Incidents"
+      ],
+      "approveSign": "Production records",
+      "restriction": "Cannot release batch",
+      "tone": "purple"
+    },
+    {
+      "id": 3,
+      "key": "quality-manager",
+      "name": "Quality Manager",
+      "createEdit": [
+        "Documents"
+      ],
+      "approveSign": "Approve documents and CAPA",
+      "restriction": "Cannot approve own records",
+      "tone": "pink"
+    },
+    {
+      "id": 4,
+      "key": "internal-auditor",
+      "name": "Internal Auditor",
+      "createEdit": [],
+      "approveSign": "None",
+      "restriction": "Read-only evidence",
+      "tone": "neutral"
+    },
+    {
+      "id": 5,
+      "key": "administrator",
+      "name": "Administrator",
+      "createEdit": [
+        "Users",
+        "Plans"
+      ],
+      "approveSign": "None",
+      "restriction": "No QA release or signing",
+      "tone": "neutral"
+    }
+  ],
+  "invitations": [
+    {
+      "id": 1,
+      "fullName": "Óscar Ramos",
+      "email": "oscar.ramos@andinos.com.pe",
+      "role": "internal-auditor",
+      "facility": "Ate manufacturing",
+      "note": "Please review the Q4 audit evidence package.",
+      "status": "pending",
+      "sentAt": "2026-10-05T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "fullName": "Jorge Salas",
+      "email": "jorge.salas@andinos.com.pe",
+      "role": "production-supervisor",
+      "facility": "Ate manufacturing",
+      "note": "",
+      "status": "pending",
+      "sentAt": "2026-10-06T09:30:00Z"
+    }
+  ],
+  "plans": [
+    {
+      "id": 1,
+      "key": "standard-lab",
+      "name": "Standard Lab",
+      "monthlyPrice": 199,
+      "annualPrice": 1990,
+      "userLimit": 10,
+      "iotDeviceLimit": 5
+    },
+    {
+      "id": 2,
+      "key": "enterprise",
+      "name": "Enterprise",
+      "monthlyPrice": 599,
+      "annualPrice": 5990,
+      "userLimit": 0,
+      "iotDeviceLimit": 0
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": 1,
+      "organizationId": 1,
+      "planKey": "enterprise",
+      "billingCycle": "monthly",
+      "status": "pending",
+      "paymentState": "declined",
+      "nextInvoiceDate": "2026-11-01",
+      "autoRenew": true,
+      "cardBrand": "Visa",
+      "cardLast4": "4242",
+      "cardExpiry": "08/2028",
+      "billingEmail": "billing@andinos.com.pe"
+    }
+  ],
+  "invoices": [
+    {
+      "id": 1,
+      "subscriptionId": 1,
+      "number": "INV-2026-0801",
+      "issuedAt": "2026-08-01",
+      "amount": 599,
+      "status": "approved"
+    },
+    {
+      "id": 2,
+      "subscriptionId": 1,
+      "number": "INV-2026-0901",
+      "issuedAt": "2026-09-01",
+      "amount": 599,
+      "status": "approved"
+    },
+    {
+      "id": 3,
+      "subscriptionId": 1,
+      "number": "INV-2026-1001",
+      "issuedAt": "2026-10-01",
+      "amount": 599,
+      "status": "declined"
+    }
+  ],
+  "organizations": [
+    {
+      "id": 1,
+      "legalName": "Laboratorios Andinos S.A.C.",
+      "ruc": "20512345678",
+      "region": "Peru",
+      "ownerName": "Carlos Medina",
+      "status": "active"
+    }
+  ],
+  "facilities": [
+    {
+      "id": 1,
+      "organizationId": 1,
+      "name": "Ate",
+      "type": "manufacturing",
+      "timezone": "America/Lima",
+      "ownerName": "Alberto Valle",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "organizationId": 1,
+      "name": "Lima",
+      "type": "qc-laboratory",
+      "timezone": "America/Lima",
+      "ownerName": "María México",
+      "status": "active"
+    }
+  ],
+  "user-profiles": [
+    {
+      "id": 1,
+      "userId": 1,
+      "firstName": "María",
+      "lastName": "México",
+      "email": "maria.mexico@andinos.com.pe",
+      "area": "Quality",
+      "site": "Lima QC lab",
+      "emailNotifications": true,
+      "inAppNotifications": true,
+      "language": "en"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "firstName": "Alberto",
+      "lastName": "Valle",
+      "email": "alberto.valle@andinos.com.pe",
+      "area": "Production",
+      "site": "Ate plant",
+      "emailNotifications": true,
+      "inAppNotifications": true,
+      "language": "es"
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "firstName": "Carlos",
+      "lastName": "Medina",
+      "email": "carlos.medina@andinos.com.pe",
+      "area": "Administration",
+      "site": "Ate plant",
+      "emailNotifications": true,
+      "inAppNotifications": false,
+      "language": "en"
+    }
+  ],
+  "administrative-activities": [
+    {
+      "id": 1,
+      "title": "Invitation sent to Óscar Ramos",
+      "actor": "Carlos Medina",
+      "occurredAt": "2026-10-07T09:15:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Profile updated: QA Specialist",
+      "actor": "Carlos Medina",
+      "occurredAt": "2026-10-06T15:20:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Payment declined · INV-2026-1001",
+      "actor": "Niubiz",
+      "occurredAt": "2026-10-01T08:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "code": "AC500",
+      "name": "Paracetamol 500 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v3.2",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 2,
+      "code": "IB200",
+      "name": "Ibuprofen 200 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v2.0",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 3,
+      "code": "AM500",
+      "name": "Amoxicillin 500 mg",
+      "dosageForm": "Capsule",
+      "formulaVersion": "v1.1",
+      "formulaStatus": "approved"
+    },
+    {
+      "id": 4,
+      "code": "MF850",
+      "name": "Metformin 850 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "v1.0 draft",
+      "formulaStatus": "pending"
+    },
+    {
+      "id": 5,
+      "code": "LR010",
+      "name": "Loratadine 10 mg",
+      "dosageForm": "Tablet",
+      "formulaVersion": "",
+      "formulaStatus": "none"
+    }
+  ],
+  "master-formulas": [
+    {
+      "id": 1,
+      "productCode": "AC500",
+      "version": "v3.2",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-09-18",
+      "batchSize": 120000
+    },
+    {
+      "id": 2,
+      "productCode": "IB200",
+      "version": "v2.0",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-08-02",
+      "batchSize": 80000
+    },
+    {
+      "id": 3,
+      "productCode": "AM500",
+      "version": "v1.1",
+      "status": "approved",
+      "approvedBy": "Lucía Paredes (Quality manager)",
+      "approvedAt": "2026-07-15",
+      "batchSize": 60000
+    },
+    {
+      "id": 4,
+      "productCode": "MF850",
+      "version": "v1.0",
+      "status": "draft",
+      "approvedBy": "",
+      "approvedAt": "",
+      "batchSize": 90000
+    }
+  ],
+  "formula-items": [
+    {
+      "id": 1,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Paracetamol (API)",
+      "role": "Active ingredient",
+      "target": "60.0 kg",
+      "tolerance": "± 0.5 %",
+      "control": "Meridian Ingredients · RM-26098"
+    },
+    {
+      "id": 2,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Microcrystalline cellulose",
+      "role": "Diluent",
+      "target": "12.0 kg",
+      "tolerance": "± 1.0 %",
+      "control": "Meridian Ingredients · RM-26092"
+    },
+    {
+      "id": 3,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Povidone K30",
+      "role": "Binder",
+      "target": "1.8 kg",
+      "tolerance": "± 2.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 4,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Croscarmellose sodium",
+      "role": "Disintegrant",
+      "target": "1.4 kg",
+      "tolerance": "± 2.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 5,
+      "formulaId": 1,
+      "kind": "component",
+      "name": "Magnesium stearate",
+      "role": "Lubricant",
+      "target": "0.36 kg",
+      "tolerance": "± 5.0 %",
+      "control": "Andes Excipients"
+    },
+    {
+      "id": 6,
+      "formulaId": 1,
+      "kind": "parameter",
+      "name": "Coating temperature",
+      "role": "",
+      "target": "22.0 °C",
+      "tolerance": "18.0–25.0 °C",
+      "control": "Sensor T-204"
+    },
+    {
+      "id": 7,
+      "formulaId": 1,
+      "kind": "parameter",
+      "name": "Tablet weight",
+      "role": "",
+      "target": "620 mg",
+      "tolerance": "± 3.0 %",
+      "control": "QC sampling"
+    },
+    {
+      "id": 8,
+      "formulaId": 2,
+      "kind": "component",
+      "name": "Ibuprofen (API)",
+      "role": "Active ingredient",
+      "target": "16.0 kg",
+      "tolerance": "± 0.5 %",
+      "control": "Meridian Ingredients"
+    },
+    {
+      "id": 9,
+      "formulaId": 2,
+      "kind": "component",
+      "name": "Lactose monohydrate",
+      "role": "Diluent",
+      "target": "9.5 kg",
+      "tolerance": "± 1.0 %",
+      "control": "Andes Excipients"
+    }
+  ],
+  "production-orders": [
+    {
+      "id": 1,
+      "code": "PO-26041",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26041",
+      "plannedQuantity": 120000,
+      "line": "Line 02",
+      "status": "on-hold",
+      "plannedStart": "2026-10-07T06:00:00Z",
+      "plannedEnd": "2026-10-07T16:00:00Z"
+    },
+    {
+      "id": 2,
+      "code": "PO-26042",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26042",
+      "plannedQuantity": 120000,
+      "line": "Line 01",
+      "status": "in-progress",
+      "plannedStart": "2026-10-07T07:00:00Z",
+      "plannedEnd": "2026-10-07T17:00:00Z"
+    },
+    {
+      "id": 3,
+      "code": "PO-26043",
+      "productCode": "IB200",
+      "formulaId": 2,
+      "batchCode": "B-26043",
+      "plannedQuantity": 80000,
+      "line": "Line 03",
+      "status": "in-progress",
+      "plannedStart": "2026-10-07T08:00:00Z",
+      "plannedEnd": "2026-10-07T18:00:00Z"
+    },
+    {
+      "id": 4,
+      "code": "PO-26044",
+      "productCode": "AC500",
+      "formulaId": 1,
+      "batchCode": "B-26044",
+      "plannedQuantity": 120000,
+      "line": "Line 01",
+      "status": "planned",
+      "plannedStart": "2026-10-08T06:00:00Z",
+      "plannedEnd": "2026-10-08T16:00:00Z"
+    }
+  ],
+  "operations": [
+    {
+      "id": 1,
+      "orderId": 1,
+      "sequence": 1,
+      "name": "Dispensing",
+      "equipment": "RM station · Alberto Valle",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 2,
+      "orderId": 1,
+      "sequence": 2,
+      "name": "Granulation",
+      "equipment": "EQ-GRAN-01",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 3,
+      "orderId": 1,
+      "sequence": 3,
+      "name": "Compression",
+      "equipment": "EQ-PRESS-02",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 4,
+      "orderId": 1,
+      "sequence": 4,
+      "name": "Coating",
+      "equipment": "EQ-COAT-02 · T-204",
+      "progress": 68,
+      "status": "on-hold",
+      "reference": "DEV-26017"
+    },
+    {
+      "id": 5,
+      "orderId": 1,
+      "sequence": 5,
+      "name": "Packaging",
+      "equipment": "Line 02",
+      "progress": 0,
+      "status": "not-started",
+      "reference": ""
+    },
+    {
+      "id": 6,
+      "orderId": 2,
+      "sequence": 1,
+      "name": "Dispensing",
+      "equipment": "RM station · Alberto Valle",
+      "progress": 100,
+      "status": "complete",
+      "reference": ""
+    },
+    {
+      "id": 7,
+      "orderId": 2,
+      "sequence": 2,
+      "name": "Granulation",
+      "equipment": "EQ-GRAN-01",
+      "progress": 42,
+      "status": "in-progress",
+      "reference": ""
+    },
+    {
+      "id": 8,
+      "orderId": 2,
+      "sequence": 3,
+      "name": "Compression",
+      "equipment": "EQ-PRESS-01",
+      "progress": 0,
+      "status": "not-started",
+      "reference": ""
+    }
+  ],
+  "batches": [
+    {
+      "id": 1,
+      "code": "B-26041",
+      "productCode": "AC500",
+      "orderCode": "PO-26041",
+      "quantity": 120000,
+      "line": "Line 02",
+      "owner": "Alberto Valle",
+      "status": "on-hold",
+      "progress": 68,
+      "incident": "Held during coating · Temperature excursion · DEV-26017",
+      "lastActivity": "Release validation blocked",
+      "lastActivityAt": "2026-10-07T10:32:00Z"
+    },
+    {
+      "id": 2,
+      "code": "B-26042",
+      "productCode": "AC500",
+      "orderCode": "PO-26042",
+      "quantity": 120000,
+      "line": "Line 01",
+      "owner": "Alberto Valle",
+      "status": "in-progress",
+      "progress": 42,
+      "incident": "",
+      "lastActivity": "Granulation started",
+      "lastActivityAt": "2026-10-07T09:10:00Z"
+    },
+    {
+      "id": 3,
+      "code": "B-26043",
+      "productCode": "IB200",
+      "orderCode": "PO-26043",
+      "quantity": 80000,
+      "line": "Line 03",
+      "owner": "Alberto Valle",
+      "status": "in-progress",
+      "progress": 15,
+      "incident": "",
+      "lastActivity": "Dispensing complete",
+      "lastActivityAt": "2026-10-07T08:40:00Z"
+    },
+    {
+      "id": 4,
+      "code": "B-26038",
+      "productCode": "AC500",
+      "orderCode": "PO-26038",
+      "quantity": 120000,
+      "line": "Line 01",
+      "owner": "María México",
+      "status": "release-requested",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Release requested",
+      "lastActivityAt": "2026-10-06T17:05:00Z"
+    },
+    {
+      "id": 5,
+      "code": "B-26039",
+      "productCode": "IB200",
+      "orderCode": "PO-26039",
+      "quantity": 80000,
+      "line": "Line 03",
+      "owner": "Lucía Paredes",
+      "status": "release-requested",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Release requested",
+      "lastActivityAt": "2026-10-06T16:20:00Z"
+    },
+    {
+      "id": 6,
+      "code": "B-26037",
+      "productCode": "AC500",
+      "orderCode": "PO-26037",
+      "quantity": 120000,
+      "line": "Line 02",
+      "owner": "María México",
+      "status": "released",
+      "progress": 100,
+      "incident": "",
+      "lastActivity": "Released by QA",
+      "lastActivityAt": "2026-10-05T11:00:00Z"
+    }
+  ],
+  "batch-events": [
+    {
+      "id": 1,
+      "batchCode": "B-26041",
+      "title": "Created & materials allocated",
+      "detail": "Alberto Valle",
+      "occurredAt": "2026-10-06T15:00:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26041",
+      "title": "Production started",
+      "detail": "Line 02",
+      "occurredAt": "2026-10-07T06:00:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26041",
+      "title": "Coating started",
+      "detail": "EQ-COAT-02",
+      "occurredAt": "2026-10-07T09:48:00Z",
+      "tone": "normal"
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26041",
+      "title": "On hold · Temperature excursion",
+      "detail": "DEV-26017",
+      "occurredAt": "2026-10-07T10:26:00Z",
+      "tone": "warning"
+    },
+    {
+      "id": 5,
+      "batchCode": "B-26041",
+      "title": "Release validation blocked",
+      "detail": "María México",
+      "occurredAt": "2026-10-07T10:32:00Z",
+      "tone": "danger"
+    }
+  ],
+  "material-lots": [
+    {
+      "id": 1,
+      "code": "RM-26098",
+      "receiptCode": "RCV-26098",
+      "material": "Paracetamol (API)",
+      "category": "api",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-AC-0911",
+      "quantity": "500 kg · 20 sealed drums",
+      "expiryDate": "2028-08-31",
+      "storageLocation": "W-B04 · Released stock",
+      "certificate": "CoA_MI-AC-0911.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 2,
+      "code": "RM-26092",
+      "receiptCode": "RCV-26092",
+      "material": "Microcrystalline cellulose",
+      "category": "excipient",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-MC-0874",
+      "quantity": "200 kg · 8 bags",
+      "expiryDate": "2028-05-31",
+      "storageLocation": "W-B07 · Released stock",
+      "certificate": "CoA_MI-MC-0874.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 3,
+      "code": "RM-26081",
+      "receiptCode": "RCV-26081",
+      "material": "Blister foil",
+      "category": "packaging",
+      "supplier": "Andes Packaging",
+      "supplierLot": "AP-BF-0412",
+      "quantity": "40 rolls",
+      "expiryDate": "2029-01-31",
+      "storageLocation": "W-P02 · Released stock",
+      "certificate": "CoA_AP-BF-0412.pdf",
+      "status": "approved",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "done",
+      "allocatedBatch": "B-26041"
+    },
+    {
+      "id": 4,
+      "code": "RM-26104",
+      "receiptCode": "RCV-26104",
+      "material": "Paracetamol (API)",
+      "category": "api",
+      "supplier": "Meridian Ingredients",
+      "supplierLot": "MI-AC-0926",
+      "quantity": "500 kg · 20 sealed drums",
+      "expiryDate": "2028-09-30",
+      "storageLocation": "Q-A12 · Quarantine zone",
+      "certificate": "CoA_MI-AC-0926.pdf",
+      "status": "sampling",
+      "packagingVerified": true,
+      "identityVerified": true,
+      "samplingStatus": "pending",
+      "allocatedBatch": ""
+    }
+  ],
+  "equipment": [
+    {
+      "id": 1,
+      "code": "EQ-MIX-02",
+      "name": "High-shear mixer",
+      "model": "Glatt VG-400 · SN 48213",
+      "location": "Ate · Line 02",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-03-14",
+      "certificate": "CAL-MIX-0326",
+      "nextMaintenance": "2026-11-20",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Operational · 1 sensor online"
+    },
+    {
+      "id": 2,
+      "code": "EQ-COAT-02",
+      "name": "Tablet coater",
+      "model": "Bosch Solidlab 2 · SN 77120",
+      "location": "Ate · Line 02",
+      "calibrationStatus": "due",
+      "calibrationDue": "2026-10-08",
+      "certificate": "CAL-204-0426",
+      "nextMaintenance": "2026-10-30",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "WO-26087",
+      "healthNote": "Temperature recovered · Inspection due"
+    },
+    {
+      "id": 3,
+      "code": "EQ-TAB-01",
+      "name": "Rotary tablet press",
+      "model": "Fette 1200i · SN 30981",
+      "location": "Ate · Line 01",
+      "calibrationStatus": "not-fit",
+      "calibrationDue": "2026-10-05",
+      "certificate": "CAL-TAB-1025",
+      "nextMaintenance": "2026-10-05",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "WO-26090",
+      "healthNote": "Calibration expired · Not fit for use"
+    },
+    {
+      "id": 4,
+      "code": "EQ-PRESS-01",
+      "name": "Rotary tablet press",
+      "model": "Fette 1090 · SN 30455",
+      "location": "Ate · Line 01",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-02-01",
+      "certificate": "CAL-PRS-0227",
+      "nextMaintenance": "2026-12-15",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Pressure 6.1 bar · Operational"
+    },
+    {
+      "id": 5,
+      "code": "EQ-HPLC-03",
+      "name": "HPLC system",
+      "model": "Agilent 1260 · SN DE6310",
+      "location": "Lima QC lab",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-01-12",
+      "certificate": "CAL-HPLC-0127",
+      "nextMaintenance": "2027-01-12",
+      "maintenanceOwner": "Elena Paz",
+      "workOrder": "",
+      "healthNote": "Operational"
+    },
+    {
+      "id": 6,
+      "code": "STORAGE-A",
+      "name": "Storage A",
+      "model": "Warehouse zone A",
+      "location": "Ate · Storage",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-06-30",
+      "certificate": "CAL-STA-0627",
+      "nextMaintenance": "2026-12-03",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Humidity warning · RH 66 %"
+    }
+  ],
+  "sensors": [
+    {
+      "id": 1,
+      "code": "T-204",
+      "deviceId": "tb-7f3a2c91-coat02-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 18,
+      "upperLimit": 25,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 2,
+      "code": "H-118",
+      "deviceId": "tb-7f3a2c91-coat02-hum",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 0,
+      "upperLimit": 55,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 3,
+      "code": "P-031",
+      "deviceId": "tb-7f3a2c91-coat02-pres",
+      "type": "pressure",
+      "unit": "Pa",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 10,
+      "upperLimit": 15,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 4,
+      "code": "T-310",
+      "deviceId": "tb-91c2e7aa-mix02-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "EQ-MIX-02",
+      "lowerLimit": 18,
+      "upperLimit": 25,
+      "status": "active",
+      "assignedBatch": "B-26039"
+    },
+    {
+      "id": 5,
+      "code": "P-301",
+      "deviceId": "tb-55d01f3e-press01-pres",
+      "type": "pressure",
+      "unit": "Pa",
+      "equipmentCode": "EQ-PRESS-01",
+      "lowerLimit": 4,
+      "upperLimit": 8,
+      "status": "active",
+      "assignedBatch": "B-26042"
+    },
+    {
+      "id": 6,
+      "code": "H-109",
+      "deviceId": "tb-0b77a2d4-storA-hum",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 0,
+      "upperLimit": 65,
+      "status": "active",
+      "assignedBatch": ""
+    },
+    {
+      "id": 7,
+      "code": "T-118",
+      "deviceId": "tb-0b77a2d4-storA-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 15,
+      "upperLimit": 25,
+      "status": "offline",
+      "assignedBatch": ""
+    },
+    {
+      "id": 8,
+      "code": "H-114",
+      "deviceId": "tb-0b77a2d4-storA-hum2",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 0,
+      "upperLimit": 65,
+      "status": "offline",
+      "assignedBatch": ""
+    }
+  ],
+  "readings": [
+    {
+      "id": 1,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.2,
+      "recordedAt": "2026-10-07T08:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 2,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.4,
+      "recordedAt": "2026-10-07T08:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 3,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.5,
+      "recordedAt": "2026-10-07T08:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 4,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.7,
+      "recordedAt": "2026-10-07T08:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 5,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.9,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 6,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.2,
+      "recordedAt": "2026-10-07T09:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 7,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.6,
+      "recordedAt": "2026-10-07T09:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 8,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23.1,
+      "recordedAt": "2026-10-07T09:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 9,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23.9,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 10,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 24.6,
+      "recordedAt": "2026-10-07T10:05:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 11,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 27.8,
+      "recordedAt": "2026-10-07T10:13:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 12,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 24.3,
+      "recordedAt": "2026-10-07T10:24:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 13,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23,
+      "recordedAt": "2026-10-07T10:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 14,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.4,
+      "recordedAt": "2026-10-07T10:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 15,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 16,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.8,
+      "recordedAt": "2026-10-07T11:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 17,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.6,
+      "recordedAt": "2026-10-07T11:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 18,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.5,
+      "recordedAt": "2026-10-07T11:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 19,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.4,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 20,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 42,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 21,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 41,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 22,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 41,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 23,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 40,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 24,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.6,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 25,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.8,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 26,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.9,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 27,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.8,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 28,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 5.9,
+      "recordedAt": "2026-10-07T08:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 29,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 30,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6.1,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 31,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6.1,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 32,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "code": "ALT-26031",
+      "sensorCode": "T-204",
+      "equipmentCode": "EQ-COAT-02",
+      "severity": "critical",
+      "status": "acknowledged",
+      "title": "Temperature excursion",
+      "detail": "T-204 exceeded 25 °C at 10:13 UTC (27.8 °C peak); above 25 °C for 12 min (10:12–10:24).",
+      "batchCode": "B-26041",
+      "acknowledgedBy": "Alberto Valle",
+      "acknowledgedAt": "2026-10-07T10:24:00Z",
+      "responseNote": "Coating paused; B-26041 held; QA notified.",
+      "linkedRecord": "DEV-26017"
+    },
+    {
+      "id": 2,
+      "code": "ALT-26032",
+      "sensorCode": "H-109",
+      "equipmentCode": "Storage A",
+      "severity": "warning",
+      "status": "open",
+      "title": "Humidity above threshold",
+      "detail": "RH 66 % · threshold 65 %.",
+      "batchCode": "",
+      "acknowledgedBy": "",
+      "acknowledgedAt": "",
+      "responseNote": "",
+      "linkedRecord": ""
+    },
+    {
+      "id": 3,
+      "code": "ALT-26033",
+      "sensorCode": "P-301",
+      "equipmentCode": "EQ-PRESS-01",
+      "severity": "warning",
+      "status": "under-investigation",
+      "title": "Low air pressure",
+      "detail": "Pressure dropped to 5.9 bar · maintenance assigned.",
+      "batchCode": "B-26042",
+      "acknowledgedBy": "Alberto Valle",
+      "acknowledgedAt": "2026-10-07T08:05:00Z",
+      "responseNote": "Maintenance notified.",
+      "linkedRecord": "INC-26007"
+    }
+  ],
+  "quality-documents": [
+    {
+      "id": 1,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.4",
+      "status": "in-review",
+      "author": "María México",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-10-06",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "Adds IoT evidence linkage and a 30-minute escalation threshold.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 2,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.3",
+      "status": "approved",
+      "author": "Elena Paz",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-07-12",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "Adds the product-impact assessment step.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 3,
+      "code": "SOP-QA-014",
+      "title": "Temperature excursion management",
+      "version": "2.2",
+      "status": "obsolete",
+      "author": "Lucía Paredes",
+      "technicalReviewer": "Alberto Valle",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-03-02",
+      "purpose": "Define consistent assessment, containment and documentation of temperature excursions.",
+      "scope": "Manufacturing lines, controlled storage and connected temperature sensors at the Ate plant.",
+      "procedure": "Quarantine affected materials, record duration and maximum temperature, assess product impact and request QA disposition.",
+      "revisionSummary": "First version aligned with DIGEMID guidance.",
+      "reviewCycleMonths": 12
+    },
+    {
+      "id": 4,
+      "code": "SOP-PR-007",
+      "title": "Line clearance",
+      "version": "1.3",
+      "status": "in-review",
+      "author": "Alberto Valle",
+      "technicalReviewer": "Jorge Salas",
+      "approver": "Lucía Paredes",
+      "changedAt": "2026-10-05",
+      "purpose": "Ensure each line is cleared before a new batch.",
+      "scope": "Every manufacturing line of the Ate plant.",
+      "procedure": "Remove previous materials and labels, verify and sign the clearance before dispensing.",
+      "revisionSummary": "Adds the supervisor signature to step 3.",
+      "reviewCycleMonths": 24
+    }
+  ],
+  "deviations": [
+    {
+      "id": 1,
+      "code": "DEV-26017",
+      "title": "Temperature excursion during coating",
+      "batchCode": "B-26041",
+      "orderCode": "PO-26041",
+      "summary": "Coater EQ-COAT-02 exceeded 25 °C for 12 minutes.",
+      "classification": "major",
+      "containment": "Batch held; coating paused; QC sampling requested.",
+      "severity": 4,
+      "likelihood": 3,
+      "detectability": 2,
+      "status": "open",
+      "rootCause": "Equipment failure",
+      "capaCode": "CAPA-26009",
+      "reportedBy": "Alberto Valle",
+      "reportedAt": "2026-10-07T10:26:00Z",
+      "owner": "María México",
+      "dueAt": "2026-10-07T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "code": "DEV-26015",
+      "title": "Label jam on line 03",
+      "batchCode": "B-26039",
+      "orderCode": "PO-26039",
+      "summary": "Labeler stopped for 6 minutes; 40 labels discarded.",
+      "classification": "minor",
+      "containment": "Labels reconciled and line cleared.",
+      "severity": 2,
+      "likelihood": 2,
+      "detectability": 1,
+      "status": "dispositioned",
+      "rootCause": "Procedure not followed",
+      "capaCode": "",
+      "reportedBy": "Alberto Valle",
+      "reportedAt": "2026-10-05T11:10:00Z",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-06T11:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "recordCode": "DEV-26017",
+      "fileName": "Telemetry_T-204_1007.csv",
+      "detail": "Sensor T-204 · 10:12–10:24 UTC · 12 KB",
+      "status": "attached"
+    },
+    {
+      "id": 2,
+      "recordCode": "DEV-26017",
+      "fileName": "Coater inspection.jpg",
+      "detail": "Alberto Valle · Oct 07, 10:30 UTC",
+      "status": "attached"
+    },
+    {
+      "id": 3,
+      "recordCode": "DEV-26017",
+      "fileName": "AR-26041 report",
+      "detail": "6 tests · independent QA approval pending",
+      "status": "pending-review"
+    },
+    {
+      "id": 4,
+      "recordCode": "AUD-26004",
+      "fileName": "Supplier_qualification.pdf",
+      "detail": "Version 4.0 · Reviewed",
+      "status": "reviewed"
+    },
+    {
+      "id": 5,
+      "recordCode": "AUD-26004",
+      "fileName": "Calibration_register.xlsx",
+      "detail": "Uploaded Oct 06 · 84 KB",
+      "status": "pending-review"
+    },
+    {
+      "id": 6,
+      "recordCode": "AUD-26004",
+      "fileName": "Audit_checklist.pdf",
+      "detail": "Version 1.2 · 24 questions",
+      "status": "reviewed"
+    }
+  ],
+  "capa-plans": [
+    {
+      "id": 1,
+      "code": "CAPA-26009",
+      "title": "Coater control-loop drift",
+      "sourceDeviation": "DEV-26017",
+      "owner": "María México",
+      "reviewer": "Lucía Paredes",
+      "rootCause": "",
+      "acceptanceCriterion": "No temperature excursion across 10 consecutive coating batches. A failed effectiveness check automatically reopens this plan.",
+      "effectivenessCheckAt": "2026-10-30",
+      "status": "in-progress"
+    }
+  ],
+  "capa-actions": [
+    {
+      "id": 1,
+      "capaCode": "CAPA-26009",
+      "code": "CA-01",
+      "title": "Calibrate T-204",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-08",
+      "status": "open",
+      "evidence": "Calibration certificate",
+      "evidenceAttached": false
+    },
+    {
+      "id": 2,
+      "capaCode": "CAPA-26009",
+      "code": "CA-02",
+      "title": "Replace control relay",
+      "owner": "Jorge Salas",
+      "dueAt": "2026-10-09",
+      "status": "planned",
+      "evidence": "WO-26087 at close",
+      "evidenceAttached": false
+    },
+    {
+      "id": 3,
+      "capaCode": "CAPA-26009",
+      "code": "PA-01",
+      "title": "Revise SOP-QA-014",
+      "owner": "Elena Paz",
+      "dueAt": "2026-10-10",
+      "status": "in-review",
+      "evidence": "SOP draft",
+      "evidenceAttached": false
+    },
+    {
+      "id": 4,
+      "capaCode": "CAPA-26009",
+      "code": "PA-02",
+      "title": "Train 8 operators",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-14",
+      "status": "open",
+      "evidence": "Training records",
+      "evidenceAttached": false
+    }
+  ],
+  "analytical-results": [
+    {
+      "id": 1,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "98.7 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Dissolution 30 min",
+      "protocol": "PRT-QC-015 v2",
+      "result": "72 % (Q)",
+      "specification": "Q ≥ 80 %",
+      "analyst": "Elena Paz",
+      "status": "oos",
+      "approval": "requested"
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Uniformity of dosage",
+      "protocol": "PRT-QC-018 v1",
+      "result": "AV 6.1",
+      "specification": "AV ≤ 15.0",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26041",
+      "sampleCode": "S-26041-01",
+      "reportCode": "AR-26041",
+      "test": "Water content (KF)",
+      "protocol": "PRT-QC-021 v3",
+      "result": "",
+      "specification": "≤ 2.0 %",
+      "analyst": "",
+      "status": "pending",
+      "approval": "requested"
+    },
+    {
+      "id": 5,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "99.2 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 6,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Dissolution 30 min",
+      "protocol": "PRT-QC-015 v2",
+      "result": "91 % (Q)",
+      "specification": "Q ≥ 80 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 7,
+      "batchCode": "B-26038",
+      "sampleCode": "S-26038-01",
+      "reportCode": "AR-26038",
+      "test": "Uniformity of dosage",
+      "protocol": "PRT-QC-018 v1",
+      "result": "AV 8.4",
+      "specification": "AV ≤ 15.0",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "approved"
+    },
+    {
+      "id": 8,
+      "batchCode": "B-26039",
+      "sampleCode": "S-26039-01",
+      "reportCode": "AR-26039",
+      "test": "Assay (HPLC)",
+      "protocol": "PRT-QC-012 v4",
+      "result": "100.4 %",
+      "specification": "95.0–105.0 %",
+      "analyst": "Elena Paz",
+      "status": "within",
+      "approval": "requested"
+    }
+  ],
+  "audits": [
+    {
+      "id": 1,
+      "code": "AUD-26004",
+      "title": "Q4 supplier quality audit",
+      "period": "Oct 05–09, 2026",
+      "areasReviewed": 3,
+      "areasTotal": 4,
+      "status": "in-progress"
+    }
+  ],
+  "audit-findings": [
+    {
+      "id": 1,
+      "auditCode": "AUD-26004",
+      "code": "F-01",
+      "title": "Calibration records",
+      "classification": "major",
+      "owner": "Jorge Salas",
+      "dueAt": "2026-10-09",
+      "status": "evidence-pending",
+      "observation": "Supplier temperature probe calibration certificates were not available for two instruments.",
+      "response": "Calibration register attached; signed certificates requested from the supplier.",
+      "closureRequirement": "Independent reviewer verifies current certificates and traceable calibration dates."
+    },
+    {
+      "id": 2,
+      "auditCode": "AUD-26004",
+      "code": "F-02",
+      "title": "Training coverage",
+      "classification": "minor",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-09",
+      "status": "in-review",
+      "observation": "Two operators had no record of SOP-QA-014 training.",
+      "response": "Training session scheduled.",
+      "closureRequirement": "Signed training records."
+    },
+    {
+      "id": 3,
+      "auditCode": "AUD-26004",
+      "code": "F-03",
+      "title": "Document retention",
+      "classification": "minor",
+      "owner": "Elena Paz",
+      "dueAt": "2026-10-06",
+      "status": "closed",
+      "observation": "Retention period not stated in two records.",
+      "response": "Retention added.",
+      "closureRequirement": "Updated records."
+    },
+    {
+      "id": 4,
+      "auditCode": "AUD-26004",
+      "code": "F-04",
+      "title": "Label reconciliation",
+      "classification": "minor",
+      "owner": "María México",
+      "dueAt": "2026-10-06",
+      "status": "closed",
+      "observation": "One reconciliation sheet without signature.",
+      "response": "Sheet signed.",
+      "closureRequirement": "Signed sheet."
+    }
+  ],
+  "audit-events": [
+    {
+      "id": 1,
+      "eventCode": "EVT-89416",
+      "occurredAt": "2026-10-07T10:32:00Z",
+      "actor": "María México",
+      "actorRole": "qa-specialist",
+      "event": "Release validation",
+      "record": "B-26041",
+      "result": "Blocked",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 2,
+      "eventCode": "EVT-89414",
+      "occurredAt": "2026-10-07T10:30:00Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Evidence attached",
+      "record": "DEV-26017",
+      "result": "Recorded",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 3,
+      "eventCode": "EVT-89412",
+      "occurredAt": "2026-10-07T10:26:14Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Batch status changed",
+      "record": "B-26041",
+      "result": "On hold",
+      "field": "Status",
+      "before": "In progress",
+      "after": "On hold",
+      "reason": "Temperature excursion · DEV-26017"
+    },
+    {
+      "id": 4,
+      "eventCode": "EVT-89410",
+      "occurredAt": "2026-10-07T10:24:00Z",
+      "actor": "Alberto Valle",
+      "actorRole": "production-supervisor",
+      "event": "Alert acknowledged",
+      "record": "ALT-26031",
+      "result": "Acknowledged",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 5,
+      "eventCode": "EVT-89407",
+      "occurredAt": "2026-10-07T10:13:00Z",
+      "actor": "T-204 service",
+      "actorRole": "system",
+      "event": "Threshold exceeded",
+      "record": "ALT-26031",
+      "result": "Alert created",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    },
+    {
+      "id": 6,
+      "eventCode": "EVT-89401",
+      "occurredAt": "2026-10-07T09:42:00Z",
+      "actor": "María México",
+      "actorRole": "qa-specialist",
+      "event": "2FA verification",
+      "record": "Session S-8912",
+      "result": "Success",
+      "field": "",
+      "before": "",
+      "after": "",
+      "reason": ""
+    }
+  ],
+  "regulatory-reports": [
+    {
+      "id": 1,
+      "code": "RPT-26012",
+      "type": "Batch dossier",
+      "scope": "B-26041",
+      "owner": "María México",
+      "status": "blocked",
+      "template": "Batch release dossier v1.2",
+      "format": "PDF package + CSV appendix",
+      "createdAt": "2026-10-07"
+    },
+    {
+      "id": 2,
+      "code": "RPT-26011",
+      "type": "Quality review",
+      "scope": "Sep 2026",
+      "owner": "Lucía Paredes",
+      "status": "approved",
+      "template": "Monthly quality review v2.0",
+      "format": "PDF",
+      "createdAt": "2026-10-02"
+    },
+    {
+      "id": 3,
+      "code": "RPT-26010",
+      "type": "CAPA summary",
+      "scope": "Q3 2026",
+      "owner": "María México",
+      "status": "approved",
+      "template": "CAPA summary v1.0",
+      "format": "PDF + CSV",
+      "createdAt": "2026-10-01"
+    },
+    {
+      "id": 4,
+      "code": "RPT-26009",
+      "type": "Audit evidence",
+      "scope": "AUD-26004",
+      "owner": "Óscar Ramos",
+      "status": "draft",
+      "template": "Audit evidence package v1.1",
+      "format": "ZIP",
+      "createdAt": "2026-10-06"
+    }
+  ],
+  "collaboration-tasks": [
+    {
+      "id": 1,
+      "title": "Assess product impact",
+      "recordCode": "DEV-26017 · B-26041",
+      "detail": "Temperature excursion",
+      "owner": "María México",
+      "dueAt": "2026-10-07T14:00:00Z",
+      "status": "to-do"
+    },
+    {
+      "id": 2,
+      "title": "Approve SOP-QA-014 v2.4",
+      "recordCode": "SOP-QA-014",
+      "detail": "Document in review",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-07T16:00:00Z",
+      "status": "in-review"
+    },
+    {
+      "id": 3,
+      "title": "Release B-26038",
+      "recordCode": "B-26038",
+      "detail": "Release requested by Production",
+      "owner": "María México",
+      "dueAt": "2026-10-07T17:00:00Z",
+      "status": "ready"
+    },
+    {
+      "id": 4,
+      "title": "Approve raw material RM-26104",
+      "recordCode": "RM-26104",
+      "detail": "Approval request · Production",
+      "owner": "Lucía Paredes",
+      "dueAt": "2026-10-08T12:00:00Z",
+      "status": "pending"
+    },
+    {
+      "id": 5,
+      "title": "Calibrate T-204",
+      "recordCode": "CAPA-26009",
+      "detail": "CAPA-26009 action",
+      "owner": "Alberto Valle",
+      "dueAt": "2026-10-08T12:00:00Z",
+      "status": "open"
+    },
+    {
+      "id": 6,
+      "title": "Approve CAPA-26009 actions",
+      "recordCode": "CAPA-26009",
+      "detail": "Corrective action plan",
+      "owner": "María México",
+      "dueAt": "2026-10-09T12:00:00Z",
+      "status": "in-review"
+    }
+  ],
+  "task-comments": [
+    {
+      "id": 1,
+      "recordCode": "DEV-26017",
+      "author": "Alberto Valle",
+      "initials": "AV",
+      "postedAt": "2026-10-07T10:30:00Z",
+      "text": "@María México coating is paused. Telemetry and the inspection photo are attached. Please assess the product impact."
+    },
+    {
+      "id": 2,
+      "recordCode": "DEV-26017",
+      "author": "Elena Paz",
+      "initials": "EP",
+      "postedAt": "2026-10-07T11:15:00Z",
+      "text": "All six analytical tests passed. The final report approval is pending independent review."
+    },
+    {
+      "id": 3,
+      "recordCode": "DEV-26017",
+      "author": "María México",
+      "initials": "MM",
+      "postedAt": "2026-10-07T11:24:00Z",
+      "text": "Reviewing the excursion duration against SOP-QA-014 v2.3. The batch remains on hold."
+    }
+  ],
+  "traceability-gaps": [
+    {
+      "id": 1,
+      "batchCode": "B-26029",
+      "product": "Ibuprofen 200 mg",
+      "missingRecord": "Line clearance signature",
+      "detail": "missing: line clearance signed by the production supervisor (step 3 of MFR-IB200 v2.0)."
+    },
+    {
+      "id": 2,
+      "batchCode": "B-26033",
+      "product": "Amoxicillin 500 mg",
+      "missingRecord": "Calibration certificate EQ-MIX-02",
+      "detail": "missing: calibration certificate of EQ-MIX-02 valid on the manufacturing date."
+    },
+    {
+      "id": 3,
+      "batchCode": "B-26035",
+      "product": "Paracetamol 500 mg",
+      "missingRecord": "QC result · water content",
+      "detail": "missing: water content (KF) result of the finished product."
+    },
+    {
+      "id": 4,
+      "batchCode": "B-26036",
+      "product": "Paracetamol 500 mg",
+      "missingRecord": "IoT readings 02:00–03:10",
+      "detail": "missing: IoT readings of T-204 between 02:00 and 03:10 UTC (sensor offline)."
+    }
+  ],
+  "deviation-trends": [
+    {
+      "id": 1,
+      "rootCause": "Equipment failure",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 2,
+      "rootCause": "Equipment failure",
+      "month": "2026-08",
+      "count": 2
+    },
+    {
+      "id": 3,
+      "rootCause": "Equipment failure",
+      "month": "2026-09",
+      "count": 3
+    },
+    {
+      "id": 4,
+      "rootCause": "Procedure not followed",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 5,
+      "rootCause": "Procedure not followed",
+      "month": "2026-08",
+      "count": 1
+    },
+    {
+      "id": 6,
+      "rootCause": "Procedure not followed",
+      "month": "2026-09",
+      "count": 0
+    },
+    {
+      "id": 7,
+      "rootCause": "Raw material",
+      "month": "2026-07",
+      "count": 0
+    },
+    {
+      "id": 8,
+      "rootCause": "Raw material",
+      "month": "2026-08",
+      "count": 1
+    },
+    {
+      "id": 9,
+      "rootCause": "Raw material",
+      "month": "2026-09",
+      "count": 1
+    },
+    {
+      "id": 10,
+      "rootCause": "Environmental conditions",
+      "month": "2026-07",
+      "count": 1
+    },
+    {
+      "id": 11,
+      "rootCause": "Environmental conditions",
+      "month": "2026-08",
+      "count": 0
+    },
+    {
+      "id": 12,
+      "rootCause": "Environmental conditions",
+      "month": "2026-09",
+      "count": 1
     }
   ]
 }

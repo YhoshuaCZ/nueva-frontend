@@ -1,18 +1,37 @@
+import {WorkspaceEnvironment} from '../../../shared/presentation/workspace-environments';
+
 /**
- * Captures credentials required to authenticate in the IAM context.
+ * Command with the credentials a user enters to sign in to an environment.
  */
 export class SignInCommand {
-  #username: string;
+  /**
+   * Work email of the user.
+   */
+  #email: string;
+
+  /**
+   * Password of the user.
+   */
   #password: string;
 
-  constructor(props: { username: string; password: string }) {
-    this.#username = props.username;
-    this.#password = props.password;
+  /**
+   * Environment the user wants to enter.
+   */
+  #environment: WorkspaceEnvironment;
+
+  /**
+   * Creates a new sign-in command.
+   * @param command - Credentials and requested environment.
+   */
+  constructor(command: { email: string; password: string; environment: WorkspaceEnvironment }) {
+    this.#email = command.email;
+    this.#password = command.password;
+    this.#environment = command.environment;
   }
 
-  get username(): string { return this.#username; }
-  set username(value: string) { this.#username = value; }
+  get email(): string { return this.#email; }
 
   get password(): string { return this.#password; }
-  set password(value: string) { this.#password = value; }
+
+  get environment(): WorkspaceEnvironment { return this.#environment; }
 }

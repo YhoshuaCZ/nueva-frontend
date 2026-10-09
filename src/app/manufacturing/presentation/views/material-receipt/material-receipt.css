@@ -1,0 +1,109 @@
+.stepper {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepper li {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  color: var(--slate);
+}
+
+.stepper li span {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.stepper li.done span {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: #fff;
+}
+
+.stepper li.current {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.stepper li.current span {
+  border-color: var(--teal);
+}
+
+.receipt,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.attached {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid #99f6e4;
+  border-radius: 8px;
+  background: var(--mint);
+  font-weight: 500;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.check > span:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 800px) {
+  .stepper {
+    flex-direction: column;
+  }
+}
+
+.side > .chip {
+  align-self: flex-start;
+}
+
+.upload {
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.upload-label {
+  color: var(--slate);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.upload.invalid .upload-label {
+  color: var(--danger-dark);
+}
+
+[class*="step"] span .mat-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
