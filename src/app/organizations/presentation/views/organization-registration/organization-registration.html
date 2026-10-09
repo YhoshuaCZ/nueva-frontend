@@ -1,0 +1,135 @@
+<header class="top">
+  <a routerLink="/sign-in"><img src="/doofplus-wordmark.png" alt="DoofPlus"></a>
+  <app-language-switcher/>
+</header>
+
+<div class="registration">
+  <aside class="intro">
+    <h1>{{ 'organizations.registration.headline' | translate }}</h1>
+    <span class="rule"></span>
+    @for (item of introItems; track item) {
+      <div>
+        <p class="intro-label">{{ 'organizations.registration.intro.' + item + '-title' | translate }}</p>
+        <p>{{ 'organizations.registration.intro.' + item + '-text' | translate }}</p>
+      </div>
+    }
+    <nav class="intro-links">
+      <a [href]="landingUrl + 'privacy.html'">{{ 'footer.privacy' | translate }}</a>
+      <a [href]="landingUrl + 'terms.html'">{{ 'footer.terms' | translate }}</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <ol class="stepper">
+      <li [class.current]="store.registrationStep() !== 'verification'"><span>1</span>{{ 'organizations.registration.step-organization' | translate }}</li>
+      <li [class.current]="store.registrationStep() !== 'verification'"><span>2</span>{{ 'organizations.registration.step-administrator' | translate }}</li>
+      <li [class.current]="store.registrationStep() === 'verification'"><span>3</span>{{ 'organizations.registration.step-verification' | translate }}</li>
+    </ol>
+
+    @if (store.registrationStep() === 'verification') {
+      <section class="verification">
+        <span class="mail"><mat-icon>mark_email_unread</mat-icon></span>
+        <h2>{{ 'organizations.registration.verify-title' | translate }}</h2>
+        <p class="muted">{{ 'organizations.registration.verify-text' | translate: {email: administratorEmail()} }}</p>
+        <a mat-flat-button routerLink="/sign-in/administration">{{ 'organizations.registration.go-sign-in' | translate }}</a>
+      </section>
+    } @else {
+      <p class="overline">{{ 'organizations.registration.overline' | translate }}</p>
+      <h2 class="title">{{ 'organizations.registration.title' | translate }}</h2>
+      <p class="muted lead">{{ 'organizations.registration.subtitle' | translate }}</p>
+
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <p class="group">{{ 'organizations.registration.organization-details' | translate }}</p>
+        <label class="label" for="legalName">{{ 'organizations.registration.legal-name' | translate }} *</label>
+        <mat-form-field appearance="fill">
+          <input matInput id="legalName" formControlName="legalName" autocomplete="organization">
+          <mat-error>{{ 'organizations.registration.legal-name-error' | translate }}</mat-error>
+        </mat-form-field>
+
+        <label class="label" for="ruc">RUC *</label>
+        <mat-form-field appearance="fill" [class.invalid]="store.registrationStep() === 'ruc-registered'">
+          <input matInput id="ruc" inputmode="numeric" maxlength="11" formControlName="ruc" (input)="rucChanged()">
+          <mat-error><mat-icon>warning</mat-icon>{{ 'organizations.registration.ruc-error' | translate }}</mat-error>
+        </mat-form-field>
+        @if (store.registrationStep() === 'ruc-registered') {
+          <p class="field-error" role="alert"><mat-icon>warning</mat-icon>{{ 'organizations.registration.ruc-registered' | translate }}</p>
+        }
+
+        <label class="label" for="facilityName">{{ 'organizations.registration.primary-plant' | translate }} *</label>
+        <mat-form-field appearance="fill" class="plant">
+          <mat-select id="facilityName" formControlName="facilityName">
+            @for (plant of plants; track plant) {
+              <mat-option [value]="plant">{{ plant }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <p class="group">{{ 'organizations.registration.plan' | translate }}</p>
+        @if (selectedPlan(); as plan) {
+          <div class="plan">
+            <div>
+              <strong>{{ plan.name }} · {{ 'subscriptions.cycle.' + form.controls.billingCycle.value | translate }} · {{ selectedPrice() | currency: 'USD':'US$':'1.0-0' }}</strong>
+              <p class="small muted">
+                {{ (plan.userLimit ? 'organizations.registration.plan-limits' : 'organizations.registration.plan-unlimited') | translate: {devices: plan.iotDeviceLimit, users: plan.userLimit} }}
+              </p>
+            </div>
+            <button mat-button type="button" (click)="choosingPlan.set(!choosingPlan())">{{ 'organizations.registration.change-plan' | translate }}</button>
+          </div>
+        }
+        @if (choosingPlan()) {
+          <div class="plan-options">
+            @for (option of planOptions(); track option.plan.key + option.cycle) {
+              <button type="button" class="plan-option" (click)="choosePlan(option.plan.key, option.cycle)">
+                <strong>{{ option.plan.name }}</strong>
+                <span>{{ 'subscriptions.cycle.' + option.cycle | translate }} · {{ option.price | currency: 'USD':'US$':'1.0-0' }}</span>
+              </button>
+            }
+          </div>
+        }
+
+        <p class="group">{{ 'organizations.registration.administrator' | translate }}</p>
+        <label class="label" for="administratorName">{{ 'organizations.registration.administrator-name' | translate }} *</label>
+        <mat-form-field appearance="fill">
+          <input matInput id="administratorName" formControlName="administratorName" autocomplete="name">
+          <mat-error>{{ 'organizations.registration.administrator-name-error' | translate }}</mat-error>
+        </mat-form-field>
+
+        <label class="label" for="administratorEmail">{{ 'organizations.registration.email' | translate }} *</label>
+        <mat-form-field appearance="fill">
+          <input matInput id="administratorEmail" type="email" formControlName="administratorEmail" autocomplete="email">
+          <mat-error>{{ 'organizations.registration.email-error' | translate }}</mat-error>
+        </mat-form-field>
+
+        <label class="label" for="password">{{ 'iam.sign-in.password' | translate }} *</label>
+        <mat-form-field appearance="fill" subscriptSizing="dynamic">
+          <input matInput id="password" [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="new-password">
+          <button mat-icon-button matSuffix type="button" (click)="showPassword.set(!showPassword())"
+                  [attr.aria-label]="(showPassword() ? 'iam.sign-in.hide-password' : 'iam.sign-in.show-password') | translate">
+            <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <p class="hint" [class.field-error]="isInvalid('password')"><mat-icon>info</mat-icon>{{ 'organizations.registration.password-rule' | translate }}</p>
+        <span class="strength" [attr.data-level]="passwordStrength()">
+          <i></i><i></i><i></i><i></i>
+          <em>{{ 'organizations.registration.strength.' + passwordStrength() | translate }}</em>
+        </span>
+
+        <p class="notice"><mat-icon>mail</mat-icon>{{ 'organizations.registration.notice' | translate: {email: administratorEmail()} }}</p>
+
+        <mat-checkbox formControlName="accepted" [class.invalid]="isInvalid('accepted')">
+          {{ 'organizations.registration.accept-1' | translate }}
+          <a [href]="landingUrl + 'terms.html'" target="_blank">{{ 'footer.terms' | translate }}</a>
+          {{ 'organizations.registration.accept-2' | translate }}
+          <a [href]="landingUrl + 'privacy.html'" target="_blank">{{ 'footer.privacy' | translate }}</a>.
+          {{ 'organizations.registration.accept-3' | translate }}
+        </mat-checkbox>
+
+        <div class="row actions">
+          <button mat-flat-button type="submit" class="submit" [disabled]="store.loading()">{{ 'organizations.registration.create' | translate }}</button>
+          <span class="muted">{{ 'organizations.registration.create-note' | translate }}</span>
+        </div>
+        <p class="small">* {{ 'organizations.registration.required' | translate }}</p>
+      </form>
+    }
+  </main>
+</div>
