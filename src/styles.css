@@ -341,6 +341,15 @@ a {
   --mat-button-filled-container-color: var(--danger);
 }
 
+.mat-mdc-button-base.warning {
+  --mat-button-filled-container-color: var(--warning-strong);
+  --mat-button-filled-label-text-color: var(--navy);
+}
+
+.mat-mdc-form-field.picker {
+  width: 240px;
+}
+
 .mat-mdc-button-base.block {
   width: 100%;
 }
