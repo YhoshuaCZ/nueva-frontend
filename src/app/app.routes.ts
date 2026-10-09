@@ -1,12 +1,14 @@
 import {Routes} from '@angular/router';
-import {Layout} from './shared/presentation/components/layout/layout';
-import {WorkspaceShell} from './shared/presentation/components/workspace-shell/workspace-shell';
 import {iamGuard} from './iam/infrastructure/iam.guard';
 
 const baseTitle = 'DoofPlus';
 
 const pageNotFound = () =>
   import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound);
+
+const layout = () => import('./shared/presentation/components/layout/layout').then(m => m.Layout);
+const workspaceShell = () =>
+  import('./shared/presentation/components/workspace-shell/workspace-shell').then(m => m.WorkspaceShell);
 
 const iamRoutes = () => import('./iam/presentation/iam.routes').then(m => m.iamRoutes);
 const iamAdministrationRoutes = () => import('./iam/presentation/iam.routes').then(m => m.iamAdministrationRoutes);
@@ -30,21 +32,21 @@ const notFound = { path: '**', loadComponent: pageNotFound, title: `${baseTitle}
  */
 export const routes: Routes = [
   { path: '',               redirectTo: '/sign-in', pathMatch: 'full' },
-  { path: 'sign-in',        component: Layout, loadChildren: iamRoutes },
+  { path: 'sign-in',        loadComponent: layout, loadChildren: iamRoutes },
   { path: 'register',       loadChildren: organizationsPublicRoutes },
-  { path: 'qa',             component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'qa' }, children: [
+  { path: 'qa',             loadComponent: workspaceShell, canActivate: [iamGuard], data: { environment: 'qa' }, children: [
     { path: '', loadChildren: profileRoutes },
     { path: '', loadChildren: qualityRoutes },
     notFound
   ]},
-  { path: 'production',     component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'production' }, children: [
+  { path: 'production',     loadComponent: workspaceShell, canActivate: [iamGuard], data: { environment: 'production' }, children: [
     { path: '', loadChildren: profileRoutes },
     { path: '', loadChildren: manufacturingRoutes },
     { path: '', loadChildren: monitoringRoutes },
     { path: '', loadChildren: qualitySharedRoutes },
     notFound
   ]},
-  { path: 'administration', component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'administration' }, children: [
+  { path: 'administration', loadComponent: workspaceShell, canActivate: [iamGuard], data: { environment: 'administration' }, children: [
     { path: '', loadChildren: iamAdministrationRoutes },
     { path: '', loadChildren: subscriptionsRoutes },
     { path: '', loadChildren: organizationsAdministrationRoutes },
@@ -52,5 +54,5 @@ export const routes: Routes = [
     { path: '', loadChildren: profileRoutes },
     notFound
   ]},
-  { path: '',               component: Layout, children: [notFound] }
+  { path: '',               loadComponent: layout, children: [notFound] }
 ];
