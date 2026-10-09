@@ -1,0 +1,90 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.administration.short' | translate, 'iam.invite.title' | translate]"
+    [title]="'iam.invite.title' | translate"
+    [subtitle]="'iam.invite.subtitle' | translate"/>
+
+  <mat-card appearance="outlined" class="summary">
+    <div><p class="value">{{ store.users().length }}</p><p class="stat-label">{{ 'iam.invite.active-users' | translate }}</p></div>
+    <div><p class="value"><mat-icon>all_inclusive</mat-icon></p><p class="stat-label">{{ 'iam.invite.user-limit' | translate }}</p></div>
+    <div><p class="value">{{ store.pendingInvitations().length }}</p><p class="stat-label">{{ 'iam.invite.pending' | translate }}</p></div>
+    <div><p class="value">7 {{ 'iam.invite.days' | translate }}</p><p class="stat-label">{{ 'iam.invite.expiry' | translate }}</p></div>
+  </mat-card>
+
+  <div class="columns">
+    <mat-card appearance="outlined" class="panel">
+      <h2>{{ 'iam.invite.details' | translate }}</h2>
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <label class="label" for="fullName">{{ 'iam.invite.full-name' | translate }} *</label>
+        <mat-form-field appearance="outline">
+          <input matInput id="fullName" formControlName="fullName" autocomplete="name">
+          <mat-error>{{ 'iam.invite.full-name-error' | translate }}</mat-error>
+        </mat-form-field>
+
+        <label class="label" for="email">{{ 'iam.invite.email' | translate }} *</label>
+        <mat-form-field appearance="outline" [class.invalid]="duplicateEmail()">
+          <input matInput id="email" type="email" formControlName="email" autocomplete="email" (input)="duplicateEmail.set(false)">
+          <mat-error>{{ 'iam.invite.email-error' | translate }}</mat-error>
+        </mat-form-field>
+        @if (duplicateEmail()) {
+          <p class="duplicate"><mat-icon>error_outline</mat-icon>{{ 'iam.invite.duplicate' | translate }}</p>
+        }
+
+        <label class="label" for="role">{{ 'iam.invite.profile' | translate }} *</label>
+        <mat-form-field appearance="outline">
+          <mat-select id="role" formControlName="role">
+            @for (profile of store.roleProfiles(); track profile.id) {
+              <mat-option [value]="profile.key">{{ 'roles.' + profile.key | translate }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <label class="label" for="facility">{{ 'iam.invite.facility' | translate }} *</label>
+        <mat-form-field appearance="outline">
+          <mat-select id="facility" formControlName="facility">
+            @for (facility of facilities; track facility) {
+              <mat-option [value]="facility">{{ facility }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <label class="label" for="note">{{ 'iam.invite.note' | translate }}</label>
+        <mat-form-field appearance="outline">
+          <textarea matInput id="note" formControlName="note" rows="3"></textarea>
+        </mat-form-field>
+
+        @if (selectedProfile(); as profile) {
+          <p class="restriction"><mat-icon>warning_amber</mat-icon>{{ profile.restriction }}</p>
+        }
+        <div class="row actions">
+          <button mat-flat-button type="submit" [disabled]="store.loading()">{{ 'iam.invite.send' | translate }}</button>
+          <a routerLink="/administration/users">{{ 'iam.invite.cancel' | translate }} →</a>
+        </div>
+      </form>
+    </mat-card>
+
+    <aside class="stack">
+      @if (selectedProfile(); as profile) {
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'iam.invite.preview' | translate }}</h2>
+          <p class="sub">{{ 'roles.' + profile.key | translate }} · {{ form.controls.facility.value }}</p>
+          <div class="permission allowed">
+            <div><strong>{{ 'iam.users.can-create' | translate }}</strong><span class="sub">{{ profile.createEdit.join(', ') || ('iam.users.none' | translate) }}</span></div>
+          </div>
+          <div class="permission allowed">
+            <div><strong>{{ 'iam.users.can-approve' | translate }}</strong><span class="sub">{{ profile.approveSign }}</span></div>
+          </div>
+          <div class="permission denied">
+            <div><strong>{{ 'iam.users.restriction' | translate }}</strong><span class="sub">{{ profile.restriction }}</span></div>
+          </div>
+        </mat-card>
+      }
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'iam.invite.states' | translate }}</h2>
+        <div class="state pending"><span class="chip chip-warning">{{ 'iam.status.pending' | translate }}</span><p class="small">{{ 'iam.invite.state-pending' | translate }}</p></div>
+        <div class="state duplicate-state"><span class="chip chip-danger">{{ 'iam.invite.duplicate-email' | translate }}</span><p class="small">{{ 'iam.invite.duplicate' | translate }}</p></div>
+        <div class="state sent"><span class="chip chip-success">{{ 'iam.invite.sent' | translate }}</span><p class="small">{{ 'iam.invite.state-sent' | translate }}</p></div>
+      </mat-card>
+    </aside>
+  </div>
+</section>

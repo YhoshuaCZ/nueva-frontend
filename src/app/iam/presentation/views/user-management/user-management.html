@@ -1,0 +1,187 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.administration.short' | translate, 'nav.users-profiles' | translate]"
+    [title]="'nav.users-profiles' | translate"
+    [subtitle]="'iam.users.subtitle' | translate">
+    <a mat-flat-button routerLink="/administration/users/invite">
+      <mat-icon>person_add</mat-icon>{{ 'iam.users.invite' | translate }}
+    </a>
+  </app-page-header>
+
+  <nav mat-tab-nav-bar [tabPanel]="panel" mat-stretch-tabs="false" mat-align-tabs="start" class="tabs">
+    <a mat-tab-link [active]="selectedTab() === 'users'" (click)="selectedTab.set('users')">
+      {{ 'iam.users.tab-users' | translate }} <span class="count">{{ store.users().length }}</span>
+    </a>
+    <a mat-tab-link [active]="selectedTab() === 'profiles'" (click)="selectedTab.set('profiles')">
+      {{ 'iam.users.tab-profiles' | translate }} <span class="count neutral">{{ store.roleProfiles().length }}</span>
+    </a>
+    <a mat-tab-link [active]="selectedTab() === 'invitations'" (click)="selectedTab.set('invitations')">
+      {{ 'iam.users.tab-invitations' | translate }} <span class="count warning">{{ store.pendingInvitations().length }}</span>
+    </a>
+  </nav>
+
+  <mat-tab-nav-panel #panel class="stack">
+    @if (sent()) {
+      <div class="alert alert-info" role="status">
+        <mat-icon>mark_email_read</mat-icon>
+        <div><strong>{{ 'iam.users.sent-title' | translate }}</strong> <span>{{ 'iam.users.sent-text' | translate: {email: sent()} }}</span></div>
+      </div>
+    }
+
+    <div class="columns">
+      <div class="stack">
+        @switch (selectedTab()) {
+          @case ('invitations') {
+            <mat-card appearance="outlined">
+              <h2 class="card-title">{{ 'iam.users.tab-invitations' | translate }}</h2>
+              <div class="table-scroll">
+                <table mat-table [dataSource]="store.invitations()">
+                  <ng-container matColumnDef="user">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.user' | translate }}</th>
+                    <td mat-cell *matCellDef="let invitation"><strong>{{ invitation.fullName }}</strong><span class="sub">{{ invitation.email }}</span></td>
+                  </ng-container>
+                  <ng-container matColumnDef="profile">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.profile' | translate }}</th>
+                    <td mat-cell *matCellDef="let invitation"><span class="chip" [class]="'chip-' + toneOf(invitation.role)">{{ 'roles.' + invitation.role | translate }}</span></td>
+                  </ng-container>
+                  <ng-container matColumnDef="facility">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.facility' | translate }}</th>
+                    <td mat-cell *matCellDef="let invitation">{{ invitation.facility }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.status' | translate }}</th>
+                    <td mat-cell *matCellDef="let invitation"><span class="chip chip-dot chip-warning">{{ 'iam.status.' + invitation.status | translate }}</span></td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+                  <tr mat-row *matRowDef="let invitation; columns: userColumns" [class.highlight]="invitation.email === sent()"></tr>
+                </table>
+              </div>
+            </mat-card>
+          }
+          @case ('users') {
+            <mat-card appearance="outlined">
+              <div class="card-title row">
+                <h2>{{ 'iam.users.directory' | translate }}</h2>
+                <span class="spacer"></span>
+                <span class="muted small">{{ 'iam.users.shown' | translate: {count: store.users().length} }}</span>
+              </div>
+              <div class="table-scroll">
+                <table mat-table [dataSource]="store.users()">
+                  <ng-container matColumnDef="user">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.user' | translate }}</th>
+                    <td mat-cell *matCellDef="let user"><span class="row"><span class="avatar" [class]="'chip-' + toneOf(user.role)">{{ user.initials }}</span><strong>{{ user.fullName }}</strong></span></td>
+                  </ng-container>
+                  <ng-container matColumnDef="profile">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.profile' | translate }}</th>
+                    <td mat-cell *matCellDef="let user"><span class="chip" [class]="'chip-' + toneOf(user.role)">{{ 'roles.' + user.role | translate }}</span></td>
+                  </ng-container>
+                  <ng-container matColumnDef="facility">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.facility' | translate }}</th>
+                    <td mat-cell *matCellDef="let user">{{ user.facility }}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.status' | translate }}</th>
+                    <td mat-cell *matCellDef="let user">
+                      <span class="chip chip-dot" [class]="user.status === 'active' ? 'chip-success' : 'chip-warning'">
+                        {{ 'iam.status.' + user.status | translate }}
+                      </span>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+                  <tr mat-row *matRowDef="let user; columns: userColumns" class="clickable"
+                      [class.highlight]="user.role === selectedRole()" (click)="selectedRole.set(user.role)"></tr>
+                </table>
+              </div>
+            </mat-card>
+          }
+        }
+
+        <mat-card appearance="outlined">
+          <h2 class="card-title">{{ 'iam.users.matrix' | translate }}</h2>
+          <div class="table-scroll">
+            <table mat-table [dataSource]="store.roleProfiles()">
+              <ng-container matColumnDef="profile">
+                <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.profile' | translate }}</th>
+                <td mat-cell *matCellDef="let profile"><span class="chip" [class]="'chip-' + profile.tone">{{ 'roles.' + profile.key | translate }}</span></td>
+              </ng-container>
+              <ng-container matColumnDef="createEdit">
+                <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.create-edit' | translate }}</th>
+                <td mat-cell *matCellDef="let profile">
+                  <span class="chips">
+                    @for (record of profile.createEdit; track record) {
+                      <span class="chip chip-info">{{ record }}</span>
+                    } @empty {
+                      {{ 'iam.users.none' | translate }}
+                    }
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="approveSign">
+                <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.approve-sign' | translate }}</th>
+                <td mat-cell *matCellDef="let profile">{{ profile.approveSign }}</td>
+              </ng-container>
+              <ng-container matColumnDef="restriction">
+                <th mat-header-cell *matHeaderCellDef>{{ 'iam.users.restrictions' | translate }}</th>
+                <td mat-cell *matCellDef="let profile">
+                  <span class="chip" [class]="profile.key === 'internal-auditor' || profile.key === 'administrator' ? 'chip-warning' : 'chip-danger'">{{ profile.restriction }}</span>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="matrixColumns"></tr>
+              <tr mat-row *matRowDef="let profile; columns: matrixColumns" class="clickable"
+                  [class.highlight]="selectedTab() === 'profiles' && profile.key === selectedRole()" (click)="selectedRole.set(profile.key)"></tr>
+            </table>
+          </div>
+        </mat-card>
+      </div>
+
+      <aside class="stack">
+        @if (selectedProfile(); as profile) {
+          <mat-card appearance="outlined" class="selected">
+            <header>
+              <p>{{ 'iam.users.selected-profile' | translate }}</p>
+              <h2>{{ 'roles.' + profile.key | translate }}</h2>
+            </header>
+            <ul>
+              <li>
+                <span class="item-icon allowed"><mat-icon>edit_note</mat-icon></span>
+                <div><strong>{{ 'iam.users.can-create' | translate }}</strong><span class="sub">{{ profile.createEdit.join(', ') || ('iam.users.none' | translate) }}</span></div>
+              </li>
+              <li>
+                <span class="item-icon approve"><mat-icon>verified</mat-icon></span>
+                <div><strong>{{ 'iam.users.can-approve' | translate }}</strong><span class="sub">{{ profile.approveSign }}</span></div>
+              </li>
+              <li>
+                <span class="item-icon denied"><mat-icon>gpp_bad</mat-icon></span>
+                <div><strong>{{ 'iam.users.restriction' | translate }}</strong><span class="sub">{{ profile.restriction }}</span></div>
+              </li>
+            </ul>
+          </mat-card>
+        }
+        <mat-card appearance="outlined" class="policy">
+          <h2 class="row"><mat-icon>shield</mat-icon>{{ 'iam.users.access-policy' | translate }}</h2>
+          <div class="policy-item">
+            <span class="item-icon allowed"><mat-icon>lock</mat-icon></span>
+            <div>
+              <strong>{{ 'iam.users.two-factor' | translate }}</strong> <span class="chip chip-success">{{ 'iam.users.all-users' | translate }}</span>
+              <p class="sub">{{ 'iam.users.two-factor-text' | translate }}</p>
+            </div>
+          </div>
+          <div class="policy-item">
+            <span class="item-icon approve"><mat-icon>history</mat-icon></span>
+            <div>
+              <strong>{{ 'iam.users.deactivation' | translate }}</strong>
+              <p class="sub">{{ 'iam.users.deactivation-text' | translate }}</p>
+            </div>
+          </div>
+        </mat-card>
+        <div class="alert alert-info">
+          <mat-icon>info</mat-icon>
+          <div>
+            <strong>{{ 'iam.users.rbac' | translate }}</strong>
+            <p class="small">{{ 'iam.users.rbac-text' | translate }}</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </mat-tab-nav-panel>
+</section>
