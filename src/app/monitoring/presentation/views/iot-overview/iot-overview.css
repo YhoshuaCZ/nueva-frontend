@@ -1,0 +1,68 @@
+.stat-value.danger { color: var(--danger); }
+.stat-value.teal { color: var(--teal); }
+
+.panel,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.sensor-select {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.current {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.current.out {
+  color: var(--danger);
+}
+
+.alert-flag {
+  margin-left: 16px;
+  color: var(--danger);
+}
+
+.health {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-left: 4px solid #22c55e;
+  border-radius: 6px;
+  background: var(--gray-bg);
+  color: var(--text);
+  font-weight: 400;
+}
+
+.health:hover {
+  text-decoration: none;
+}
+
+.health span {
+  color: var(--slate);
+  font-size: 13px;
+}
+
+.health-due { border-color: var(--warning-strong); background: #fef9c3; }
+.health-not-fit { border-color: var(--danger); background: var(--danger-bg); }
+
+.rule {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.rule.teal { border-color: var(--teal); background: var(--mint); color: var(--teal); }
+.rule.blue { border-color: #93c5fd; background: #eff6ff; color: var(--blue); }
+.rule.yellow { border-color: var(--warning-strong); background: var(--warning-bg); color: #854d0e; }
