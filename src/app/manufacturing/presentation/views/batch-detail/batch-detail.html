@@ -1,0 +1,77 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'manufacturing.detail.title' | translate]"
+    [title]="'manufacturing.detail.title' | translate"
+    [subtitle]="code() + ' · ' + (product()?.name ?? '') + ' · ' + ('manufacturing.detail.subtitle' | translate)">
+    <a mat-stroked-button routerLink="/production/batches">← {{ 'nav.batches' | translate }}</a>
+    <a mat-flat-button [routerLink]="['/production/batches', code(), 'iot']">{{ 'manufacturing.detail.iot-evidence' | translate }}</a>
+  </app-page-header>
+
+  @if (batch(); as current) {
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined" class="panel genealogy">
+          <h2>{{ 'manufacturing.detail.genealogy' | translate }}</h2>
+          <p class="label">{{ 'manufacturing.detail.input-lots' | translate }}</p>
+          <div class="lots">
+            @for (lot of lots(); track lot.id) {
+              <div class="node lot">
+                <strong>{{ lot.code }}</strong>
+                <span>{{ 'manufacturing.category.' + lot.category | translate }} · {{ lot.material }}</span>
+              </div>
+            } @empty {
+              <p class="muted">{{ 'manufacturing.detail.no-lots' | translate }}</p>
+            }
+          </div>
+          <span class="arrow">↓</span>
+          @if (order(); as po) {
+            <a class="node order" [routerLink]="['/production/orders', po.code]">
+              <strong>{{ po.code }} · MFR-{{ po.productCode }} {{ formula()?.version }}</strong>
+              <span>{{ 'manufacturing.detail.allocated' | translate }}</span>
+            </a>
+            <span class="arrow">↓</span>
+          }
+          <div class="node batch">
+            <div>
+              <strong class="batch-code">{{ current.code }} · {{ product()?.name }}</strong>
+              <p class="flow">
+                @for (operation of operations(); track operation.id; let last = $last) {
+                  {{ operation.name }} {{ 'manufacturing.operation-status.' + operation.status | translate }}@if (!last) { → }
+                }
+              </p>
+              <span class="small">{{ 'manufacturing.detail.target' | translate: {quantity: (current.quantity | number), line: current.line, owner: current.owner} }}</span>
+            </div>
+            <div class="batch-state">
+              <span class="chip" [class]="current.status === 'on-hold' ? 'chip-warning' : 'chip-teal'">{{ 'manufacturing.batch-status.' + current.status | translate }}</span>
+              <mat-progress-bar mode="determinate" [value]="current.progress"/>
+              <span class="small">{{ current.progress }}%</span>
+            </div>
+          </div>
+          <span class="arrow">↓</span>
+          <div class="node finished">
+            FG-{{ current.code.slice(2) }} ·
+            {{ (current.status === 'released' ? 'manufacturing.detail.fg-released' : 'manufacturing.detail.fg-pending') | translate }}
+          </div>
+        </mat-card>
+      </div>
+
+      <aside class="stack">
+        <mat-card appearance="outlined" class="panel history">
+          <h2>{{ 'manufacturing.detail.history' | translate }}</h2>
+          <ol>
+            @for (event of events(); track event.id) {
+              <li [class]="event.tone">
+                <strong>{{ event.title }}</strong>
+                <span>{{ event.occurredAt | date: 'MMM dd, HH:mm' : 'UTC' }} · {{ event.detail }}</span>
+              </li>
+            } @empty {
+              <li class="muted">{{ 'manufacturing.detail.no-history' | translate }}</li>
+            }
+          </ol>
+        </mat-card>
+      </aside>
+    </div>
+  } @else {
+    <p class="muted">{{ 'manufacturing.batches.not-found' | translate }}</p>
+  }
+</section>
