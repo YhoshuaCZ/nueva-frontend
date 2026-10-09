@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 
+const productionOverview = () => import('./views/production-overview/production-overview').then(m => m.ProductionOverview);
 const orderList = () => import('./views/order-list/order-list').then(m => m.OrderList);
 const orderDetail = () => import('./views/order-detail/order-detail').then(m => m.OrderDetail);
 const productCatalog = () => import('./views/product-catalog/product-catalog').then(m => m.ProductCatalog);
@@ -11,6 +12,7 @@ const materialReceipt = () => import('./views/material-receipt/material-receipt'
  * Production routes of the Manufacturing & Batch Management bounded context.
  */
 export const manufacturingRoutes: Routes = [
+  { path: 'overview',       loadComponent: productionOverview, title: 'DoofPlus - Production overview' },
   { path: 'orders',         loadComponent: orderList,       title: 'DoofPlus - Production orders' },
   { path: 'orders/:code',   loadComponent: orderDetail,     title: 'DoofPlus - Production order' },
   { path: 'products',       loadComponent: productCatalog,  title: 'DoofPlus - Products & formulas' },
