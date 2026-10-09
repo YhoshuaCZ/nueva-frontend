@@ -15,5 +15,9 @@ export const environment = {
   platformProviderPlansEndpointPath: '/plans',
   platformProviderSubscriptionsEndpointPath: '/subscriptions',
   platformProviderInvoicesEndpointPath: '/invoices',
+  platformProviderOrganizationsEndpointPath: '/organizations',
+  platformProviderFacilitiesEndpointPath: '/facilities',
+  platformProviderUserProfilesEndpointPath: '/user-profiles',
+  platformProviderAdministrativeActivitiesEndpointPath: '/administrative-activities',
   landingPageUrl: 'https://ingescompany-7742.github.io/IngesCompany-LandingPage/'
 };

@@ -258,5 +258,93 @@
       "amount": 599,
       "status": "declined"
     }
+  ],
+  "organizations": [
+    {
+      "id": 1,
+      "legalName": "Laboratorios Andinos S.A.C.",
+      "ruc": "20512345678",
+      "region": "Peru",
+      "ownerName": "Carlos Medina",
+      "status": "active"
+    }
+  ],
+  "facilities": [
+    {
+      "id": 1,
+      "organizationId": 1,
+      "name": "Ate",
+      "type": "manufacturing",
+      "timezone": "America/Lima",
+      "ownerName": "Alberto Valle",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "organizationId": 1,
+      "name": "Lima",
+      "type": "qc-laboratory",
+      "timezone": "America/Lima",
+      "ownerName": "María México",
+      "status": "active"
+    }
+  ],
+  "user-profiles": [
+    {
+      "id": 1,
+      "userId": 1,
+      "firstName": "María",
+      "lastName": "México",
+      "email": "maria.mexico@andinos.com.pe",
+      "area": "Quality",
+      "site": "Lima QC lab",
+      "emailNotifications": true,
+      "inAppNotifications": true,
+      "language": "en"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "firstName": "Alberto",
+      "lastName": "Valle",
+      "email": "alberto.valle@andinos.com.pe",
+      "area": "Production",
+      "site": "Ate plant",
+      "emailNotifications": true,
+      "inAppNotifications": true,
+      "language": "es"
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "firstName": "Carlos",
+      "lastName": "Medina",
+      "email": "carlos.medina@andinos.com.pe",
+      "area": "Administration",
+      "site": "Ate plant",
+      "emailNotifications": true,
+      "inAppNotifications": false,
+      "language": "en"
+    }
+  ],
+  "administrative-activities": [
+    {
+      "id": 1,
+      "title": "Invitation sent to Óscar Ramos",
+      "actor": "Carlos Medina",
+      "occurredAt": "2026-10-07T09:15:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Profile updated: QA Specialist",
+      "actor": "Carlos Medina",
+      "occurredAt": "2026-10-06T15:20:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Payment declined · INV-2026-1001",
+      "actor": "Niubiz",
+      "occurredAt": "2026-10-01T08:00:00Z"
+    }
   ]
 }
