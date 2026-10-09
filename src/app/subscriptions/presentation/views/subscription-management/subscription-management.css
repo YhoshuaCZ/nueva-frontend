@@ -29,10 +29,6 @@
   color: var(--danger-dark);
 }
 
-.danger {
-  --mat-button-filled-container-color: var(--danger);
-}
-
 .proposed {
   align-self: flex-start;
 }

@@ -286,6 +286,15 @@ a {
 
 .alert .mat-icon {
   flex-shrink: 0;
+  color: var(--warning);
+}
+
+.alert-danger .mat-icon {
+  color: var(--danger-dark);
+}
+
+.alert-info .mat-icon {
+  color: var(--teal);
 }
 
 /* ---------- Forms ---------- */
@@ -308,6 +317,53 @@ a {
 
 .form-grid .full {
   grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field .mat-mdc-form-field {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.field-error {
+  margin: -14px 0 12px;
+  color: var(--danger-dark);
+  font-size: 12px;
+}
+
+/* ---------- Buttons, tabs and icons ---------- */
+
+.mat-mdc-button-base.danger {
+  --mat-button-filled-container-color: var(--danger);
+}
+
+.mat-mdc-button-base.block {
+  width: 100%;
+}
+
+.mat-mdc-tab-nav-bar.tabs {
+  --mat-tab-active-indicator-color: var(--teal);
+  --mat-tab-active-label-text-color: var(--teal);
+  --mat-tab-active-focus-label-text-color: var(--teal);
+  --mat-tab-active-hover-label-text-color: var(--teal);
+  --mat-tab-inactive-label-text-color: var(--slate);
+  --mat-tab-label-text-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.mat-icon.inline {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  vertical-align: text-bottom;
+}
+
+.card-body {
+  padding: 16px 20px;
 }
 
 /* ---------- Responsive ---------- */

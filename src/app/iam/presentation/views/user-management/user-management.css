@@ -1,13 +1,3 @@
-.tabs {
-  --mat-tab-active-indicator-color: var(--teal);
-  --mat-tab-active-label-text-color: var(--teal);
-  --mat-tab-active-focus-label-text-color: var(--teal);
-  --mat-tab-active-hover-label-text-color: var(--teal);
-  --mat-tab-inactive-label-text-color: var(--slate);
-  --mat-tab-label-text-weight: 600;
-  border-bottom: 1px solid var(--border);
-}
-
 .count {
   margin-left: 6px;
   padding: 1px 7px;
