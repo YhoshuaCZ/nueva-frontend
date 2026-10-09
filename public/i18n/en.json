@@ -225,5 +225,61 @@
       "sent": "Sent",
       "state-sent": "The invited user appears in Users & profiles → Invitations."
     }
+  },
+  "subscriptions": {
+    "subtitle": "Manage your plan, payment method and invoice history. Payments are processed by Niubiz.",
+    "current-plan": "Current plan",
+    "active-users": "Active users",
+    "user-limit": "Limit: {{limit}} users",
+    "unlimited": "Unlimited users and IoT devices",
+    "amount": "Amount",
+    "per": {
+      "monthly": "per month",
+      "annual": "per year"
+    },
+    "taxes": "taxes not included",
+    "next-invoice": "Next invoice",
+    "auto-renew": "Auto-renew enabled",
+    "no-auto-renew": "Auto-renew disabled",
+    "cycle": {
+      "monthly": "Monthly",
+      "annual": "Annual · 2 months free"
+    },
+    "declined-title": "Payment declined by Niubiz",
+    "declined-text": "The card was declined. The subscription stays Pending until a payment is approved.",
+    "retry": "Retry payment",
+    "billing-history": "Billing history",
+    "invoice": "Invoice",
+    "date": "Date",
+    "amount-column": "Amount",
+    "status": "Status",
+    "payment": {
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "no-invoices": "There are no invoices yet.",
+    "review": "Plan change review",
+    "plan": "Plan",
+    "billing-cycle": "Billing cycle",
+    "proposed-change": "Proposed billing change",
+    "current": "Current",
+    "proposed": "Proposed",
+    "effective": "Effective",
+    "no-charge": "No charge until confirmed",
+    "confirm": "Confirm plan change",
+    "cancel": "Cancel",
+    "no-change": "Choose another plan or billing cycle to review the change.",
+    "cancellation": "Cancellation policy: access continues through the end of the paid term. Export records before account closure.",
+    "payment-method": "Payment method",
+    "no-card": "No card registered yet. The first charge is requested after email verification.",
+    "billing-contact": "Billing contact",
+    "states": "Payment states",
+    "state-declined": "Declined payment",
+    "state-declined-text": "Niubiz declined the charge. The subscription stays Pending and the reason is shown.",
+    "state-upgrades": "No silent upgrades",
+    "state-upgrades-text": "Only organization admins can confirm plan changes.",
+    "state-reminder": "Renewal reminder",
+    "state-reminder-text": "Sent to {{email}} 7 days before each renewal.",
+    "none": "The organization has no subscription."
   }
 }
