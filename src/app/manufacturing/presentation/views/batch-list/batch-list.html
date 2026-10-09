@@ -1,40 +1,106 @@
-<div class="lots-container">
-  <div class="page-header">
-    <div>
-      <h2>{{ 'manufacturing.batch_list.title' | translate }}</h2>
-      <p class="subtitle">{{ 'manufacturing.batch_list.subtitle' | translate }}</p>
-    </div>
-    <a routerLink="/batches/new" class="btn-create">{{ 'manufacturing.batch_list.new_batch' | translate }}</a>
-  </div>
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.batches' | translate]"
+    [title]="'nav.batches' | translate"
+    [subtitle]="'manufacturing.batches.subtitle' | translate">
+    <button mat-flat-button type="button" (click)="openCreate()"><mat-icon>add</mat-icon>{{ 'manufacturing.batches.create' | translate }}</button>
+  </app-page-header>
 
-  <div class="table-card">
-    <table class="custom-table">
-      <thead>
-      <tr>
-        <th>{{ 'manufacturing.batch_list.col_id' | translate }}</th>
-        <th>{{ 'manufacturing.batch_list.col_formula' | translate }}</th>
-        <th>{{ 'manufacturing.batch_list.col_quantity' | translate }}</th>
-        <th>{{ 'manufacturing.batch_list.col_status' | translate }}</th>
-      </tr>
-      </thead>
-      <tbody>
-        @for (batch of batches; track batch.id) {
-          <tr>
-            <td><strong>{{ batch.id }}</strong></td>
-            <td>{{ batch.productFormula }}</td>
-            <td>{{ batch.quantity }} u.</td>
-            <td>
-              <span class="badge" [class]="batch.status.toLowerCase().replace(' ', '_')">
-                {{ batch.status }}
-              </span>
-            </td>
-          </tr>
-        } @empty {
-          <tr>
-            <td colspan="4" class="empty-state">{{ 'manufacturing.batch_list.empty' | translate }}</td>
-          </tr>
+  <mat-card appearance="outlined" class="summary">
+    <div><p class="stat-label">{{ 'manufacturing.batch-status.in-progress' | translate }}</p><p class="stat-value teal">{{ store.batchCounts()['in-progress'] ?? 0 }}</p></div>
+    <div><p class="stat-label">{{ 'manufacturing.batch-status.on-hold' | translate }}</p><p class="stat-value warn">{{ store.batchCounts()['on-hold'] ?? 0 }}</p></div>
+    <div><p class="stat-label">{{ 'manufacturing.batch-status.release-requested' | translate }}</p><p class="stat-value teal">{{ store.batchCounts()['release-requested'] ?? 0 }}</p></div>
+    <div><p class="stat-label">{{ 'manufacturing.batch-status.released' | translate }}</p><p class="stat-value teal">{{ store.batchCounts()['released'] ?? 0 }}</p></div>
+  </mat-card>
+
+  <nav mat-tab-nav-bar [tabPanel]="panel" mat-stretch-tabs="false" mat-align-tabs="start" class="tabs">
+    @for (tab of filters; track tab) {
+      <a mat-tab-link [active]="filter() === tab" (click)="filter.set(tab)">{{ 'manufacturing.batches.tab.' + tab | translate }}</a>
+    }
+  </nav>
+
+  <mat-tab-nav-panel #panel>
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined">
+          <div class="table-scroll">
+            <table mat-table [dataSource]="visibleBatches()">
+              <ng-container matColumnDef="batch">
+                <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.batch-product' | translate }}</th>
+                <td mat-cell *matCellDef="let batch">
+                  <a [routerLink]="['/production/batches', batch.code]" (click)="$event.stopPropagation()">{{ batch.code }}</a>
+                  <span class="sub">{{ batch.productCode }}</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.order-quantity' | translate }}</th>
+                <td mat-cell *matCellDef="let batch">{{ batch.orderCode }}<span class="sub">{{ batch.quantity | number }} {{ 'manufacturing.units' | translate }}</span></td>
+              </ng-container>
+              <ng-container matColumnDef="owner">
+                <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.owner' | translate }}</th>
+                <td mat-cell *matCellDef="let batch">{{ batch.owner }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.products.status' | translate }}</th>
+                <td mat-cell *matCellDef="let batch"><span class="chip" [class]="toneOf(batch.status)">{{ 'manufacturing.batch-status.' + batch.status | translate }}</span></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let batch; columns: columns" class="clickable"
+                  [class.highlight]="batch.code === selectedCode()" (click)="selectedCode.set(batch.code)"></tr>
+            </table>
+          </div>
+          <p class="footnote small muted">{{ 'manufacturing.batches.showing' | translate: {shown: visibleBatches().length, total: store.batches().length} }}</p>
+        </mat-card>
+
+        <mat-card appearance="outlined" class="panel">
+          <div>
+            <h2>{{ 'manufacturing.batches.lookup' | translate }}</h2>
+            <p class="sub">{{ 'manufacturing.batches.lookup-text' | translate }}</p>
+          </div>
+          <div class="row lookup">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <input matInput [formControl]="lookup" (keyup.enter)="search()" [attr.aria-label]="'manufacturing.batches.lookup' | translate">
+            </mat-form-field>
+            <button mat-flat-button type="button" (click)="search()">{{ 'manufacturing.batches.search' | translate }}</button>
+          </div>
+          @if (notFound()) {
+            <p class="not-found" role="alert">{{ 'manufacturing.batches.not-found' | translate }}</p>
+          }
+        </mat-card>
+      </div>
+
+      <aside class="stack">
+        @if (selected(); as batch) {
+          <mat-card appearance="outlined" class="panel batch">
+            <p class="state" [class]="'state-' + batch.status">
+              @if (batch.status === 'on-hold') { <mat-icon>warning</mat-icon> }
+              {{ 'manufacturing.batch-status.' + batch.status | translate }}
+            </p>
+            <h2>{{ batch.code }}</h2>
+            <p class="muted">{{ store.productByCode(batch.productCode)()?.name }}</p>
+            <p class="muted">{{ batch.quantity | number }} {{ 'manufacturing.units' | translate }} · {{ batch.line }}</p>
+            @if (batch.incident) {
+              <p class="label danger">{{ 'manufacturing.batches.incident' | translate }}</p>
+              <p>{{ batch.incident }}</p>
+            }
+            <p class="label">{{ 'manufacturing.batches.last-activity' | translate }}</p>
+            <p>{{ batch.lastActivityAt | date: 'MMM dd, HH:mm' : 'UTC' }} UTC</p>
+            <p class="muted">{{ batch.lastActivity }}</p>
+            <a [routerLink]="['/production/batches', batch.code]">{{ 'manufacturing.batches.view-genealogy' | translate }} →</a>
+          </mat-card>
         }
-      </tbody>
-    </table>
-  </div>
-</div>
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'manufacturing.batches.definitions' | translate }}</h2>
+          <div>
+            <strong>{{ 'manufacturing.batches.definition-hold' | translate }}</strong>
+            <p class="sub">{{ 'manufacturing.batches.definition-hold-text' | translate }}</p>
+          </div>
+          <div>
+            <strong>{{ 'manufacturing.batches.definition-release' | translate }}</strong>
+            <p class="sub">{{ 'manufacturing.batches.definition-release-text' | translate }}</p>
+          </div>
+        </mat-card>
+      </aside>
+    </div>
+  </mat-tab-nav-panel>
+</section>

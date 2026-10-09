@@ -1,93 +1,64 @@
-.lots-container {
-  display: flex;
-  flex-direction: column; gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 20px;
-}
-
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-.page-header h2 {
-  font-size: 20px;
-  color: #0f172a;
-  margin: 0;
-}
-
-.page-header .subtitle {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 4px;
-}
-
-.btn-create {
-  background-color: #2563eb;
-  color: #ffffff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.btn-create:hover {
-  background-color: #1d4ed8;
-}
-
-.table-card {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-.custom-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.custom-table th, .custom-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 14px;
-}
-
-.custom-table th {
-  color: #64748b;
-  font-weight: 600;
-  background: #f8fafc;
-}
-
-.badge {
-  padding: 4px 10px;
-  border-radius: 6px;
+.stat-label {
   font-size: 12px;
-  font-weight: bold;
-  display: inline-block;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.badge.planned {
-  background-color: #f1f5f9;
-  color: #475569;
+.stat-value.teal { color: var(--teal); }
+.stat-value.warn { color: var(--warning); }
+
+.footnote {
+  padding: 16px 20px;
 }
 
-.badge.in_progress {
-  background-color: #dbeafe;
-  color: #1e40af;
+.lookup .mat-mdc-form-field {
+  width: 320px;
+  max-width: 100%;
 }
-.empty-state {
-  text-align: center;
-  color: #94a3b8;
-  padding: 30px !important;
+
+.not-found {
+  color: var(--danger-dark);
+  font-size: 13px;
+}
+
+.batch {
+  gap: 8px;
+}
+
+.state {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.state .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.state-on-hold { background: var(--warning-bg); color: var(--warning); }
+.state-in-progress, .state-planned { background: var(--mint); color: var(--teal); }
+.state-release-requested, .state-released { background: var(--success-bg); color: var(--success); }
+
+.batch h2 {
+  font-size: 26px;
+}
+
+.label {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.label.danger {
+  color: var(--danger);
 }
