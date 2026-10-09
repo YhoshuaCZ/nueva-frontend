@@ -1,75 +1,13 @@
 {
-  "home": {
-    "title": "Welcome to DoofPlus",
-    "content": "Manage batch traceability, quality events and regulatory evidence of your pharmaceutical laboratory in one place."
-  },
-  "option": {
-    "home": "Home",
-    "about": "About"
-  },
-  "about": {
-    "eyebrow": "About DoofPlus",
-    "title": "Quality and traceability for pharmaceutical laboratories",
-    "content": "DoofPlus centralizes batch records, deviations and audit evidence so quality and production teams can comply with Good Manufacturing Practices without paperwork.",
-    "actions": {
-      "start": "Get started",
-      "back-home": "Back to home",
-      "evaluate": "Evaluate DoofPlus"
-    },
-    "panel": {
-      "platform": "DoofPlus Platform",
-      "platform-description": "One workspace for quality and production",
-      "iot": "Process data captured by sensors",
-      "bpm": "Approval and quality workflows",
-      "ra": "Regulatory audit evidence",
-      "saas": "Cloud subscription, no installation"
-    },
-    "value": {
-      "eyebrow": "Why DoofPlus",
-      "title": "Built for regulated environments",
-      "subtitle": "Every action is recorded so your laboratory is always ready for an audit.",
-      "traceability": {
-        "title": "Batch traceability",
-        "description": "Follow each batch from raw materials to release."
-      },
-      "monitoring": {
-        "title": "Real-time monitoring",
-        "description": "Track production status and quality alerts as they happen."
-      },
-      "audit": {
-        "title": "Audit readiness",
-        "description": "Keep an immutable audit trail and generate regulatory reports."
-      }
-    },
-    "workflow": {
-      "eyebrow": "How it works",
-      "title": "From batch to release",
-      "description": "DoofPlus supports the daily quality workflow of your laboratory.",
-      "items": {
-        "0": "Register the production batch.",
-        "1": "Capture process data and record deviations.",
-        "2": "Review and approve with electronic signatures.",
-        "3": "Release the batch with complete evidence."
-      }
-    },
-    "team": {
-      "eyebrow": "Our team",
-      "title": "Made by IngesCompany",
-      "description": "A team of Software Engineering students from UPC focused on digital solutions for the pharmaceutical industry."
-    }
-  },
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{invalid_path}}</strong> does not exist.",
-    "go-home": "Go to home"
+    "go-home": "Go to sign in"
   },
   "footer": {
-    "product": "Product",
-    "copyright": "Copyright © 2026 IngesCompany. All rights reserved",
-    "features": "Features",
-    "contact": "Contact",
-    "pricing": "Pricing",
-    "how-it-works": "How it works"
+    "copyright": "Copyright © 2026 IngesCompany. All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "manufacturing": {
     "batch_list": {
@@ -89,5 +27,8 @@
       "lbl_quantity": "Quantity (units):",
       "btn_save": "Save Batch"
     }
+  },
+  "shell": {
+    "back-to-doofplus": "Back to DoofPlus"
   }
 }

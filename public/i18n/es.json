@@ -1,75 +1,13 @@
 {
-  "home": {
-    "title": "Bienvenido a DoofPlus",
-    "content": "Gestiona la trazabilidad de lotes, los eventos de calidad y la evidencia regulatoria de tu laboratorio farmacéutico en un solo lugar."
-  },
-  "option": {
-    "home": "Inicio",
-    "about": "Sobre nosotros"
-  },
-  "about": {
-    "eyebrow": "Sobre DoofPlus",
-    "title": "Calidad y trazabilidad para laboratorios farmacéuticos",
-    "content": "DoofPlus centraliza los registros de lotes, las desviaciones y la evidencia de auditoría para que los equipos de calidad y producción cumplan las Buenas Prácticas de Manufactura sin papeleo.",
-    "actions": {
-      "start": "Comenzar",
-      "back-home": "Volver al inicio",
-      "evaluate": "Evaluar DoofPlus"
-    },
-    "panel": {
-      "platform": "Plataforma DoofPlus",
-      "platform-description": "Un solo espacio para calidad y producción",
-      "iot": "Datos del proceso capturados por sensores",
-      "bpm": "Flujos de aprobación y calidad",
-      "ra": "Evidencia para auditorías regulatorias",
-      "saas": "Suscripción en la nube, sin instalación"
-    },
-    "value": {
-      "eyebrow": "Por qué DoofPlus",
-      "title": "Diseñado para entornos regulados",
-      "subtitle": "Cada acción queda registrada para que tu laboratorio esté siempre listo para una auditoría.",
-      "traceability": {
-        "title": "Trazabilidad de lotes",
-        "description": "Sigue cada lote desde las materias primas hasta su liberación."
-      },
-      "monitoring": {
-        "title": "Monitoreo en tiempo real",
-        "description": "Revisa el estado de producción y las alertas de calidad al momento."
-      },
-      "audit": {
-        "title": "Listo para auditorías",
-        "description": "Mantén un audit trail inalterable y genera reportes regulatorios."
-      }
-    },
-    "workflow": {
-      "eyebrow": "Cómo funciona",
-      "title": "Del lote a la liberación",
-      "description": "DoofPlus acompaña el flujo diario de calidad de tu laboratorio.",
-      "items": {
-        "0": "Registra el lote de producción.",
-        "1": "Captura los datos del proceso y registra desviaciones.",
-        "2": "Revisa y aprueba con firma electrónica.",
-        "3": "Libera el lote con toda su evidencia."
-      }
-    },
-    "team": {
-      "eyebrow": "Nuestro equipo",
-      "title": "Hecho por IngesCompany",
-      "description": "Un equipo de estudiantes de Ingeniería de Software de la UPC enfocado en soluciones digitales para la industria farmacéutica."
-    }
-  },
   "page-not-found": {
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{invalid_path}}</strong> no existe.",
-    "go-home": "Ir al inicio"
+    "go-home": "Ir a iniciar sesión"
   },
   "footer": {
-    "product": "Producto",
-    "copyright": "Copyright © 2026 IngesCompany. Derechos reservados",
-    "features": "Características",
-    "contact": "Contacto",
-    "pricing": "Precios",
-    "how-it-works": "Cómo funciona"
+    "copyright": "Copyright © 2026 IngesCompany. Todos los derechos reservados.",
+    "terms": "Términos del servicio",
+    "privacy": "Política de privacidad"
   },
   "manufacturing": {
     "batch_list": {
@@ -89,6 +27,8 @@
       "lbl_quantity": "Cantidad (unidades):",
       "btn_save": "Guardar Lote"
     }
+  },
+  "shell": {
+    "back-to-doofplus": "Volver a DoofPlus"
   }
 }
-
