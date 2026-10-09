@@ -196,5 +196,67 @@
       "status": "pending",
       "sentAt": "2026-10-06T09:30:00Z"
     }
+  ],
+  "plans": [
+    {
+      "id": 1,
+      "key": "standard-lab",
+      "name": "Standard Lab",
+      "monthlyPrice": 199,
+      "annualPrice": 1990,
+      "userLimit": 10,
+      "iotDeviceLimit": 5
+    },
+    {
+      "id": 2,
+      "key": "enterprise",
+      "name": "Enterprise",
+      "monthlyPrice": 599,
+      "annualPrice": 5990,
+      "userLimit": 0,
+      "iotDeviceLimit": 0
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": 1,
+      "organizationId": 1,
+      "planKey": "enterprise",
+      "billingCycle": "monthly",
+      "status": "pending",
+      "paymentState": "declined",
+      "nextInvoiceDate": "2026-11-01",
+      "autoRenew": true,
+      "cardBrand": "Visa",
+      "cardLast4": "4242",
+      "cardExpiry": "08/2028",
+      "billingEmail": "billing@andinos.com.pe"
+    }
+  ],
+  "invoices": [
+    {
+      "id": 1,
+      "subscriptionId": 1,
+      "number": "INV-2026-0801",
+      "issuedAt": "2026-08-01",
+      "amount": 599,
+      "status": "approved"
+    },
+    {
+      "id": 2,
+      "subscriptionId": 1,
+      "number": "INV-2026-0901",
+      "issuedAt": "2026-09-01",
+      "amount": 599,
+      "status": "approved"
+    },
+    {
+      "id": 3,
+      "subscriptionId": 1,
+      "number": "INV-2026-1001",
+      "issuedAt": "2026-10-01",
+      "amount": 599,
+      "status": "declined"
+    }
   ]
 }

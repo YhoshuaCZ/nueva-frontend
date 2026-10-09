@@ -225,5 +225,61 @@
       "sent": "Enviada",
       "state-sent": "El invitado aparece en Usuarios y perfiles → Invitaciones."
     }
+  },
+  "subscriptions": {
+    "subtitle": "Gestiona tu plan, el medio de pago y el historial de facturas. Los pagos los procesa Niubiz.",
+    "current-plan": "Plan actual",
+    "active-users": "Usuarios activos",
+    "user-limit": "Límite: {{limit}} usuarios",
+    "unlimited": "Usuarios y dispositivos IoT ilimitados",
+    "amount": "Monto",
+    "per": {
+      "monthly": "al mes",
+      "annual": "al año"
+    },
+    "taxes": "sin impuestos",
+    "next-invoice": "Próxima factura",
+    "auto-renew": "Renovación automática activa",
+    "no-auto-renew": "Renovación automática desactivada",
+    "cycle": {
+      "monthly": "Mensual",
+      "annual": "Anual · 2 meses gratis"
+    },
+    "declined-title": "Niubiz rechazó el pago",
+    "declined-text": "La tarjeta fue rechazada. La suscripción queda Pendiente hasta que se apruebe un pago.",
+    "retry": "Reintentar pago",
+    "billing-history": "Historial de facturación",
+    "invoice": "Factura",
+    "date": "Fecha",
+    "amount-column": "Monto",
+    "status": "Estado",
+    "payment": {
+      "approved": "Aprobado",
+      "declined": "Rechazado"
+    },
+    "no-invoices": "Todavía no hay facturas.",
+    "review": "Revisión del cambio de plan",
+    "plan": "Plan",
+    "billing-cycle": "Ciclo de facturación",
+    "proposed-change": "Cambio de facturación propuesto",
+    "current": "Actual",
+    "proposed": "Propuesto",
+    "effective": "Desde",
+    "no-charge": "Sin cargo hasta confirmar",
+    "confirm": "Confirmar cambio de plan",
+    "cancel": "Cancelar",
+    "no-change": "Elige otro plan o ciclo de facturación para revisar el cambio.",
+    "cancellation": "Política de cancelación: el acceso sigue hasta el final del periodo pagado. Exporta los registros antes de cerrar la cuenta.",
+    "payment-method": "Medio de pago",
+    "no-card": "Todavía no hay tarjeta registrada. El primer cobro se solicita tras verificar el correo.",
+    "billing-contact": "Contacto de facturación",
+    "states": "Estados del pago",
+    "state-declined": "Pago rechazado",
+    "state-declined-text": "Niubiz rechazó el cobro. La suscripción queda Pendiente y se muestra el motivo.",
+    "state-upgrades": "Sin cambios silenciosos",
+    "state-upgrades-text": "Solo los administradores de la organización pueden confirmar cambios de plan.",
+    "state-reminder": "Recordatorio de renovación",
+    "state-reminder-text": "Se envía a {{email}} 7 días antes de cada renovación.",
+    "none": "La organización no tiene suscripción."
   }
 }
