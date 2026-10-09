@@ -1,4 +1,6 @@
-import {Component, inject, input, signal} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 
@@ -20,8 +22,9 @@ export class LanguageSwitcher {
   /** Supported language codes available to users. */
   protected readonly languages = ['en', 'es'];
 
-  /** Currently selected language code in the toggle group. */
-  protected readonly currentLang = signal(this.translate.getCurrentLang() ?? 'en');
+  /** Currently selected language code, also when another page (such as the profile) changes it. */
+  protected readonly currentLang = toSignal(this.translate.onLangChange.pipe(map(event => event.lang)),
+    {initialValue: this.translate.getCurrentLang() ?? 'en'});
 
   /**
    * Changes the active application language and remembers it for the next visit.
@@ -29,7 +32,6 @@ export class LanguageSwitcher {
    */
   useLanguage(language: string) {
     this.translate.use(language);
-    this.currentLang.set(language);
     localStorage.setItem('language', language);
   }
 }
