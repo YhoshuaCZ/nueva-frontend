@@ -19,5 +19,13 @@ export const environment = {
   platformProviderFacilitiesEndpointPath: '/facilities',
   platformProviderUserProfilesEndpointPath: '/user-profiles',
   platformProviderAdministrativeActivitiesEndpointPath: '/administrative-activities',
+  platformProviderProductsEndpointPath: '/products',
+  platformProviderMasterFormulasEndpointPath: '/master-formulas',
+  platformProviderFormulaItemsEndpointPath: '/formula-items',
+  platformProviderProductionOrdersEndpointPath: '/production-orders',
+  platformProviderOperationsEndpointPath: '/operations',
+  platformProviderBatchesEndpointPath: '/batches',
+  platformProviderBatchEventsEndpointPath: '/batch-events',
+  platformProviderMaterialLotsEndpointPath: '/material-lots',
   landingPageUrl: 'https://ingescompany-7742.github.io/IngesCompany-LandingPage/'
 };
