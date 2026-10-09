@@ -1,7 +1,6 @@
-<mat-toolbar color="primary" class="toolbar">
-  <img src="/doofplus-logo.png" alt="Doofplus Logo" class="toolbar-logo" />
-  <p class="toolbar-title">Doofplus</p>
-
+<mat-toolbar class="toolbar">
+  <a [href]="landingUrl" class="brand"><img src="/doofplus-wordmark.png" alt="DoofPlus" class="toolbar-logo"/></a>
+  <a [href]="landingUrl" class="back"><mat-icon>arrow_back</mat-icon>{{ 'shell.back-to-doofplus' | translate }}</a>
   <span class="spacer"></span>
-  <app-language-switcher></app-language-switcher>
+  <app-language-switcher/>
 </mat-toolbar>

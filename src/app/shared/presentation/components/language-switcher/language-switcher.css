@@ -1,0 +1,22 @@
+.language-switcher {
+  --mat-button-toggle-height: 32px;
+  --mat-button-toggle-shape: 999px;
+  --mat-button-toggle-selected-state-background-color: var(--teal);
+  --mat-button-toggle-selected-state-text-color: #fff;
+  --mat-button-toggle-text-color: var(--navy);
+  --mat-button-toggle-divider-color: transparent;
+  --mat-button-toggle-label-text-weight: 700;
+  --mat-button-toggle-label-text-size: 12px;
+  padding: 2px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.language-switcher.dark {
+  border-color: var(--teal);
+}
+
+.language-switcher .mat-button-toggle {
+  border-radius: 999px;
+}

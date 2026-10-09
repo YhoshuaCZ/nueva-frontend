@@ -1,25 +1,51 @@
-import { Routes } from '@angular/router';
-import {Home} from './shared/presentation/views/home/home';
-import {About} from './shared/presentation/views/about/about';
-import {PageNotFound} from './shared/presentation/views/page-not-found/page-not-found';
+import {Routes} from '@angular/router';
+import {Layout} from './shared/presentation/components/layout/layout';
+import {WorkspaceShell} from './shared/presentation/components/workspace-shell/workspace-shell';
+import {iamGuard} from './iam/infrastructure/iam.guard';
+import {routes as manufacturingRoutes} from './manufacturing/presentation/manufacturing.routes';
 
-const baseTitle = 'DoofPlus'
-
-/**
- * Import views for the routes
- */
-const about = () =>
-  import('./shared/presentation/views/about/about').then(m => m.About);
+const baseTitle = 'DoofPlus';
 
 const pageNotFound = () =>
-  import('./shared/presentation/views/page-not-found/page-not-found').then(m=>m.PageNotFound);
+  import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound);
+
+const iamRoutes = () => import('./iam/presentation/iam.routes').then(m => m.iamRoutes);
+const iamAdministrationRoutes = () => import('./iam/presentation/iam.routes').then(m => m.iamAdministrationRoutes);
+const organizationsPublicRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.organizationsPublicRoutes);
+const organizationsAdministrationRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.organizationsAdministrationRoutes);
+const profileRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.profileRoutes);
+const subscriptionsRoutes = () => import('./subscriptions/presentation/subscriptions.routes').then(m => m.subscriptionsRoutes);
 
 /**
- * Define the routes where the toolbar and footer will be used
+ * Route shown inside a frame when a path does not exist.
+ */
+const notFound = { path: '**', loadComponent: pageNotFound, title: `${baseTitle} - Page Not Found` };
+
+/**
+ * Root routes. Public pages use the layout (toolbar and footer); each environment uses the
+ * workspace shell and is protected by the IAM guard.
  */
 export const routes: Routes = [
-  { path: 'home', component: Home, title: `${baseTitle} - Home` },
-  { path: 'about', loadComponent: about, title: `${baseTitle} - About` },
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
-  { path: '**', loadComponent: pageNotFound, title: `${baseTitle} - Page Not Found` },
+  { path: '',               redirectTo: '/sign-in', pathMatch: 'full' },
+  { path: 'sign-in',        component: Layout, loadChildren: iamRoutes },
+  { path: 'register',       loadChildren: organizationsPublicRoutes },
+  { path: 'qa',             component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'qa' }, children: [
+    { path: '', loadChildren: profileRoutes },
+    notFound
+  ]},
+  { path: 'production',     component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'production' }, children: [
+    { path: '', loadChildren: profileRoutes },
+    notFound
+  ]},
+  { path: 'administration', component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'administration' }, children: [
+    { path: '', loadChildren: iamAdministrationRoutes },
+    { path: '', loadChildren: subscriptionsRoutes },
+    { path: '', loadChildren: organizationsAdministrationRoutes },
+    { path: '', loadChildren: profileRoutes },
+    notFound
+  ]},
+  { path: '',               component: Layout, children: [
+    ...manufacturingRoutes,
+    notFound
+  ]}
 ];

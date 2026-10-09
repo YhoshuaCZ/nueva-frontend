@@ -1,0 +1,163 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.administration.short' | translate, 'nav.subscription-payments' | translate]"
+    [title]="'nav.subscription-payments' | translate"
+    [subtitle]="'subscriptions.subtitle' | translate"/>
+
+  @if (store.subscription(); as subscription) {
+    <div class="stats">
+      <mat-card appearance="outlined" class="stat">
+        <p class="stat-label">{{ 'subscriptions.current-plan' | translate }}</p>
+        <p class="stat-value">{{ store.currentPlan()?.name }}</p>
+        <span class="chip chip-teal">{{ 'subscriptions.cycle.' + subscription.billingCycle | translate }}</span>
+      </mat-card>
+      <mat-card appearance="outlined" class="stat">
+        <p class="stat-label">{{ 'subscriptions.active-users' | translate }}</p>
+        <p class="stat-value">{{ iamStore.users().length }}</p>
+        <mat-progress-bar mode="determinate" [value]="usersProgress()"/>
+        <p class="stat-note">
+          @if (store.currentPlan()?.userLimit) {
+            {{ 'subscriptions.user-limit' | translate: {limit: store.currentPlan()?.userLimit} }}
+          } @else {
+            {{ 'subscriptions.unlimited' | translate }}
+          }
+        </p>
+      </mat-card>
+      <mat-card appearance="outlined" class="stat">
+        <p class="stat-label">{{ 'subscriptions.amount' | translate }}</p>
+        <p class="stat-value">{{ store.currentAmount() | currency: 'USD':'US$':'1.0-0' }}</p>
+        <p class="stat-note">{{ 'subscriptions.per.' + subscription.billingCycle | translate }} · {{ 'subscriptions.taxes' | translate }}</p>
+      </mat-card>
+      <mat-card appearance="outlined" class="stat">
+        <p class="stat-label">{{ 'subscriptions.next-invoice' | translate }}</p>
+        <p class="stat-value">{{ subscription.nextInvoiceDate | date: 'MMM dd' }}</p>
+        <p class="stat-note">{{ (subscription.autoRenew ? 'subscriptions.auto-renew' : 'subscriptions.no-auto-renew') | translate }}</p>
+      </mat-card>
+    </div>
+
+    @if (subscription.paymentState === 'declined') {
+      <div class="alert alert-danger declined-alert" role="alert">
+        <mat-icon>warning</mat-icon>
+        <div>
+          <strong>{{ 'subscriptions.declined-title' | translate }}</strong>
+          <p>{{ 'subscriptions.declined-text' | translate }}</p>
+        </div>
+        <button mat-flat-button type="button" class="danger" (click)="store.retryPayment()" [disabled]="store.loading()">
+          {{ 'subscriptions.retry' | translate }} →
+        </button>
+      </div>
+    }
+
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined">
+          <h2 class="card-title">{{ 'subscriptions.billing-history' | translate }}</h2>
+          <div class="table-scroll">
+            <table mat-table [dataSource]="store.invoices()">
+              <ng-container matColumnDef="number">
+                <th mat-header-cell *matHeaderCellDef>{{ 'subscriptions.invoice' | translate }}</th>
+                <td mat-cell *matCellDef="let invoice"><strong>{{ invoice.number }}</strong></td>
+              </ng-container>
+              <ng-container matColumnDef="issuedAt">
+                <th mat-header-cell *matHeaderCellDef>{{ 'subscriptions.date' | translate }}</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.issuedAt | date: 'MMM dd, yyyy' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>{{ 'subscriptions.amount-column' | translate }}</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.amount | currency: 'USD':'US$' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>{{ 'subscriptions.status' | translate }}</th>
+                <td mat-cell *matCellDef="let invoice">
+                  <span class="chip" [class]="invoice.status === 'approved' ? 'chip-success' : 'chip-danger'">
+                    {{ 'subscriptions.payment.' + invoice.status | translate }}
+                  </span>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="invoiceColumns"></tr>
+              <tr mat-row *matRowDef="let invoice; columns: invoiceColumns"></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell muted" [attr.colspan]="invoiceColumns.length">{{ 'subscriptions.no-invoices' | translate }}</td>
+              </tr>
+            </table>
+          </div>
+        </mat-card>
+
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'subscriptions.review' | translate }}</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'subscriptions.plan' | translate }}</mat-label>
+              <mat-select [value]="proposedPlan()?.key" (valueChange)="proposedPlanKey.set($event)">
+                @for (plan of store.plans(); track plan.id) {
+                  <mat-option [value]="plan.key">{{ plan.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'subscriptions.billing-cycle' | translate }}</mat-label>
+              <mat-select [value]="cycle()" (valueChange)="proposedCycle.set($event)">
+                <mat-option value="monthly">{{ 'subscriptions.cycle.monthly' | translate }}</mat-option>
+                <mat-option value="annual">{{ 'subscriptions.cycle.annual' | translate }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          @if (hasChange()) {
+            <span class="chip chip-warning proposed">{{ 'subscriptions.proposed-change' | translate }}</span>
+            <dl>
+              <dt>{{ 'subscriptions.current' | translate }}</dt>
+              <dd>{{ store.currentPlan()?.name }} · {{ 'subscriptions.cycle.' + subscription.billingCycle | translate }} · {{ store.currentAmount() | currency: 'USD':'US$':'1.0-0' }}</dd>
+              <dt>{{ 'subscriptions.proposed' | translate }}</dt>
+              <dd><strong>{{ proposedPlan()?.name }} · {{ 'subscriptions.cycle.' + cycle() | translate }} · {{ proposedAmount() | currency: 'USD':'US$':'1.0-0' }}</strong></dd>
+              <dt>{{ 'subscriptions.effective' | translate }}</dt>
+              <dd>{{ subscription.nextInvoiceDate | date: 'MMM dd, yyyy' }} · {{ 'subscriptions.no-charge' | translate }}</dd>
+            </dl>
+            <div class="row">
+              <button mat-flat-button type="button" (click)="confirmChange()" [disabled]="store.loading()">{{ 'subscriptions.confirm' | translate }}</button>
+              <button mat-button type="button" (click)="cancelChange()">{{ 'subscriptions.cancel' | translate }}</button>
+            </div>
+          } @else {
+            <p class="muted">{{ 'subscriptions.no-change' | translate }}</p>
+          }
+          <p class="small muted">{{ 'subscriptions.cancellation' | translate }}</p>
+        </mat-card>
+      </div>
+
+      <aside class="stack">
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'subscriptions.payment-method' | translate }}</h2>
+          @if (subscription.cardLast4) {
+            <div class="credit-card">
+              <strong>•••• •••• •••• {{ subscription.cardLast4 }}</strong>
+              <span>{{ subscription.cardBrand }} · Exp {{ subscription.cardExpiry }} · Niubiz</span>
+              <span>{{ iamStore.currentUser()?.organizationName }}</span>
+            </div>
+          } @else {
+            <p class="muted">{{ 'subscriptions.no-card' | translate }}</p>
+          }
+          <div>
+            <p class="stat-label">{{ 'subscriptions.billing-contact' | translate }}</p>
+            <p>{{ subscription.billingEmail }}</p>
+          </div>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'subscriptions.states' | translate }}</h2>
+          <div class="state declined">
+            <mat-icon>close</mat-icon>
+            <div><strong>{{ 'subscriptions.state-declined' | translate }}</strong><p class="small">{{ 'subscriptions.state-declined-text' | translate }}</p></div>
+          </div>
+          <div class="state upgrades">
+            <mat-icon>lock</mat-icon>
+            <div><strong>{{ 'subscriptions.state-upgrades' | translate }}</strong><p class="small">{{ 'subscriptions.state-upgrades-text' | translate }}</p></div>
+          </div>
+          <div class="state reminder">
+            <mat-icon>notifications</mat-icon>
+            <div><strong>{{ 'subscriptions.state-reminder' | translate }}</strong><p class="small">{{ 'subscriptions.state-reminder-text' | translate: {email: subscription.billingEmail} }}</p></div>
+          </div>
+        </mat-card>
+      </aside>
+    </div>
+  } @else if (!store.loading()) {
+    <p class="muted">{{ 'subscriptions.none' | translate }}</p>
+  }
+</section>

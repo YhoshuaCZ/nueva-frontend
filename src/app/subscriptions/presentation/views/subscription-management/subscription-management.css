@@ -1,0 +1,90 @@
+.stat-label {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 28px;
+}
+
+.stat .chip {
+  align-self: flex-start;
+}
+
+.stat mat-progress-bar {
+  --mat-progress-bar-active-indicator-color: var(--teal);
+  --mat-progress-bar-track-color: #e2e8f0;
+  --mat-progress-bar-track-height: 6px;
+  --mat-progress-bar-active-indicator-height: 6px;
+  margin: 4px 0 8px;
+  border-radius: 3px;
+}
+
+.declined-alert {
+  border-left: 4px solid var(--danger);
+}
+
+.declined-alert .mat-icon {
+  color: var(--danger-dark);
+}
+
+.danger {
+  --mat-button-filled-container-color: var(--danger);
+}
+
+.proposed {
+  align-self: flex-start;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 0;
+}
+
+.credit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+  font-size: 13px;
+}
+
+.credit-card strong {
+  font-size: 15px;
+}
+
+.state {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+.state .mat-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.declined { border-color: var(--danger-border); background: var(--danger-bg); color: var(--danger-dark); }
+.upgrades { border-color: #bfdbfe; background: #eff6ff; color: var(--blue); }
+.reminder { border-color: var(--warning-border); background: var(--warning-bg); color: var(--warning); }

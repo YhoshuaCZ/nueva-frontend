@@ -1,75 +1,13 @@
 {
-  "home": {
-    "title": "Welcome to DoofPlus",
-    "content": "Manage batch traceability, quality events and regulatory evidence of your pharmaceutical laboratory in one place."
-  },
-  "option": {
-    "home": "Home",
-    "about": "About"
-  },
-  "about": {
-    "eyebrow": "About DoofPlus",
-    "title": "Quality and traceability for pharmaceutical laboratories",
-    "content": "DoofPlus centralizes batch records, deviations and audit evidence so quality and production teams can comply with Good Manufacturing Practices without paperwork.",
-    "actions": {
-      "start": "Get started",
-      "back-home": "Back to home",
-      "evaluate": "Evaluate DoofPlus"
-    },
-    "panel": {
-      "platform": "DoofPlus Platform",
-      "platform-description": "One workspace for quality and production",
-      "iot": "Process data captured by sensors",
-      "bpm": "Approval and quality workflows",
-      "ra": "Regulatory audit evidence",
-      "saas": "Cloud subscription, no installation"
-    },
-    "value": {
-      "eyebrow": "Why DoofPlus",
-      "title": "Built for regulated environments",
-      "subtitle": "Every action is recorded so your laboratory is always ready for an audit.",
-      "traceability": {
-        "title": "Batch traceability",
-        "description": "Follow each batch from raw materials to release."
-      },
-      "monitoring": {
-        "title": "Real-time monitoring",
-        "description": "Track production status and quality alerts as they happen."
-      },
-      "audit": {
-        "title": "Audit readiness",
-        "description": "Keep an immutable audit trail and generate regulatory reports."
-      }
-    },
-    "workflow": {
-      "eyebrow": "How it works",
-      "title": "From batch to release",
-      "description": "DoofPlus supports the daily quality workflow of your laboratory.",
-      "items": {
-        "0": "Register the production batch.",
-        "1": "Capture process data and record deviations.",
-        "2": "Review and approve with electronic signatures.",
-        "3": "Release the batch with complete evidence."
-      }
-    },
-    "team": {
-      "eyebrow": "Our team",
-      "title": "Made by IngesCompany",
-      "description": "A team of Software Engineering students from UPC focused on digital solutions for the pharmaceutical industry."
-    }
-  },
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{invalid_path}}</strong> does not exist.",
-    "go-home": "Go to home"
+    "go-home": "Go to sign in"
   },
   "footer": {
-    "product": "Product",
-    "copyright": "Copyright © 2026 IngesCompany. All rights reserved",
-    "features": "Features",
-    "contact": "Contact",
-    "pricing": "Pricing",
-    "how-it-works": "How it works"
+    "copyright": "Copyright © 2026 IngesCompany. All rights reserved.",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "manufacturing": {
     "batch_list": {
@@ -88,6 +26,371 @@
       "lbl_formula": "Product Formula:",
       "lbl_quantity": "Quantity (units):",
       "btn_save": "Save Batch"
+    }
+  },
+  "shell": {
+    "back-to-doofplus": "Back to DoofPlus",
+    "workspace": "Workspace",
+    "help": "Help & documentation",
+    "menu": "Open menu",
+    "search": "Search batches, documents, people",
+    "profile": "Profile & preferences",
+    "sign-out": "Sign out",
+    "utc": "All times UTC",
+    "role-based": "Role-based permissions"
+  },
+  "nav": {
+    "quality-overview": "Quality overview",
+    "quality-indicators": "Quality indicators",
+    "quality-documents": "Quality documents",
+    "deviations": "Deviations",
+    "capa-plans": "CAPA plans",
+    "batch-release": "Batch release",
+    "analytical-results": "Analytical results",
+    "audits": "Audits",
+    "audit-trail": "Audit trail",
+    "regulatory-reports": "Regulatory reports",
+    "tasks": "Tasks & collaboration",
+    "production-overview": "Production overview",
+    "production-orders": "Production orders",
+    "products-formulas": "Products & formulas",
+    "batches": "Batches",
+    "raw-materials": "Raw materials",
+    "equipment-sensors": "Equipment & sensors",
+    "iot-overview": "IoT overview",
+    "administration-overview": "Administration overview",
+    "users-profiles": "Users & profiles",
+    "subscription-payments": "Subscriptions & payments",
+    "incidents": "Incidents"
+  },
+  "environments": {
+    "qa": {
+      "label": "QA/QC environment",
+      "role": "QA/QC Specialist",
+      "name": "QA/QC",
+      "short": "QA/QC",
+      "description": "Review documents and analytical results, manage deviations and CAPA, and release batches with your electronic signature.",
+      "headline": "Quality decisions backed by complete evidence",
+      "continue": "Continue as QA/QC Specialist"
+    },
+    "production": {
+      "label": "Production environment",
+      "role": "Production Supervisor",
+      "name": "Production",
+      "short": "Production",
+      "description": "Issue production orders, execute batches against master formulas, receive raw materials and respond to IoT alerts.",
+      "headline": "Batches executed against approved master formulas",
+      "continue": "Continue as Production Supervisor"
+    },
+    "administration": {
+      "label": "Administration environment",
+      "role": "Laboratory Administrator",
+      "name": "Administration",
+      "short": "Administration",
+      "description": "Manage the organization and its plants, invite users, assign roles and manage the subscription.",
+      "headline": "One organization, the right access for every role",
+      "continue": "Continue as Laboratory Administrator"
+    },
+    "features": {
+      "documents": "Documents & SOPs",
+      "analytical-results": "Analytical results",
+      "deviations-capa": "Deviations & CAPA",
+      "batch-release": "Batch release",
+      "audits": "Audits & audit trail",
+      "products-formulas": "Products & master formulas",
+      "production-orders": "Production orders",
+      "batch-execution": "Batch execution",
+      "raw-material-receipt": "Raw-material receipt",
+      "organization-plants": "Organization & plants",
+      "users-roles": "Users & roles",
+      "subscription-payments": "Subscription & payments",
+      "profile-preferences": "Profile & preferences"
+    }
+  },
+  "roles": {
+    "qa-specialist": "QA Specialist",
+    "production-supervisor": "Production Supervisor",
+    "administrator": "Administrator",
+    "quality-manager": "Quality Manager",
+    "internal-auditor": "Internal Auditor",
+    "system": "Automated system"
+  },
+  "privileges": {
+    "qa-release": "QA release privilege",
+    "no-final-release": "Supervisor · No final release",
+    "administrator": "Administrator",
+    "read-only": "Read-only",
+    "none": "Standard access"
+  },
+  "iam": {
+    "selection": {
+      "overline": "Sign in",
+      "title": "Sign in to DoofPlus",
+      "subtitle": "Choose the environment you work in. Each environment shows the modules and approvals of its role.",
+      "new-laboratory": "New laboratory?",
+      "register": "Register your organization",
+      "not-customer": "Not a customer yet?",
+      "see-plans": "See plans"
+    },
+    "sign-in": {
+      "title": "Sign in to the {{environment}} environment",
+      "subtitle": "Use your work account. Next, you will confirm your identity with a two-factor code.",
+      "email": "Work email",
+      "password": "Password",
+      "continue": "Continue",
+      "email-error": "Enter a valid work email.",
+      "password-error": "Enter your password.",
+      "show-password": "Show password",
+      "hide-password": "Hide password",
+      "invalid-title": "The email or password is incorrect.",
+      "invalid-text": "Check your credentials and try again. After 5 failed attempts the account is locked for 15 minutes.",
+      "not-your-environment": "Not your environment?",
+      "choose-another": "Choose another",
+      "access-note": "Access is granted by the role your laboratory administrator assigned.",
+      "two-factor-title": "Two-factor authentication",
+      "two-factor-text": "Enter the 6-digit code from your authenticator app to confirm that you are {{name}} ({{email}}).",
+      "code": "Authentication code",
+      "digit": "Digit",
+      "code-hint": "Codes refresh every 30 seconds. After 5 failed attempts the account is locked for 15 minutes.",
+      "invalid-code": "The code is not valid. Enter the current code of your authenticator app.",
+      "verify": "Verify and continue",
+      "back-to-sign-in": "Back to sign in",
+      "denied-title": "Access not authorized for this environment",
+      "denied-text": "Your identity was verified, but your role ({{role}}) does not grant access to the {{environment}} environment. Ask your laboratory administrator to review your role, or continue in your own environment.",
+      "choose-another-environment": "Choose another environment",
+      "other-account": "Sign in with another account"
+    },
+    "status": {
+      "active": "Active",
+      "invited": "Invited",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "expired": "Expired"
+    },
+    "users": {
+      "subtitle": "Assign least-privilege profiles and review access by facility.",
+      "invite": "Invite user",
+      "tab-users": "Users",
+      "tab-profiles": "Profiles",
+      "tab-invitations": "Invitations",
+      "directory": "User directory",
+      "shown": "{{count}} shown",
+      "user": "User",
+      "profile": "Profile",
+      "facility": "Facility",
+      "status": "Status",
+      "matrix": "Profile permissions matrix",
+      "create-edit": "Create / edit",
+      "approve-sign": "Approve / sign",
+      "restrictions": "Restrictions",
+      "none": "None",
+      "selected-profile": "Selected profile",
+      "can-create": "Can create or edit",
+      "can-approve": "Can approve or sign",
+      "restriction": "Restriction",
+      "access-policy": "Access policy",
+      "two-factor": "2FA mandatory",
+      "all-users": "All users",
+      "two-factor-text": "Sessions expire after 15 minutes of inactivity.",
+      "deactivation": "Deactivation preserves history",
+      "deactivation-text": "Signed records and attributed events are never deleted.",
+      "rbac": "Role-based access control",
+      "rbac-text": "Only authenticated users with assigned roles and facility scope can access functions. Choosing a public segment never grants access.",
+      "sent-title": "Invitation sent.",
+      "sent-text": "{{email}} appears in Invitations until the user verifies the email and enrolls 2FA."
+    },
+    "invite": {
+      "title": "Invite user",
+      "subtitle": "An organization administrator can invite users within the user limit of the plan (Standard Lab: 10 users; Enterprise: unlimited).",
+      "active-users": "Active users",
+      "user-limit": "User limit",
+      "pending": "Pending invitations",
+      "days": "days",
+      "expiry": "Invitation expiry · verify email + 2FA",
+      "details": "User and access details",
+      "full-name": "Full name",
+      "full-name-error": "Enter the full name.",
+      "email": "Work email",
+      "email-error": "Enter a valid work email.",
+      "profile": "Profile",
+      "facility": "Facility access",
+      "note": "Invitation note",
+      "send": "Send invitation",
+      "cancel": "Cancel",
+      "preview": "Permission preview",
+      "states": "Invitation states",
+      "duplicate-email": "Duplicate email",
+      "duplicate": "The user already belongs to this organization or has an invitation.",
+      "state-pending": "The user receives a verification link; access starts after email verification and 2FA enrollment.",
+      "sent": "Sent",
+      "state-sent": "The invited user appears in Users & profiles → Invitations."
+    }
+  },
+  "subscriptions": {
+    "subtitle": "Manage your plan, payment method and invoice history. Payments are processed by Niubiz.",
+    "current-plan": "Current plan",
+    "active-users": "Active users",
+    "user-limit": "Limit: {{limit}} users",
+    "unlimited": "Unlimited users and IoT devices",
+    "amount": "Amount",
+    "per": {
+      "monthly": "per month",
+      "annual": "per year"
+    },
+    "taxes": "taxes not included",
+    "next-invoice": "Next invoice",
+    "auto-renew": "Auto-renew enabled",
+    "no-auto-renew": "Auto-renew disabled",
+    "cycle": {
+      "monthly": "Monthly",
+      "annual": "Annual · 2 months free"
+    },
+    "declined-title": "Payment declined by Niubiz",
+    "declined-text": "The card was declined. The subscription stays Pending until a payment is approved.",
+    "retry": "Retry payment",
+    "billing-history": "Billing history",
+    "invoice": "Invoice",
+    "date": "Date",
+    "amount-column": "Amount",
+    "status": "Status",
+    "payment": {
+      "approved": "Approved",
+      "declined": "Declined"
+    },
+    "no-invoices": "There are no invoices yet.",
+    "review": "Plan change review",
+    "plan": "Plan",
+    "billing-cycle": "Billing cycle",
+    "proposed-change": "Proposed billing change",
+    "current": "Current",
+    "proposed": "Proposed",
+    "effective": "Effective",
+    "no-charge": "No charge until confirmed",
+    "confirm": "Confirm plan change",
+    "cancel": "Cancel",
+    "no-change": "Choose another plan or billing cycle to review the change.",
+    "cancellation": "Cancellation policy: access continues through the end of the paid term. Export records before account closure.",
+    "payment-method": "Payment method",
+    "no-card": "No card registered yet. The first charge is requested after email verification.",
+    "billing-contact": "Billing contact",
+    "states": "Payment states",
+    "state-declined": "Declined payment",
+    "state-declined-text": "Niubiz declined the charge. The subscription stays Pending and the reason is shown.",
+    "state-upgrades": "No silent upgrades",
+    "state-upgrades-text": "Only organization admins can confirm plan changes.",
+    "state-reminder": "Renewal reminder",
+    "state-reminder-text": "Sent to {{email}} 7 days before each renewal.",
+    "none": "The organization has no subscription."
+  },
+  "organizations": {
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "pending-verification": "Pending verification",
+      "inactive": "Inactive"
+    },
+    "facility-type": {
+      "manufacturing": "Manufacturing",
+      "qc-laboratory": "QC laboratory"
+    },
+    "registration": {
+      "headline": "Clarity at every critical step.",
+      "intro": {
+        "qa-title": "QA/QC workspace",
+        "qa-text": "Documents, deviations, CAPA and release decisions.",
+        "production-title": "Production workspace",
+        "production-text": "Orders, batches, materials and equipment tracking.",
+        "access-title": "Controlled access",
+        "access-text": "Organization profiles, assigned roles, facility scope and two-factor authentication. Email verification is required before workspace activation.",
+        "permissions-title": "Role-based permissions",
+        "permissions-text": "The administrator role does not grant QA or release permissions. Roles and facility access are assigned after authentication and 2FA enrollment."
+      },
+      "step-organization": "Organization",
+      "step-administrator": "Administrator",
+      "step-verification": "Verification",
+      "overline": "Set up your organization",
+      "title": "Organization registration",
+      "subtitle": "Create the organization profile and designate its first administrator. An email verification link is sent before workspace activation.",
+      "organization-details": "Organization details",
+      "legal-name": "Legal name (razón social)",
+      "legal-name-error": "Enter the legal name.",
+      "ruc-error": "Enter a valid RUC: 11 digits starting with 10 or 20.",
+      "ruc-registered": "This RUC is already registered. The organization already exists in DoofPlus — ask its administrator for an invitation.",
+      "primary-plant": "Primary plant",
+      "plan": "Plan",
+      "change-plan": "Change plan",
+      "plan-limits": "Up to {{devices}} IoT devices and {{users}} users · Paid with Niubiz after email verification",
+      "plan-unlimited": "Unlimited IoT devices and users · Paid with Niubiz after email verification",
+      "administrator": "Administrator",
+      "administrator-name": "Administrator name",
+      "administrator-name-error": "Enter the name of the administrator.",
+      "email": "Corporate email",
+      "email-error": "Enter a valid corporate email.",
+      "password-rule": "At least 12 characters, including a number and a symbol.",
+      "strength": {
+        "0": "Too short",
+        "1": "Weak",
+        "2": "Medium",
+        "3": "Strong",
+        "4": "Very strong"
+      },
+      "notice": "An email verification link will be sent to {{email}} before your workspace is activated.",
+      "accept-1": "I have read and accept the",
+      "accept-2": "and",
+      "accept-3": "I understand that an email verification link will be sent to confirm my address.",
+      "create": "Create organization",
+      "create-note": "You will receive an email to verify your address.",
+      "required": "Required fields. Your information is used only to set up this organization.",
+      "verify-title": "Check your email",
+      "verify-text": "We sent a verification link to {{email}}. Open it to activate the workspace; then sign in and enroll two-factor authentication.",
+      "go-sign-in": "Go to sign in"
+    },
+    "profile": {
+      "my-account": "My account",
+      "subtitle": "Your personal data, area and notification preferences. Roles and plant access are assigned by your laboratory administrator.",
+      "save": "Save changes",
+      "saved": "Your changes were saved.",
+      "personal-data": "Personal data",
+      "personal-data-text": "Profile linked to your user account",
+      "first-name": "First name",
+      "last-name": "Last name",
+      "email": "Work email",
+      "area": "Area",
+      "email-note": "The work email identifies your account and cannot be changed here.",
+      "notifications": "Notification preferences",
+      "notifications-text": "How DoofPlus notifies you about tasks, critical deviations and IoT alerts",
+      "email-notifications": "Email notifications",
+      "email-notifications-text": "Critical deviations, approval requests and release decisions are sent to your work email.",
+      "in-app": "In-app notifications",
+      "in-app-text": "Tasks and alerts appear in the notification bell and in your task inbox.",
+      "language": "Language",
+      "language-text": "English (en-US) is the default; Spanish (es-419) is available for every screen.",
+      "security": "Two-factor authentication is active on your account. Your password is also used to confirm electronic signatures; a new password must be at least 12 characters long."
+    },
+    "overview": {
+      "subtitle": "Organization access, platform adoption and account health.",
+      "active-users": "Active users",
+      "invitations-pending": "{{count}} invitations pending",
+      "organizations": "Organizations",
+      "facilities-count": "{{count}} facilities",
+      "subscription": "Subscription",
+      "renews": "Renews",
+      "access-reviews": "Access reviews",
+      "due": "Due this quarter",
+      "users-attention": "Users requiring attention",
+      "facilities": "Organization & facility profiles",
+      "org-facility": "Org / facility",
+      "region": "Region",
+      "owner": "Owner",
+      "account-health": "Account health",
+      "plan-active": "{{plan}} plan",
+      "plan-active-text": "{{count}} active users",
+      "two-factor": "2FA enforced",
+      "two-factor-text": "All privileged users · Enforced",
+      "access-review": "Quarterly access review",
+      "access-review-text": "{{count}} users due",
+      "review-access": "Review access",
+      "activity": "Administrative activity"
     }
   }
 }
