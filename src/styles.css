@@ -1,13 +1,308 @@
-/* You can add global styles to this file, and also import other style files */
-html, body {
+/* DoofPlus layout helpers and status styles, used together with the Angular Material components. */
+
+:root {
+  --navy: #0f172a;
+  --navy-soft: #1e293b;
+  --teal: #0f766e;
+  --teal-dark: #115e59;
+  --teal-pale: #ccfbf1;
+  --mint: #f0fdfa;
+  --blue: #1e40af;
+  --blue-pale: #dbeafe;
+  --slate: #334155;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --gray-bg: #f8fafc;
+  --danger: #dc2626;
+  --danger-dark: #b91c1c;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  --warning: #b45309;
+  --warning-strong: #f59e0b;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --success: #15803d;
+  --success-bg: #dcfce7;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
   height: 100%;
 }
 
 body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.container-with-spacing {
-  margin: 10px;
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.overline {
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Page layout ---------- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ---------- Material cards ---------- */
+
+.mat-mdc-card.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.mat-mdc-card .card-title {
+  padding: 20px 24px 12px;
+}
+
+/* ---------- Material tables ---------- */
+
+.mat-mdc-table .mat-mdc-header-row {
+  background: var(--gray-bg);
+}
+
+.mat-mdc-table .mat-mdc-header-cell {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mat-mdc-table .mat-mdc-row.highlight {
+  background: var(--mint);
+}
+
+.mat-mdc-table .mat-mdc-row.clickable {
+  cursor: pointer;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.code {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.sub {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- Stats ---------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  padding: 18px 20px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-value {
+  margin: 6px 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.stat-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- Status chips ---------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chip-dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.chip-success { background: var(--success-bg); color: var(--success); }
+.chip-danger { background: var(--danger-bg); color: var(--danger-dark); }
+.chip-warning { background: var(--warning-bg); color: var(--warning); }
+.chip-info { background: var(--blue-pale); color: var(--blue); }
+.chip-neutral { background: #f1f5f9; color: var(--slate); }
+.chip-teal { background: var(--mint); color: var(--teal); border: 1px solid #99f6e4; }
+.chip-purple { background: #ede9fe; color: #6d28d9; border: 1px solid #ddd6fe; }
+.chip-pink { background: #fce7f3; color: #be185d; border: 1px solid #fbcfe8; }
+
+/* ---------- Alerts ---------- */
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius);
+  background: var(--warning-bg);
+}
+
+.alert > div {
+  flex: 1;
+}
+
+.alert strong {
+  color: var(--warning);
+}
+
+.alert-danger {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.alert-danger strong,
+.alert-danger p {
+  color: var(--danger-dark);
+}
+
+.alert-info {
+  border-color: #99f6e4;
+  background: var(--mint);
+}
+
+.alert-info strong {
+  color: var(--teal);
+}
+
+.alert .mat-icon {
+  flex-shrink: 0;
+}
+
+/* ---------- Forms ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form .mat-mdc-form-field {
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px) {
+  .columns,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
 }
