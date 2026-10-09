@@ -15,6 +15,8 @@ const organizationsAdministrationRoutes = () => import('./organizations/presenta
 const profileRoutes = () => import('./organizations/presentation/organizations.routes').then(m => m.profileRoutes);
 const manufacturingRoutes = () => import('./manufacturing/presentation/manufacturing.routes').then(m => m.manufacturingRoutes);
 const monitoringRoutes = () => import('./monitoring/presentation/monitoring.routes').then(m => m.monitoringRoutes);
+const qualityRoutes = () => import('./quality/presentation/quality.routes').then(m => m.qualityRoutes);
+const qualitySharedRoutes = () => import('./quality/presentation/quality.routes').then(m => m.qualitySharedRoutes);
 const subscriptionsRoutes = () => import('./subscriptions/presentation/subscriptions.routes').then(m => m.subscriptionsRoutes);
 
 /**
@@ -32,18 +34,21 @@ export const routes: Routes = [
   { path: 'register',       loadChildren: organizationsPublicRoutes },
   { path: 'qa',             component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'qa' }, children: [
     { path: '', loadChildren: profileRoutes },
+    { path: '', loadChildren: qualityRoutes },
     notFound
   ]},
   { path: 'production',     component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'production' }, children: [
     { path: '', loadChildren: profileRoutes },
     { path: '', loadChildren: manufacturingRoutes },
     { path: '', loadChildren: monitoringRoutes },
+    { path: '', loadChildren: qualitySharedRoutes },
     notFound
   ]},
   { path: 'administration', component: WorkspaceShell, canActivate: [iamGuard], data: { environment: 'administration' }, children: [
     { path: '', loadChildren: iamAdministrationRoutes },
     { path: '', loadChildren: subscriptionsRoutes },
     { path: '', loadChildren: organizationsAdministrationRoutes },
+    { path: '', loadChildren: qualitySharedRoutes },
     { path: '', loadChildren: profileRoutes },
     notFound
   ]},

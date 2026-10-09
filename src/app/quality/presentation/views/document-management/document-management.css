@@ -1,0 +1,78 @@
+.content,
+.workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.section-title {
+  margin-top: 8px;
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.summary {
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--mint);
+}
+
+.danger {
+  color: var(--danger);
+}
+
+.warning {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.workflow ol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow li {
+  display: flex;
+  flex-direction: column;
+  padding-left: 32px;
+  position: relative;
+}
+
+.workflow li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+}
+
+.workflow li.done::before {
+  content: "✓";
+  border-color: #22c55e;
+  background: #22c55e;
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+}
+
+.workflow li.current::before {
+  border-color: var(--warning-strong);
+  background: #fde68a;
+}
+
+.workflow li span {
+  color: var(--muted);
+  font-size: 13px;
+}

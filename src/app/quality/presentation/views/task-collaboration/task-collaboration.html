@@ -1,0 +1,80 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'nav.tasks' | translate]"
+    [title]="'nav.tasks' | translate"
+    [subtitle]="'quality.tasks.subtitle' | translate"/>
+
+  <div class="stats">
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.tasks.my-open' | translate }}</p><p class="stat-value">{{ myTasks().length }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.tasks.team-open' | translate }}</p><p class="stat-value">{{ store.tasks().length }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.tasks.approvals' | translate }}</p><p class="stat-value">{{ approvals() }}</p><p class="stat-note">{{ 'quality.tasks.approvals-note' | translate }}</p></mat-card>
+    <mat-card appearance="outlined" class="stat"><p class="stat-label">{{ 'quality.tasks.comments' | translate }}</p><p class="stat-value">{{ comments().length }}</p><p class="stat-note">{{ recordCode() }}</p></mat-card>
+  </div>
+
+  <div class="columns">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div><h2>{{ 'quality.tasks.inbox' | translate }}</h2><span class="spacer"></span><p class="small muted">{{ 'quality.tasks.inbox-text' | translate }}</p></div></div>
+      <div class="table-scroll"><table mat-table [dataSource]="store.tasks()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.tasks.task-record' | translate }}</th>
+    <td mat-cell *matCellDef="let task"><strong>{{ task.title }}</strong><span class="sub">{{ task.recordCode }} · {{ task.detail }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.owner' | translate }}</th>
+    <td mat-cell *matCellDef="let task">{{ task.owner }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.capa.due' | translate }}</th>
+    <td mat-cell *matCellDef="let task">{{ task.dueAt | date: 'MMM dd' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let task"><span class="chip chip-dot" [class]="toneOf(task.status)">{{ 'quality.task-status.' + task.status | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let task"><button mat-stroked-button type="button" (click)="recordCode.set(task.recordCode.split(' ')[0])">{{ 'quality.tasks.discuss' | translate }}</button></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let task; columns: ['c0', 'c1', 'c2', 'c3', 'c4']" [class.highlight]="task.recordCode.startsWith(recordCode())"></tr>
+</table></div>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="panel"><form [formGroup]="form" (ngSubmit)="assign()" novalidate>
+      <h2>{{ 'quality.tasks.new' | translate }}</h2>
+      <p class="small muted">{{ 'quality.tasks.new-text' | translate }}</p>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.tasks.title' | translate }}</mat-label><input matInput type="text" formControlName="title"></mat-form-field></div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.tasks.record' | translate }}</mat-label><input matInput type="text" formControlName="recordCode"></mat-form-field></div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'manufacturing.batches.owner' | translate }}</mat-label><mat-select formControlName="owner"><mat-option value="">—</mat-option>
+          @for (name of ['María México', 'Lucía Paredes', 'Elena Paz', 'Alberto Valle', 'Jorge Salas']; track name) { <mat-option [value]="name">{{ name }}</mat-option> }
+        </mat-select></mat-form-field></div>
+      <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.tasks.due' | translate }}</mat-label><input matInput type="datetime-local" formControlName="dueAt"></mat-form-field></div>
+      <button mat-flat-button type="submit" class="block">{{ 'quality.tasks.assign' | translate }}</button>
+    </form></mat-card>
+  </div>
+
+  <div class="columns">
+    <mat-card appearance="outlined" class="panel">
+      <h2>{{ 'quality.tasks.discussion' | translate }} · {{ recordCode() }}</h2>
+      <p class="small muted">{{ 'quality.tasks.discussion-text' | translate }}</p>
+      @for (item of comments(); track item.id) {
+        <div class="comment"><span class="avatar">{{ item.initials }}</span>
+          <div><p><strong>{{ item.author }}</strong> <span class="small muted">· {{ item.postedAt | date: 'MMM dd, HH:mm' : 'UTC' }} UTC</span></p><p>{{ item.text }}</p></div></div>
+      } @empty {
+        <p class="muted">{{ 'quality.tasks.no-comments' | translate }}</p>
+      }
+      <div class="row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="comment-input">
+          <input matInput [formControl]="comment" (keyup.enter)="send()" [placeholder]="'quality.tasks.comment-placeholder' | translate">
+        </mat-form-field>
+        <button mat-flat-button type="button" (click)="send()">{{ 'quality.tasks.send' | translate }}</button>
+      </div>
+    </mat-card>
+    <mat-card appearance="outlined" class="panel">
+      <h2>{{ 'quality.tasks.controls' | translate }}</h2>
+      <strong>{{ 'quality.tasks.record-access' | translate }}</strong><p class="small muted">{{ 'quality.tasks.record-access-text' | translate }}</p>
+      <strong>{{ 'quality.tasks.attribution' | translate }}</strong><p class="small muted">{{ 'quality.tasks.attribution-text' | translate }}</p>
+      <strong>{{ 'quality.tasks.not-approval' | translate }}</strong><p class="small muted">{{ 'quality.tasks.not-approval-text' | translate }}</p>
+    </mat-card>
+  </div>
+</section>

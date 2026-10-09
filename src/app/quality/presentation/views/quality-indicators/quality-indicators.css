@@ -1,0 +1,71 @@
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.detail {
+  padding-top: 14px;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.heat {
+  display: grid;
+  gap: 14px 10px;
+  align-items: end;
+}
+
+.month {
+  color: var(--slate);
+  font-size: 12px;
+  text-align: center;
+}
+
+.cause {
+  font-size: 13px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cell i {
+  display: block;
+  width: 26px;
+  border-radius: 3px;
+  background: var(--teal);
+}
+
+.cell i.hot {
+  background: var(--danger);
+}
+
+.cell small {
+  color: var(--slate);
+}
+
+.danger {
+  color: var(--danger);
+}
+
+@media (max-width: 1000px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

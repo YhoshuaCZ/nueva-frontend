@@ -1,0 +1,89 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'nav.audit-trail' | translate]"
+    [title]="'nav.audit-trail' | translate"
+    [subtitle]="'quality.trail.subtitle' | translate">
+    <button mat-flat-button type="button" (click)="exportCsv()">{{ 'quality.trail.export' | translate }}</button>
+  </app-page-header>
+
+  <mat-card appearance="outlined" class="panel filters">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput type="search" [value]="recordFilter()" (input)="recordFilter.set($any($event.target).value)" [placeholder]="'quality.trail.record-filter' | translate">
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-select [value]="actorFilter()" (selectionChange)="actorFilter.set($event.value)" [attr.aria-label]="'quality.trail.all-actors' | translate">
+      <mat-option value="">{{ 'quality.trail.all-actors' | translate }}</mat-option>
+      @for (actor of actors(); track actor) { <mat-option [value]="actor">{{ actor }}</mat-option> }
+    </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button type="button" (click)="clearFilters()">{{ 'quality.trail.clear' | translate }}</button>
+    <span class="spacer"></span>
+    <span class="muted small">{{ 'shell.utc' | translate }}</span>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <div class="card-title row"><h2>{{ 'quality.trail.log' | translate }}</h2><span class="spacer"></span><span class="chip chip-teal">{{ 'quality.trail.events' | translate: {count: visible().length} }}</span></div>
+    <div class="table-scroll"><table mat-table [dataSource]="visible()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>UTC</th>
+    <td mat-cell *matCellDef="let event">{{ event.occurredAt | date: 'MMM dd · HH:mm' : 'UTC' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.actor' | translate }}</th>
+    <td mat-cell *matCellDef="let event"><strong>{{ event.actor }}</strong><span class="sub">{{ ('roles.' + event.actorRole | translate) }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.event' | translate }}</th>
+    <td mat-cell *matCellDef="let event">{{ event.event }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.record' | translate }}</th>
+    <td mat-cell *matCellDef="let event" class="code">{{ event.record }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.result' | translate }}</th>
+    <td mat-cell *matCellDef="let event"><span class="chip" [class]="event.result === 'Blocked' ? 'chip-danger' : 'chip-teal'">{{ event.result }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let event; columns: ['c0', 'c1', 'c2', 'c3', 'c4']" class="clickable" [class.blocked]="event.result === 'Blocked'" [class.highlight]="event.eventCode === selected()?.eventCode" (click)="selectedCode.set(event.eventCode)"></tr>
+</table></div>
+  </mat-card>
+
+  @if (selected(); as event) {
+    <div class="columns">
+      <mat-card appearance="outlined">
+        <div class="card-title row"><div><h2>{{ 'quality.trail.selected' | translate }} · {{ event.event }}</h2><span class="spacer"></span>
+          <p class="small muted">{{ event.eventCode }} · {{ event.occurredAt | date: 'HH:mm' : 'UTC' }} UTC</p></div></div>
+        <div class="table-scroll">
+          <table mat-table [dataSource]="[event]">
+            <ng-container matColumnDef="field">
+              <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.field' | translate }}</th>
+              <td mat-cell *matCellDef="let change">{{ change.field || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="before">
+              <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.before' | translate }}</th>
+              <td mat-cell *matCellDef="let change">{{ change.before || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="after">
+              <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.after' | translate }}</th>
+              <td mat-cell *matCellDef="let change">{{ change.after || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="reason">
+              <th mat-header-cell *matHeaderCellDef>{{ 'quality.trail.reason' | translate }}</th>
+              <td mat-cell *matCellDef="let change">{{ change.reason || '—' }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="changeColumns"></tr>
+            <tr mat-row *matRowDef="let change; columns: changeColumns"></tr>
+          </table>
+        </div>
+      </mat-card>
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'quality.trail.provenance' | translate }}</h2>
+        <span class="chip chip-teal">{{ 'quality.trail.immutable' | translate }}</span>
+        <p class="label">{{ 'quality.trail.event-id' | translate }}</p><p>{{ event.eventCode }} · {{ event.occurredAt | date: 'MMM dd, yyyy · HH:mm:ss' : 'UTC' }} UTC</p>
+        <p class="label">{{ 'quality.trail.retention' | translate }}</p><p class="small muted">{{ 'quality.trail.retention-text' | translate }}</p>
+      </mat-card>
+    </div>
+  }
+</section>

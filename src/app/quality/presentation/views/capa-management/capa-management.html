@@ -1,0 +1,103 @@
+<section class="page">
+  @if (plan(); as capa) {
+    <app-page-header
+      [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'quality.capa.title' | translate]"
+      [title]="'quality.capa.title' | translate"
+      [subtitle]="capa.code + ' · ' + capa.title + ' · ' + ('quality.capa.source' | translate) + ' ' + capa.sourceDeviation">
+      <div class="route">
+        <button mat-flat-button type="button" (click)="route()" [disabled]="capa.status === 'in-approval'">{{ 'quality.capa.route' | translate }}</button>
+        <span class="small muted">{{ 'quality.capa.no-self-approve' | translate }}</span>
+      </div>
+    </app-page-header>
+
+    <div class="alert alert-info">
+      <div><strong>{{ 'quality.capa.effectiveness' | translate }}</strong><p>{{ capa.acceptanceCriterion }}</p></div>
+    </div>
+    @if (rejection(); as reasons) {
+      @if (reasons.length) {
+        <div class="alert alert-danger" role="alert">
+          <div>
+            <strong>{{ 'quality.capa.cannot-route' | translate }}</strong>
+            @for (reason of reasons; track reason) { <p>• {{ 'quality.capa.rejected.' + reason | translate }}</p> }
+          </div>
+        </div>
+      } @else {
+        <div class="alert alert-info" role="status"><div><strong>{{ 'quality.capa.routed' | translate: {reviewer: capa.reviewer} }}</strong></div></div>
+      }
+    }
+
+    <div class="columns">
+      <div class="stack">
+        <mat-card appearance="outlined">
+          <div class="card-title row"><h2>{{ 'quality.capa.actions' | translate }}</h2><span class="spacer"></span>
+            <span class="chip chip-teal">{{ 'quality.capa.attached' | translate: {count: attached(), total: actions().length} }}</span></div>
+          <div class="table-scroll"><table mat-table [dataSource]="actions()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.capa.action' | translate }}</th>
+    <td mat-cell *matCellDef="let action"><span class="code">{{ action.code }}</span><span class="sub">{{ action.title }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.owner' | translate }}</th>
+    <td mat-cell *matCellDef="let action">{{ action.owner }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.capa.due' | translate }}</th>
+    <td mat-cell *matCellDef="let action">{{ action.dueAt | date: 'MMM dd' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let action"><span class="chip" [class]="toneOf(action.status)">{{ 'quality.action-status.' + action.status | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.capa.evidence' | translate }}</th>
+    <td mat-cell *matCellDef="let action">@if (action.evidenceAttached) {
+                      <span class="chip chip-success"><mat-icon class="inline">check</mat-icon>{{ action.evidence }}</span>
+                    } @else {
+                      <button mat-stroked-button type="button" (click)="store.attachActionEvidence(action)">{{ 'quality.capa.attach' | translate }} ↑</button>
+                      <span class="sub">{{ action.evidence }}</span>
+                    }</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+  <tr mat-row *matRowDef="let action; columns: ['c0', 'c1', 'c2', 'c3', 'c4']"></tr>
+</table></div>
+          <div class="card-body add">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="grow">
+              <input matInput [formControl]="newAction" [placeholder]="'quality.capa.new-action' | translate">
+            </mat-form-field>
+            <button mat-stroked-button type="button" (click)="addAction()">+ {{ 'quality.capa.add-action' | translate }}</button>
+          </div>
+        </mat-card>
+
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.capa.root-cause-analysis' | translate }}</h2>
+          <div class="field"><mat-form-field appearance="outline"><mat-label>{{ 'quality.capa.root-cause' | translate }}</mat-label><textarea matInput rows="3" [formControl]="rootCause"></textarea></mat-form-field></div>
+          <button mat-stroked-button type="button" class="save" (click)="saveRootCause()" [disabled]="rootCause.pristine">{{ 'quality.capa.save-root-cause' | translate }}</button>
+          <div class="box teal"><strong>{{ 'quality.capa.check' | translate }} · {{ capa.effectivenessCheckAt | date: 'MMM dd' }}</strong><p>{{ 'quality.capa.check-text' | translate: {reviewer: capa.reviewer} }}</p></div>
+          <div class="box orange"><strong>{{ 'quality.capa.closure-gate' | translate }}</strong><p>{{ 'quality.capa.closure-text' | translate }}</p></div>
+        </mat-card>
+      </div>
+
+      <aside class="stack">
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.capa.accountability' | translate }}</h2>
+          <p class="label">{{ 'quality.capa.owner' | translate }}</p><p><strong>{{ capa.owner }}</strong></p>
+          <p class="label">{{ 'quality.capa.risk' | translate }}</p>
+          @if (deviation(); as dev) {
+            <p><span class="chip chip-danger">{{ 'quality.classification.' + dev.classification | translate }} · RPN {{ dev.severity * dev.likelihood * dev.detectability }}</span></p>
+          }
+          <p class="label">{{ 'quality.capa.reviewer' | translate }}</p><p><strong>{{ capa.reviewer }}</strong></p>
+          <p class="label">{{ 'monitoring.status' | translate }}</p><p>{{ 'quality.capa-status.' + capa.status | translate }}</p>
+        </mat-card>
+        <mat-card appearance="outlined" class="panel">
+          <h2>{{ 'quality.capa.required-evidence' | translate }}</h2>
+          <p class="small muted">{{ 'quality.capa.required-text' | translate }}</p>
+          @for (action of actions(); track action.id) {
+            <div class="evidence-item"><span>{{ action.evidence }}</span>
+              <span class="chip" [class]="action.evidenceAttached ? 'chip-success' : 'chip-neutral'">{{ (action.evidenceAttached ? 'quality.capa.uploaded' : 'quality.capa.pending') | translate }}</span></div>
+          }
+          <p class="small muted box">{{ 'quality.capa.uploaded-count' | translate: {count: attached(), total: actions().length} }}</p>
+        </mat-card>
+      </aside>
+    </div>
+  }
+</section>
