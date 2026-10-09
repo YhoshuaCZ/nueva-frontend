@@ -1,0 +1,97 @@
+.critical {
+  border-left: 4px solid var(--warning-strong);
+}
+
+.severity {
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.current {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.current.out,
+.danger {
+  color: var(--danger);
+}
+
+.label {
+  margin-top: 6px;
+  color: var(--slate);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.mono {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+}
+
+.link-text {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.workflow li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--slate);
+  counter-increment: step;
+}
+
+.workflow li::before {
+  content: counter(step);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--warning-strong);
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.workflow li.done {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.workflow li.done::before {
+  content: "✓";
+  background: #22c55e;
+  color: #fff;
+}
+
+.note {
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--mint);
+  color: var(--teal);
+}
