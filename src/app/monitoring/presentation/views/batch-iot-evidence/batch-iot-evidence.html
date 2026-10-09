@@ -1,0 +1,103 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.batches' | translate, code()]"
+    [title]="code() + ' · ' + ('monitoring.evidence.title' | translate)"
+    [subtitle]="(manufacturingStore.productByCode(batch()?.productCode ?? '')()?.name ?? '') + ' · ' + (batch()?.orderCode ?? '')">
+    <a mat-flat-button [routerLink]="['/production/batches', code()]">{{ 'monitoring.evidence.batch-record' | translate }}</a>
+  </app-page-header>
+
+  <div class="evidence-grid">
+    <mat-card appearance="outlined" class="panel">
+      <h2>{{ 'monitoring.evidence.associate' | translate }}</h2>
+      <p class="small muted">{{ 'monitoring.evidence.associate-text' | translate }}</p>
+      @for (item of store.equipment(); track item.id) {
+        @if (store.sensorsOf(item.code)().length || item.calibrationStatus === 'not-fit') {
+          <div class="equipment" [class.associated]="isAssociated(item.code)">
+            <strong>{{ item.code }} · {{ item.name }}</strong>
+            <span class="small muted">{{ 'monitoring.evidence.sensors' | translate }}: {{ sensorCodes(item.code) }}</span>
+            @if (isAssociated(item.code)) {
+              <span class="chip chip-dot chip-success">{{ 'monitoring.evidence.associated' | translate }}</span>
+            } @else if (item.calibrationStatus === 'not-fit') {
+              <span class="chip chip-dot chip-danger">{{ 'monitoring.calibration.not-fit' | translate }}</span>
+            } @else if (busyWith(item.code); as other) {
+              <span class="chip chip-dot chip-danger">{{ 'monitoring.evidence.in-use' | translate: {batch: other} }}</span>
+            }
+            @if (!isAssociated(item.code)) {
+              <button mat-stroked-button type="button" (click)="associate(item.code)">+ {{ 'monitoring.evidence.associate-button' | translate }}</button>
+            }
+            @for (reason of rejections()[item.code] ?? []; track reason) {
+              <p class="field-error">▲ {{ 'monitoring.evidence.rejected.' + reason | translate: {code: item.code} }}</p>
+            }
+          </div>
+        }
+      }
+    </mat-card>
+
+    <mat-card appearance="outlined" class="panel">
+      @if (mainSensor(); as sensor) {
+        <h2>{{ 'monitoring.evidence.critical' | translate }} · {{ sensor.equipmentCode }}</h2>
+        <p class="small muted">{{ 'monitoring.type.' + sensor.type | translate }} {{ sensor.code }} · {{ 'monitoring.range' | translate: {lower: sensor.lowerLimit, upper: sensor.upperLimit, unit: sensor.unit} }}</p>
+        <app-telemetry-chart [readings]="mainReadings()" [lower]="sensor.lowerLimit" [upper]="sensor.upperLimit" [unit]="sensor.unit"/>
+        <p class="small muted">{{ 'monitoring.evidence.recorded' | translate }}</p>
+      } @else {
+        <h2>{{ 'monitoring.evidence.critical' | translate }}</h2>
+        <p class="muted empty">{{ 'monitoring.no-data' | translate }}</p>
+      }
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined">
+    <div class="card-title row"><div>
+        <h2>{{ 'monitoring.evidence.readings' | translate }}</h2><span class="spacer"></span>
+        <p class="small muted">{{ 'monitoring.evidence.readings-text' | translate }}</p></div>
+    </div>
+    <div class="table-scroll">
+      <table mat-table [dataSource]="evidenceRows()">
+        <ng-container matColumnDef="timestamp">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.timestamp' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.reading.recordedAt | date: 'MMM dd · HH:mm' : 'UTC' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="sensor">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.sensor' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.sensor.code }}</td>
+        </ng-container>
+        <ng-container matColumnDef="variable">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.variable' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ 'monitoring.type.' + row.sensor.type | translate }}</td>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.value' | translate }}</th>
+          <td mat-cell *matCellDef="let row" [class.out]="row.outOfRange">{{ row.reading.value }} {{ row.sensor.unit }}</td>
+        </ng-container>
+        <ng-container matColumnDef="limits">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment.limits' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.sensor.lowerLimit }}–{{ row.sensor.upperLimit }} {{ row.sensor.unit }}</td>
+        </ng-container>
+        <ng-container matColumnDef="source">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.source' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.reading.source }}</td>
+        </ng-container>
+        <ng-container matColumnDef="result">
+          <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.evidence.result' | translate }}</th>
+          <td mat-cell *matCellDef="let row"><span class="chip chip-dot" [class]="row.outOfRange ? 'chip-danger' : 'chip-success'">{{ (row.outOfRange ? 'monitoring.evidence.out-alert' : 'monitoring.within-range') | translate }}</span></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="evidenceColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: evidenceColumns" [class.highlight]="row.outOfRange"></tr>
+        <tr class="mat-mdc-row" *matNoDataRow><td class="mat-mdc-cell muted" colspan="7">{{ 'monitoring.no-data' | translate }}</td></tr>
+      </table>
+    </div>
+    @if (readings().length > 8) {
+      <p class="card-body more">
+        <button mat-stroked-button type="button" (click)="showAll.set(!showAll())">
+          {{ (showAll() ? 'monitoring.evidence.show-latest' : 'monitoring.evidence.show-all') | translate: {count: readings().length} }}
+        </button>
+      </p>
+    }
+  </mat-card>
+
+  @if (alert(); as open) {
+    <div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ open.code }} · {{ open.detail }}</strong></div>
+      <a mat-flat-button [routerLink]="['/production/sensors', open.sensorCode]">{{ 'monitoring.evidence.view-alert' | translate }}</a>
+    </div>
+  }
+</section>

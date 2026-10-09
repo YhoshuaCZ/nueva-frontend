@@ -832,5 +832,494 @@
       "samplingStatus": "pending",
       "allocatedBatch": ""
     }
+  ],
+  "equipment": [
+    {
+      "id": 1,
+      "code": "EQ-MIX-02",
+      "name": "High-shear mixer",
+      "model": "Glatt VG-400 · SN 48213",
+      "location": "Ate · Line 02",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-03-14",
+      "certificate": "CAL-MIX-0326",
+      "nextMaintenance": "2026-11-20",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Operational · 1 sensor online"
+    },
+    {
+      "id": 2,
+      "code": "EQ-COAT-02",
+      "name": "Tablet coater",
+      "model": "Bosch Solidlab 2 · SN 77120",
+      "location": "Ate · Line 02",
+      "calibrationStatus": "due",
+      "calibrationDue": "2026-10-08",
+      "certificate": "CAL-204-0426",
+      "nextMaintenance": "2026-10-30",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "WO-26087",
+      "healthNote": "Temperature recovered · Inspection due"
+    },
+    {
+      "id": 3,
+      "code": "EQ-TAB-01",
+      "name": "Rotary tablet press",
+      "model": "Fette 1200i · SN 30981",
+      "location": "Ate · Line 01",
+      "calibrationStatus": "not-fit",
+      "calibrationDue": "2026-10-05",
+      "certificate": "CAL-TAB-1025",
+      "nextMaintenance": "2026-10-05",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "WO-26090",
+      "healthNote": "Calibration expired · Not fit for use"
+    },
+    {
+      "id": 4,
+      "code": "EQ-PRESS-01",
+      "name": "Rotary tablet press",
+      "model": "Fette 1090 · SN 30455",
+      "location": "Ate · Line 01",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-02-01",
+      "certificate": "CAL-PRS-0227",
+      "nextMaintenance": "2026-12-15",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Pressure 6.1 bar · Operational"
+    },
+    {
+      "id": 5,
+      "code": "EQ-HPLC-03",
+      "name": "HPLC system",
+      "model": "Agilent 1260 · SN DE6310",
+      "location": "Lima QC lab",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-01-12",
+      "certificate": "CAL-HPLC-0127",
+      "nextMaintenance": "2027-01-12",
+      "maintenanceOwner": "Elena Paz",
+      "workOrder": "",
+      "healthNote": "Operational"
+    },
+    {
+      "id": 6,
+      "code": "STORAGE-A",
+      "name": "Storage A",
+      "model": "Warehouse zone A",
+      "location": "Ate · Storage",
+      "calibrationStatus": "fit",
+      "calibrationDue": "2027-06-30",
+      "certificate": "CAL-STA-0627",
+      "nextMaintenance": "2026-12-03",
+      "maintenanceOwner": "Jorge Salas",
+      "workOrder": "",
+      "healthNote": "Humidity warning · RH 66 %"
+    }
+  ],
+  "sensors": [
+    {
+      "id": 1,
+      "code": "T-204",
+      "deviceId": "tb-7f3a2c91-coat02-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 18,
+      "upperLimit": 25,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 2,
+      "code": "H-118",
+      "deviceId": "tb-7f3a2c91-coat02-hum",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 0,
+      "upperLimit": 55,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 3,
+      "code": "P-031",
+      "deviceId": "tb-7f3a2c91-coat02-pres",
+      "type": "pressure",
+      "unit": "Pa",
+      "equipmentCode": "EQ-COAT-02",
+      "lowerLimit": 10,
+      "upperLimit": 15,
+      "status": "active",
+      "assignedBatch": "B-26041"
+    },
+    {
+      "id": 4,
+      "code": "T-310",
+      "deviceId": "tb-91c2e7aa-mix02-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "EQ-MIX-02",
+      "lowerLimit": 18,
+      "upperLimit": 25,
+      "status": "active",
+      "assignedBatch": "B-26039"
+    },
+    {
+      "id": 5,
+      "code": "P-301",
+      "deviceId": "tb-55d01f3e-press01-pres",
+      "type": "pressure",
+      "unit": "Pa",
+      "equipmentCode": "EQ-PRESS-01",
+      "lowerLimit": 4,
+      "upperLimit": 8,
+      "status": "active",
+      "assignedBatch": "B-26042"
+    },
+    {
+      "id": 6,
+      "code": "H-109",
+      "deviceId": "tb-0b77a2d4-storA-hum",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 0,
+      "upperLimit": 65,
+      "status": "active",
+      "assignedBatch": ""
+    },
+    {
+      "id": 7,
+      "code": "T-118",
+      "deviceId": "tb-0b77a2d4-storA-temp",
+      "type": "temperature",
+      "unit": "°C",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 15,
+      "upperLimit": 25,
+      "status": "offline",
+      "assignedBatch": ""
+    },
+    {
+      "id": 8,
+      "code": "H-114",
+      "deviceId": "tb-0b77a2d4-storA-hum2",
+      "type": "humidity",
+      "unit": "%RH",
+      "equipmentCode": "STORAGE-A",
+      "lowerLimit": 0,
+      "upperLimit": 65,
+      "status": "offline",
+      "assignedBatch": ""
+    }
+  ],
+  "readings": [
+    {
+      "id": 1,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.2,
+      "recordedAt": "2026-10-07T08:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 2,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.4,
+      "recordedAt": "2026-10-07T08:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 3,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.5,
+      "recordedAt": "2026-10-07T08:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 4,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.7,
+      "recordedAt": "2026-10-07T08:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 5,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.9,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 6,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.2,
+      "recordedAt": "2026-10-07T09:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 7,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.6,
+      "recordedAt": "2026-10-07T09:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 8,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23.1,
+      "recordedAt": "2026-10-07T09:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 9,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23.9,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 10,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 24.6,
+      "recordedAt": "2026-10-07T10:05:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 11,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 27.8,
+      "recordedAt": "2026-10-07T10:13:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 12,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 24.3,
+      "recordedAt": "2026-10-07T10:24:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 13,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 23,
+      "recordedAt": "2026-10-07T10:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 14,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22.4,
+      "recordedAt": "2026-10-07T10:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 15,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 22,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 16,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.8,
+      "recordedAt": "2026-10-07T11:15:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 17,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.6,
+      "recordedAt": "2026-10-07T11:30:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 18,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.5,
+      "recordedAt": "2026-10-07T11:45:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 19,
+      "sensorCode": "T-204",
+      "batchCode": "B-26041",
+      "value": 21.4,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 20,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 42,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 21,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 41,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 22,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 41,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 23,
+      "sensorCode": "H-118",
+      "batchCode": "B-26041",
+      "value": 40,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 24,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.6,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 25,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.8,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 26,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.9,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 27,
+      "sensorCode": "P-031",
+      "batchCode": "B-26041",
+      "value": 11.8,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 28,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 5.9,
+      "recordedAt": "2026-10-07T08:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 29,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6,
+      "recordedAt": "2026-10-07T09:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 30,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6.1,
+      "recordedAt": "2026-10-07T10:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 31,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6.1,
+      "recordedAt": "2026-10-07T11:00:00Z",
+      "source": "ThingsBoard"
+    },
+    {
+      "id": 32,
+      "sensorCode": "P-301",
+      "batchCode": "B-26042",
+      "value": 6,
+      "recordedAt": "2026-10-07T12:00:00Z",
+      "source": "ThingsBoard"
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "code": "ALT-26031",
+      "sensorCode": "T-204",
+      "equipmentCode": "EQ-COAT-02",
+      "severity": "critical",
+      "status": "acknowledged",
+      "title": "Temperature excursion",
+      "detail": "T-204 exceeded 25 °C at 10:13 UTC (27.8 °C peak); above 25 °C for 12 min (10:12–10:24).",
+      "batchCode": "B-26041",
+      "acknowledgedBy": "Alberto Valle",
+      "acknowledgedAt": "2026-10-07T10:24:00Z",
+      "responseNote": "Coating paused; B-26041 held; QA notified.",
+      "linkedRecord": "DEV-26017"
+    },
+    {
+      "id": 2,
+      "code": "ALT-26032",
+      "sensorCode": "H-109",
+      "equipmentCode": "Storage A",
+      "severity": "warning",
+      "status": "open",
+      "title": "Humidity above threshold",
+      "detail": "RH 66 % · threshold 65 %.",
+      "batchCode": "",
+      "acknowledgedBy": "",
+      "acknowledgedAt": "",
+      "responseNote": "",
+      "linkedRecord": ""
+    },
+    {
+      "id": 3,
+      "code": "ALT-26033",
+      "sensorCode": "P-301",
+      "equipmentCode": "EQ-PRESS-01",
+      "severity": "warning",
+      "status": "under-investigation",
+      "title": "Low air pressure",
+      "detail": "Pressure dropped to 5.9 bar · maintenance assigned.",
+      "batchCode": "B-26042",
+      "acknowledgedBy": "Alberto Valle",
+      "acknowledgedAt": "2026-10-07T08:05:00Z",
+      "responseNote": "Maintenance notified.",
+      "linkedRecord": "INC-26007"
+    }
   ]
 }
