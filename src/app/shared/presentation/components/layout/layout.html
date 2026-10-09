@@ -1,15 +1,5 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <h1>Doof Plus - IngesCompany</h1>
-    <div class="mat-spacer"></div>
-    @for (option of options(); track option.label) {
-      <a mat-button [routerLink]="option.link" routerLinkActive="active">
-        {{ option.label | translate}}
-      </a>
-    }
-    <!-- To Add when Language Switcher is implemented -->
-  </mat-toolbar-row>
-</mat-toolbar>
-<app-toolbar />
-<router-outlet/>
+<app-toolbar/>
+<main class="content">
+  <router-outlet/>
+</main>
 <app-footer/>

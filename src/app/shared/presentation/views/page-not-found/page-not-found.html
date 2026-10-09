@@ -1,5 +1,6 @@
-<div class="container-with-spacing">
+<mat-card appearance="outlined" class="not-found">
+  <mat-icon class="icon">search_off</mat-icon>
   <h1>{{ 'page-not-found.title' | translate }}</h1>
-  <div [innerHTML]="'page-not-found.content' | translate: {invalid_path: invalidPath}"></div>
-  <button mat-button (click)="navigateToHome()">{{ 'page-not-found.go-home' | translate }}</button>
-</div>
+  <p class="muted" [innerHTML]="'page-not-found.content' | translate: {invalid_path: invalidPath}"></p>
+  <button mat-flat-button (click)="navigateToHome()">{{ 'page-not-found.go-home' | translate }}</button>
+</mat-card>

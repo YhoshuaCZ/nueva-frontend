@@ -1,0 +1,102 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.production.short' | translate, 'nav.iot-overview' | translate]"
+    [title]="'nav.iot-overview' | translate"
+    [subtitle]="'monitoring.overview.subtitle' | translate">
+    <a mat-flat-button routerLink="/production/incidents">{{ 'monitoring.overview.view-alerts' | translate }}</a>
+  </app-page-header>
+
+  <div class="stats">
+    <mat-card appearance="outlined" class="stat">
+      <p class="stat-label">{{ 'monitoring.overview.sensors-online' | translate }}</p>
+      <p class="stat-value">{{ store.onlineSensors().length }} / {{ store.sensors().length }}</p>
+      <p class="stat-note">{{ 'monitoring.overview.offline' | translate: {count: store.sensors().length - store.onlineSensors().length} }}</p>
+    </mat-card>
+    <mat-card appearance="outlined" class="stat">
+      <p class="stat-label">{{ 'monitoring.overview.equipment' | translate }}</p>
+      <p class="stat-value">{{ store.equipment().length }}</p>
+      <p class="stat-note">{{ 'monitoring.overview.equipment-note' | translate }}</p>
+    </mat-card>
+    <mat-card appearance="outlined" class="stat">
+      <p class="stat-label">{{ 'monitoring.overview.active-alerts' | translate }}</p>
+      <p class="stat-value danger">{{ store.activeAlerts().length }}</p>
+      <span class="chip chip-danger">{{ 'monitoring.overview.critical' | translate: {count: criticalCount()} }}</span>
+    </mat-card>
+    <mat-card appearance="outlined" class="stat">
+      <p class="stat-label">{{ 'monitoring.overview.availability' | translate }}</p>
+      <p class="stat-value teal">99.8%</p>
+      <p class="stat-note">{{ 'monitoring.overview.past-day' | translate }}</p>
+    </mat-card>
+  </div>
+
+  <div class="columns">
+    <div class="stack">
+      @if (sensor(); as current) {
+        <mat-card appearance="outlined" class="panel">
+          <div class="row">
+            <h2>{{ current.equipmentCode }} · {{ 'monitoring.type.' + current.type | translate }}</h2>
+            <span class="spacer"></span>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="sensor-select"><mat-select [value]="sensorCode()" (selectionChange)="sensorCode.set($event.value)" [attr.aria-label]="'monitoring.equipment.sensor' | translate">
+              @for (item of store.onlineSensors(); track item.id) {
+                <mat-option [value]="item.code">{{ item.code }} · {{ item.equipmentCode }}</mat-option>
+              }
+            </mat-select></mat-form-field>
+          </div>
+          <p class="muted">{{ current.code }} · {{ 'monitoring.range' | translate: {lower: current.lowerLimit, upper: current.upperLimit, unit: current.unit} }}</p>
+          @if (lastReading(); as last) {
+            <p class="current" [class.out]="store.isOutOfRange(last)">
+              {{ last.value }} {{ current.unit }} · {{ (store.isOutOfRange(last) ? 'monitoring.out-of-range' : 'monitoring.within-range') | translate }}
+              @if (store.alertOfSensor(current.code)(); as alert) { <span class="alert-flag">{{ 'monitoring.alert-open' | translate }} · {{ alert.code }}</span> }
+            </p>
+          }
+          <app-telemetry-chart [readings]="readings()" [lower]="current.lowerLimit" [upper]="current.upperLimit" [unit]="current.unit"
+                               [emptyText]="'monitoring.no-data' | translate"/>
+          <a [routerLink]="['/production/sensors', current.code]">{{ 'monitoring.overview.sensor-detail' | translate }} →</a>
+        </mat-card>
+      }
+
+      <mat-card appearance="outlined">
+        <h2 class="card-title">{{ 'monitoring.overview.alert-queue' | translate }}</h2>
+        <div class="card-body"><div class="alert"><mat-icon>warning_amber</mat-icon><div><strong>{{ 'monitoring.acknowledgment-rule' | translate }}</strong></div></div></div>
+        <div class="table-scroll"><table mat-table [dataSource]="store.activeAlerts()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.alert-sensor' | translate }}</th>
+    <td mat-cell *matCellDef="let alert"><a [routerLink]="['/production/sensors', alert.sensorCode]">{{ alert.code }} · {{ alert.sensorCode }}</a></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.equipment-column' | translate }}</th>
+    <td mat-cell *matCellDef="let alert">{{ alert.equipmentCode }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.severity' | translate }}</th>
+    <td mat-cell *matCellDef="let alert"><span class="chip" [class]="alert.severity === 'critical' ? 'chip-danger' : 'chip-warning'">{{ 'monitoring.severity-level.' + alert.severity | translate }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let alert"><span class="chip" [class]="statusTone(alert.status)">{{ 'monitoring.alert-status.' + alert.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3']"></tr>
+  <tr mat-row *matRowDef="let alert; columns: ['c0', 'c1', 'c2', 'c3']"></tr>
+</table></div>
+      </mat-card>
+    </div>
+
+    <aside class="stack">
+      <mat-card appearance="outlined" class="panel side">
+        <h2>{{ 'monitoring.overview.health' | translate }}</h2>
+        @for (item of store.equipment(); track item.id) {
+          <a class="health" [class]="'health-' + item.calibrationStatus" routerLink="/production/equipment">
+            <strong>{{ item.code }} · {{ 'monitoring.calibration.' + item.calibrationStatus | translate }}</strong>
+            <span>{{ item.healthNote }}</span>
+          </a>
+        }
+      </mat-card>
+      <mat-card appearance="outlined" class="panel side">
+        <h2>{{ 'monitoring.overview.rules' | translate }}</h2>
+        <div class="rule teal"><strong>{{ 'monitoring.rules.threshold' | translate }}</strong><span>{{ 'monitoring.rules.threshold-text' | translate }}</span></div>
+        <div class="rule blue"><strong>{{ 'monitoring.rules.offline' | translate }}</strong><span>{{ 'monitoring.rules.offline-text' | translate }}</span></div>
+        <div class="rule yellow"><strong>{{ 'monitoring.rules.acknowledgment' | translate }}</strong><span>{{ 'monitoring.rules.acknowledgment-text' | translate }}</span></div>
+      </mat-card>
+    </aside>
+  </div>
+</section>

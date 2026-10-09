@@ -1,0 +1,33 @@
+<section class="selection">
+  <p class="overline">{{ 'iam.selection.overline' | translate }}</p>
+  <h1>{{ 'iam.selection.title' | translate }}</h1>
+  <p class="muted lead">{{ 'iam.selection.subtitle' | translate }}</p>
+
+  <div class="environments">
+    @for (item of environments; track item.key) {
+      <mat-card appearance="outlined" class="environment" [class]="'accent-' + item.accent">
+        <app-environment-icon [environment]="item.key"/>
+        <p class="label">{{ 'environments.' + item.key + '.label' | translate }}</p>
+        <h2>{{ 'environments.' + item.key + '.role' | translate }}</h2>
+        <p class="muted">{{ 'environments.' + item.key + '.description' | translate }}</p>
+        <ul class="features">
+          @for (feature of item.summary; track feature) {
+            <li><mat-icon>check_circle</mat-icon>{{ 'environments.features.' + feature | translate }}</li>
+          }
+        </ul>
+        <a mat-flat-button class="continue" [routerLink]="['/sign-in', item.key]">
+          {{ 'environments.' + item.key + '.continue' | translate }}
+        </a>
+      </mat-card>
+    }
+  </div>
+
+  <p class="links">
+    <strong>{{ 'iam.selection.new-laboratory' | translate }}</strong>
+    <a routerLink="/register">{{ 'iam.selection.register' | translate }} →</a>
+  </p>
+  <p class="links">
+    <strong>{{ 'iam.selection.not-customer' | translate }}</strong>
+    <a [href]="plansUrl">{{ 'iam.selection.see-plans' | translate }} →</a>
+  </p>
+</section>

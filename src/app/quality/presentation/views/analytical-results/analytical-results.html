@@ -1,0 +1,88 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'nav.analytical-results' | translate]"
+    [title]="'nav.analytical-results' | translate"
+    [subtitle]="'quality.results.subtitle' | translate">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="picker"><mat-select [value]="batchCode()" (selectionChange)="batchCode.set($event.value); assay.set(null)" aria-label="Record">
+      @for (code of batches(); track code) { <mat-option [value]="code">{{ code }}</mat-option> }
+    </mat-select></mat-form-field>
+  </app-page-header>
+
+  <mat-card appearance="outlined">
+    <div class="card-title row"><div>
+        <h2>{{ 'quality.results.results' | translate }} · {{ batchCode() }} · {{ manufacturingStore.productByCode(manufacturingStore.batchByCode(batchCode())()?.productCode ?? '')()?.name }}</h2><span class="spacer"></span>
+        <p class="small muted">{{ results()[0]?.sampleCode }} · {{ results()[0]?.reportCode }}</p></div>
+    </div>
+    <div class="table-scroll"><table mat-table [dataSource]="results()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.test' | translate }}</th>
+    <td mat-cell *matCellDef="let result"><strong>{{ result.test }}</strong></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.protocol' | translate }}</th>
+    <td mat-cell *matCellDef="let result">{{ result.protocol }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.calculated' | translate }}</th>
+    <td mat-cell *matCellDef="let result">{{ result.result || '—' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.specification' | translate }}</th>
+    <td mat-cell *matCellDef="let result">{{ result.specification }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c4">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.results.analyst' | translate }}</th>
+    <td mat-cell *matCellDef="let result">{{ result.analyst || '—' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c5">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let result"><span class="chip chip-dot" [class]="result.status === 'within' ? 'chip-success' : result.status === 'oos' ? 'chip-danger' : 'chip-neutral'">{{ 'quality.result-status.' + result.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3', 'c4', 'c5']"></tr>
+  <tr mat-row *matRowDef="let result; columns: ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']" [class.highlight]="result.test.startsWith('Assay')"></tr>
+</table></div>
+  </mat-card>
+
+  <div class="grid-2">
+    <mat-card appearance="outlined" class="panel"><form [formGroup]="form" (ngSubmit)="calculate()" novalidate>
+      <h2>{{ 'quality.results.calculation' | translate }} · Assay (HPLC)</h2>
+      <p class="small muted">{{ 'quality.results.formula-from' | translate }}</p>
+      @for (input of [['sampleArea', 'As'], ['standardArea', 'Ast'], ['standardConcentration', 'Cst'], ['sampleConcentration', 'Cs'], ['purity', 'P']]; track input[0]) {
+        <div class="input-row">
+          <label [for]="input[0]">{{ 'quality.results.inputs.' + input[0] | translate }} ({{ input[1] }})</label>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <input matInput [id]="input[0]" type="number" step="any" [formControlName]="input[0]">
+          </mat-form-field>
+        </div>
+      }
+      <p class="formula">Assay % = (As / Ast) × (Cst / Cs) × P
+        @if (assay() !== null) { <br>= {{ assay() }} % }
+      </p>
+      @if (assay() !== null) {
+        <span class="chip chip-dot" [class]="assay()! >= 95 && assay()! <= 105 ? 'chip-success' : 'chip-danger'">{{ assay() }} % · {{ 'quality.results.spec-range' | translate }}</span>
+      }
+      <div class="row">
+        <button mat-flat-button type="submit">{{ 'quality.results.calculate' | translate }}</button>
+        <button mat-stroked-button type="button" (click)="save()" [disabled]="assay() === null">{{ 'quality.results.save' | translate }}</button>
+      </div>
+    </form></mat-card>
+
+    <mat-card appearance="outlined" class="panel">
+      @if (oos(); as result) {
+        <h2>{{ 'quality.results.oos-title' | translate }} · {{ result.test }}</h2>
+        <p class="small muted">{{ 'quality.results.oos-subtitle' | translate }}</p>
+        <div class="alert alert-danger"><div><p>{{ 'quality.results.oos-text' | translate: {result: result.result, spec: result.specification} }}</p></div></div>
+        <dl>
+          <dt>{{ 'quality.results.batch' | translate }}</dt><dd>{{ batchCode() }} · {{ 'quality.results.quarantine' | translate }}</dd>
+          <dt>{{ 'quality.results.linked-deviation' | translate }}</dt>
+          <dd>@if (linkedDeviation(); as dev) { <a routerLink="/qa/deviations" [queryParams]="{code: dev.code}">{{ dev.code }}</a> } @else { {{ 'quality.results.not-registered' | translate }} }</dd>
+          <dt>{{ 'quality.results.release' | translate }}</dt><dd>{{ 'quality.results.release-blocked' | translate }}</dd>
+        </dl>
+        <button mat-flat-button type="button" class="block" (click)="registerDeviation()" [disabled]="!!linkedDeviation()">{{ 'quality.results.register-deviation' | translate }}</button>
+      } @else {
+        <h2>{{ 'quality.results.no-oos' | translate }}</h2>
+        <p class="muted">{{ 'quality.results.no-oos-text' | translate }}</p>
+      }
+    </mat-card>
+  </div>
+</section>

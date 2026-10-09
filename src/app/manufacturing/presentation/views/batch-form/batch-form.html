@@ -1,18 +1,52 @@
-<div class="content-box">
-  <h2>{{ 'manufacturing.batch_form.title' | translate }}</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div class="field">
-      <label for="batchId">{{ 'manufacturing.batch_form.lbl_id' | translate }}</label>
-      <input id="batchId" type="text" [(ngModel)]="newBatch.id" name="id" required />
-    </div>
-    <div class="field">
-      <label for="productFormula">{{ 'manufacturing.batch_form.lbl_formula' | translate }}</label>
-      <input id="productFormula" type="text" [(ngModel)]="newBatch.productFormula" name="productFormula" required />
-    </div>
-    <div class="field">
-      <label for="quantity">{{ 'manufacturing.batch_form.lbl_quantity' | translate }}</label>
-      <input id="quantity" type="number" [(ngModel)]="newBatch.quantity" name="quantity" required />
-    </div>
-    <button type="submit" class="btn">{{ 'manufacturing.batch_form.btn_save' | translate }}</button>
+@if (rejection().length) {
+  <mat-dialog-content class="rejected">
+    <span class="dialog-icon"><mat-icon>error_outline</mat-icon></span>
+    <h2>{{ 'manufacturing.batches.rejected-title' | translate }}</h2>
+    <p class="muted">
+      @for (reason of rejection(); track reason) {
+        {{ 'manufacturing.batches.rejected.' + reason | translate: {code: form.controls.code.value, product: form.controls.productCode.value} }}
+      }
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="actions">
+    <button mat-stroked-button type="button" mat-dialog-close>{{ 'subscriptions.cancel' | translate }}</button>
+    <button mat-flat-button type="button" (click)="changeData()">{{ 'manufacturing.batches.change-data' | translate }}</button>
+  </mat-dialog-actions>
+} @else {
+  <h2 mat-dialog-title>{{ 'manufacturing.batches.create' | translate }}</h2>
+  <form [formGroup]="form" (ngSubmit)="saveBatch()" novalidate>
+    <mat-dialog-content class="form">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'manufacturing.batches.batch-code' | translate }}</mat-label>
+        <input matInput formControlName="code" placeholder="B-26045" required>
+        <mat-error>{{ 'manufacturing.batches.code-error' | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'manufacturing.products.product' | translate }}</mat-label>
+        <mat-select formControlName="productCode" required>
+          @for (product of store.products(); track product.id) {
+            <mat-option [value]="product.code">{{ product.code }} · {{ product.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'manufacturing.batches.quantity' | translate }}</mat-label>
+          <input matInput type="number" formControlName="quantity" min="1" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'manufacturing.batches.line' | translate }}</mat-label>
+          <mat-select formControlName="line" required>
+            @for (line of lines; track line) {
+              <mat-option [value]="line">{{ line }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="actions">
+      <button mat-stroked-button type="button" mat-dialog-close>{{ 'subscriptions.cancel' | translate }}</button>
+      <button mat-flat-button type="submit">{{ 'manufacturing.batches.create' | translate }}</button>
+    </mat-dialog-actions>
   </form>
-</div>
+}

@@ -1,0 +1,30 @@
+.mat-mdc-card.filters {
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+tr.blocked td {
+  background: var(--danger-bg);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px;
+}
+
+.label {
+  color: var(--slate);
+  font-size: 12px;
+  font-weight: 700;
+}

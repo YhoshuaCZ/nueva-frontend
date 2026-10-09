@@ -1,0 +1,85 @@
+.save {
+  --mat-button-filled-container-shape: 6px;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.identity strong {
+  font-size: 18px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.preference {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+mat-slide-toggle {
+  --mat-slide-toggle-selected-track-color: var(--teal);
+  --mat-slide-toggle-selected-hover-track-color: var(--teal);
+  --mat-slide-toggle-selected-focus-track-color: var(--teal);
+  --mat-slide-toggle-selected-pressed-track-color: var(--teal);
+  --mat-slide-toggle-selected-handle-color: #fff;
+  --mat-slide-toggle-selected-hover-handle-color: #fff;
+  --mat-slide-toggle-selected-focus-handle-color: #fff;
+  --mat-slide-toggle-selected-pressed-handle-color: #fff;
+}
+
+.language {
+  --mat-button-toggle-height: 32px;
+  --mat-button-toggle-shape: 999px;
+  --mat-button-toggle-selected-state-background-color: var(--teal);
+  --mat-button-toggle-selected-state-text-color: #fff;
+  --mat-button-toggle-divider-color: transparent;
+  --mat-button-toggle-label-text-weight: 700;
+  --mat-button-toggle-label-text-size: 12px;
+  padding: 2px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+}
+
+.security {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.security .mat-icon {
+  flex-shrink: 0;
+  color: var(--teal);
+}
+
+.language .mat-button-toggle {
+  border-radius: 999px;
+}

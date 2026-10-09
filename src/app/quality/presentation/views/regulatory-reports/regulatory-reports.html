@@ -1,0 +1,67 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'environments.qa.short' | translate, 'nav.regulatory-reports' | translate]"
+    [title]="'nav.regulatory-reports' | translate"
+    [subtitle]="'quality.reports.subtitle' | translate">
+    <button mat-flat-button type="button" (click)="createReport()">+ {{ 'quality.reports.create' | translate }}</button>
+  </app-page-header>
+
+  <div class="columns">
+    <mat-card appearance="outlined">
+      <div class="card-title row"><div><h2>{{ 'quality.reports.library' | translate }}</h2><span class="spacer"></span>
+        <p class="small muted">{{ 'quality.reports.library-text' | translate: {count: store.reports().length} }}</p></div></div>
+      <div class="table-scroll"><table mat-table [dataSource]="store.reports()">
+  <ng-container matColumnDef="c0">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.reports.report' | translate }}</th>
+    <td mat-cell *matCellDef="let report"><strong>{{ report.code }}</strong><span class="sub">{{ report.type }}</span></td>
+  </ng-container>
+  <ng-container matColumnDef="c1">
+    <th mat-header-cell *matHeaderCellDef>{{ 'quality.reports.scope' | translate }}</th>
+    <td mat-cell *matCellDef="let report">{{ report.scope }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c2">
+    <th mat-header-cell *matHeaderCellDef>{{ 'manufacturing.batches.owner' | translate }}</th>
+    <td mat-cell *matCellDef="let report">{{ report.owner }}</td>
+  </ng-container>
+  <ng-container matColumnDef="c3">
+    <th mat-header-cell *matHeaderCellDef>{{ 'monitoring.status' | translate }}</th>
+    <td mat-cell *matCellDef="let report"><span class="chip chip-dot" [class]="toneOf(report.status)">{{ 'quality.report-status.' + report.status | translate }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['c0', 'c1', 'c2', 'c3']"></tr>
+  <tr mat-row *matRowDef="let report; columns: ['c0', 'c1', 'c2', 'c3']" class="clickable" [class.highlight]="report.code === selectedCode()" (click)="selectedCode.set(report.code)"></tr>
+</table></div>
+    </mat-card>
+    @if (selected(); as report) {
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'quality.reports.configuration' | translate }}</h2>
+        <p class="label">{{ 'quality.reports.template' | translate }}</p><p>{{ report.template }}</p>
+        <p class="label">{{ 'quality.reports.scope' | translate }}</p><p>{{ report.scope }}</p>
+        <p class="label">{{ 'quality.reports.format' | translate }}</p><p>{{ report.format }}</p>
+        <p class="label">{{ 'manufacturing.batches.owner' | translate }}</p><p>{{ report.owner }}</p>
+        <p class="label">{{ 'quality.reports.created' | translate }}</p><p>{{ report.createdAt | date: 'MMM dd, yyyy' }}</p>
+      </mat-card>
+    }
+  </div>
+
+  @if (selected(); as report) {
+    <div class="columns">
+      <mat-card appearance="outlined" class="panel">
+        <div class="row"><h2>{{ report.type }} · {{ report.code }}</h2><span class="spacer"></span>
+          <span class="chip chip-dot" [class]="toneOf(report.status)">{{ 'quality.report-status.' + report.status | translate }}</span></div>
+        <p class="small muted">{{ 'quality.reports.dossier-text' | translate }}</p>
+        @for (item of dossier(); track item.key) {
+          <div class="dossier-item">
+            <div><strong>{{ 'quality.reports.dossier.' + item.key | translate }}</strong></div>
+            <span class="chip chip-dot" [class]="item.state === 'linked' || item.state === 'approved' ? 'chip-success' : item.tone">{{ 'quality.reports.dossier-state.' + item.state | translate }}</span>
+          </div>
+        }
+      </mat-card>
+      <mat-card appearance="outlined" class="panel">
+        <h2>{{ 'quality.reports.review' | translate }}</h2>
+        <strong>{{ 'quality.reports.completeness' | translate }}</strong><p class="small muted">{{ 'quality.reports.completeness-text' | translate }}</p>
+        <strong>{{ 'quality.reports.no-certification' | translate }}</strong><p class="small muted">{{ 'quality.reports.no-certification-text' | translate }}</p>
+        <strong>{{ 'quality.reports.permissions' | translate }}</strong><p class="small muted">{{ 'quality.reports.permissions-text' | translate }}</p>
+      </mat-card>
+    </div>
+  }
+</section>

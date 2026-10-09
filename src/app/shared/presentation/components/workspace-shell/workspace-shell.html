@@ -1,0 +1,70 @@
+<mat-sidenav-container class="workspace">
+  <mat-sidenav #sidenav class="sidebar" [mode]="isHandset() ? 'over' : 'side'" [opened]="!isHandset()">
+    <a [routerLink]="navigation[0].link" class="brand"><img src="/doofplus-wordmark.png" alt="DoofPlus"></a>
+    @if (user(); as current) {
+      <div class="organization">
+        <strong>{{ current.organizationName }}</strong>
+        <span>{{ current.plant }} · {{ 'environments.' + environment + '.short' | translate }}</span>
+        <span class="privilege">{{ 'privileges.' + current.privilege | translate }}</span>
+      </div>
+    }
+    <p class="section-title">{{ 'shell.workspace' | translate }}</p>
+    <mat-nav-list (click)="isHandset() && sidenav.close()">
+      @for (option of navigation; track option.link) {
+        <a mat-list-item [routerLink]="option.link" routerLinkActive="active" #link="routerLinkActive"
+           [activated]="link.isActive">{{ option.label | translate }}</a>
+      }
+    </mat-nav-list>
+    <a class="help" [href]="landingUrl" target="_blank" rel="noopener">
+      {{ 'shell.help' | translate }}<mat-icon>open_in_new</mat-icon>
+    </a>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main">
+    <mat-toolbar class="topbar">
+      @if (isHandset()) {
+        <button mat-icon-button type="button" (click)="sidenav.toggle()" [attr.aria-label]="'shell.menu' | translate">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+      <label class="search">
+        <mat-icon>search</mat-icon>
+        <input type="search" [placeholder]="'shell.search' | translate" [attr.aria-label]="'shell.search' | translate">
+      </label>
+      <span class="spacer"></span>
+      <app-language-switcher variant="dark"/>
+      @if (user(); as current) {
+        <button type="button" class="user-button" [matMenuTriggerFor]="userMenu">
+          <span class="avatar">{{ current.initials }}</span>
+          <span class="user-text">
+            <strong>{{ current.fullName }}</strong>
+            <span>{{ 'roles.' + current.role | translate }}</span>
+          </span>
+        </button>
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <a mat-menu-item [routerLink]="'/' + environment + '/profile'">
+            <mat-icon>manage_accounts</mat-icon>{{ 'shell.profile' | translate }}
+          </a>
+          <mat-divider/>
+          <button mat-menu-item type="button" (click)="signOut()">
+            <mat-icon>logout</mat-icon>{{ 'shell.sign-out' | translate }}
+          </button>
+        </mat-menu>
+      }
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet/>
+    </main>
+
+    <footer class="footer">
+      @if (user(); as current) {
+        <p>{{ current.organizationName }} · {{ current.plant }} · {{ today() }} · {{ 'shell.utc' | translate }} · {{ 'shell.role-based' | translate }}</p>
+      }
+      <nav>
+        <a [href]="landingUrl + 'terms.html'">{{ 'footer.terms' | translate }}</a>
+        <a [href]="landingUrl + 'privacy.html'">{{ 'footer.privacy' | translate }}</a>
+      </nav>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,57 +1,39 @@
-.content-box {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: 40px auto;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f1f5f9;
-}
-
-.content-box h2 {
-  margin-top: 0;
-  color: #0f172a;
-  margin-bottom: 20px;
-}
-
-.field {
-  margin-bottom: 16px;
+.rejected {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  padding-top: 28px;
 }
 
-.field label {
-  font-weight: 500;
-  margin-bottom: 4px;
-  font-size: 14px;
-  color: #0f172a;
+.rejected h2 {
+  font-size: 20px;
 }
 
-.field input {
-  padding: 8px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
+.dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
-.field input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+.form {
+  min-width: 420px;
+  padding-top: 8px;
 }
 
-.btn {
-  background: #2563eb;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 10px;
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 8px 24px 24px;
 }
 
-.btn:hover {
-  background: #1d4ed8;
+@media (max-width: 600px) {
+  .form {
+    min-width: 0;
+  }
 }

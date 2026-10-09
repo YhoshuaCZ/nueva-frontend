@@ -1,0 +1,97 @@
+<section class="page">
+  <app-page-header
+    [breadcrumb]="['shell.workspace' | translate, 'organizations.profile.my-account' | translate, 'shell.profile' | translate]"
+    [title]="'shell.profile' | translate"
+    [subtitle]="'organizations.profile.subtitle' | translate">
+    <button mat-flat-button type="button" class="save" (click)="save()" [disabled]="store.loading()">{{ 'organizations.profile.save' | translate }}</button>
+  </app-page-header>
+
+  @if (saved() && form.pristine) {
+    <div class="alert alert-info" role="status"><mat-icon>check_circle</mat-icon><div><strong>{{ 'organizations.profile.saved' | translate }}</strong></div></div>
+  }
+
+  @if (store.currentProfile(); as profile) {
+    <div class="grid-2" [formGroup]="form">
+      <mat-card appearance="outlined" class="panel">
+        <div>
+          <h2>{{ 'organizations.profile.personal-data' | translate }}</h2>
+          <p class="sub">{{ 'organizations.profile.personal-data-text' | translate }}</p>
+        </div>
+        <div class="identity">
+          <span class="avatar">{{ iamStore.currentUser()?.initials }}</span>
+          <div>
+            <strong>{{ profile.firstName }} {{ profile.lastName }}</strong>
+            <p class="sub">{{ 'roles.' + iamStore.currentUser()?.role | translate }} · {{ profile.site }}</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label class="label" for="firstName">{{ 'organizations.profile.first-name' | translate }} *</label>
+            <mat-form-field appearance="outline">
+              <input matInput id="firstName" formControlName="firstName" autocomplete="given-name">
+              <mat-error>{{ 'organizations.profile.first-name' | translate }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <label class="label" for="lastName">{{ 'organizations.profile.last-name' | translate }} *</label>
+            <mat-form-field appearance="outline">
+              <input matInput id="lastName" formControlName="lastName" autocomplete="family-name">
+              <mat-error>{{ 'organizations.profile.last-name' | translate }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="full">
+            <label class="label" for="email">{{ 'organizations.profile.email' | translate }}</label>
+            <mat-form-field appearance="outline">
+              <input matInput id="email" type="email" [value]="profile.email" disabled>
+            </mat-form-field>
+          </div>
+          <div class="full">
+            <label class="label" for="area">{{ 'organizations.profile.area' | translate }} *</label>
+            <mat-form-field appearance="outline">
+              <input matInput id="area" formControlName="area">
+              <mat-error>{{ 'organizations.profile.area' | translate }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <p class="sub">{{ 'organizations.profile.email-note' | translate }}</p>
+      </mat-card>
+
+      <mat-card appearance="outlined" class="panel">
+        <div>
+          <h2>{{ 'organizations.profile.notifications' | translate }}</h2>
+          <p class="sub">{{ 'organizations.profile.notifications-text' | translate }}</p>
+        </div>
+        <div class="preference">
+          <div>
+            <strong>{{ 'organizations.profile.email-notifications' | translate }}</strong>
+            <p class="sub">{{ 'organizations.profile.email-notifications-text' | translate }}</p>
+          </div>
+          <mat-slide-toggle formControlName="emailNotifications" hideIcon
+                            [attr.aria-label]="'organizations.profile.email-notifications' | translate"/>
+        </div>
+        <div class="preference">
+          <div>
+            <strong>{{ 'organizations.profile.in-app' | translate }}</strong>
+            <p class="sub">{{ 'organizations.profile.in-app-text' | translate }}</p>
+          </div>
+          <mat-slide-toggle formControlName="inAppNotifications" hideIcon
+                            [attr.aria-label]="'organizations.profile.in-app' | translate"/>
+        </div>
+        <div class="preference">
+          <strong>{{ 'organizations.profile.language' | translate }}</strong>
+          <mat-button-toggle-group formControlName="language" hideSingleSelectionIndicator class="language"
+                                   (change)="chooseLanguage($event.value)" [attr.aria-label]="'organizations.profile.language' | translate">
+            <mat-button-toggle value="en">EN</mat-button-toggle>
+            <mat-button-toggle value="es">ES</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <p class="sub">{{ 'organizations.profile.language-text' | translate }}</p>
+      </mat-card>
+    </div>
+
+    <mat-card appearance="outlined" class="security">
+      <mat-icon>verified_user</mat-icon>
+      <p>{{ 'organizations.profile.security' | translate }}</p>
+    </mat-card>
+  }
+</section>

@@ -1,30 +1,238 @@
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 70vh;
-  padding: 2rem;
+.accent-teal { --accent: var(--teal); --accent-pale: var(--mint); }
+.accent-blue { --accent: var(--blue); --accent-pale: var(--blue-pale); }
+.accent-slate { --accent: var(--slate); --accent-pale: #f1f5f9; }
+
+.sign-in {
+  display: grid;
+  grid-template-columns: 560px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  max-width: 1312px;
+  margin: 0 auto;
 }
 
-.auth-card {
-  width: 100%;
-  max-width: 400px;
-  padding: 1rem;
-}
-
-mat-card-header {
-  margin-bottom: 1.5rem;
-  justify-content: center;
-}
-
-.auth-form {
+.panel {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
+  min-height: 648px;
+  padding: 40px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
 }
 
-.submit-btn {
-  padding: 1.5rem 0;
-  font-size: 1.1rem;
-  margin-top: 1rem;
+.panel-label {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.panel h2 {
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.panel-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+}
+
+.panel ul {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+}
+
+.panel li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel li .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.panel-note {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+}
+
+.form-card,
+.denied {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 46px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.form-card h1,
+.denied h1 {
+  font-size: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-weight: 600;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field.invalid {
+  --mat-form-field-outlined-outline-color: var(--danger);
+  --mat-form-field-outlined-hover-outline-color: var(--danger);
+}
+
+.role-chip {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-pale);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.submit {
+  --mat-button-filled-container-color: var(--accent, var(--teal));
+  --mat-button-filled-container-height: 52px;
+  --mat-button-filled-label-text-size: 15px;
+  margin-top: 12px;
+}
+
+.alert .mat-icon {
+  color: var(--danger);
+}
+
+.alert p {
+  font-size: 13px;
+}
+
+.code {
+  display: flex;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.code input {
+  width: 60px;
+  height: 64px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  color: var(--navy);
+  font: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.code input:focus {
+  outline: 3px solid var(--accent-pale);
+}
+
+.code.invalid input {
+  border-color: var(--danger);
+}
+
+.code-error {
+  color: var(--danger-dark);
+  font-size: 13px;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.links a {
+  margin-left: 6px;
+  color: var(--accent);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent, var(--teal));
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.denied {
+  --accent: var(--teal);
+  max-width: 704px;
+  margin: 8px auto;
+}
+
+.denied-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--danger-bg);
+  color: var(--danger-dark);
+}
+
+@media (max-width: 1100px) {
+  .sign-in {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-card,
+  .denied {
+    padding: 28px 22px;
+  }
+
+  .code {
+    gap: 8px;
+  }
+
+  .code input {
+    width: 44px;
+    height: 52px;
+  }
 }

@@ -1,0 +1,156 @@
+.genealogy,
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.genealogy {
+  align-items: center;
+}
+
+.genealogy h2,
+.label {
+  align-self: flex-start;
+}
+
+.label {
+  color: var(--slate);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--teal);
+  border-radius: 6px;
+  background: var(--mint);
+}
+
+.node strong {
+  color: var(--teal);
+}
+
+.node span {
+  color: var(--slate);
+  font-size: 13px;
+}
+
+.order {
+  min-width: 300px;
+}
+
+.order:hover {
+  text-decoration: none;
+}
+
+.batch {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  border: 0;
+  background: var(--navy);
+  color: #fff;
+}
+
+.batch .batch-code {
+  color: #2dd4bf;
+}
+
+.batch span,
+.flow {
+  color: #fff;
+}
+
+.flow {
+  margin: 8px 0 6px;
+}
+
+.batch-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 90px;
+}
+
+.batch-state .chip {
+  background: var(--warning-strong);
+  color: var(--navy);
+}
+
+.batch-state .progress {
+  width: 90px;
+  height: 8px;
+}
+
+.finished {
+  border-style: dashed;
+  border-color: var(--slate);
+  background: #fff;
+  color: var(--slate);
+  font-size: 13px;
+}
+
+.arrow {
+  color: var(--teal);
+}
+
+.history ol {
+  margin: 8px 0 0;
+  padding: 0 0 0 18px;
+  border-left: 2px solid var(--border);
+  list-style: none;
+}
+
+.history li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 0 22px 8px;
+}
+
+.history li::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: -25px;
+  width: 10px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--teal);
+}
+
+.history li span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.history .warning strong { color: #b45309; }
+.history .warning::before { background: var(--warning-strong); }
+.history .danger strong { color: var(--danger); }
+.history .danger::before { background: var(--danger); }
+
+@media (max-width: 700px) {
+  .lots {
+    grid-template-columns: 1fr;
+  }
+
+  .batch {
+    flex-direction: column;
+  }
+}
